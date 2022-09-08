@@ -1,0 +1,11 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#logoimg{
+    width: 10%;
+    height: 10%;
+}
+p{
+    font-size: 1.8vh;
+}

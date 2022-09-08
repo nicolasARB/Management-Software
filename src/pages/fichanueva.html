@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body id="bodyfichanueva">
+    <form id="datoscontainer">
+<input id="usuario" type="text" placeholder="Nombre y apellido">
+<input id="mail" type="email" placeholder="Mail">
+<input id="domicilio" type="text" placeholder="Domicilio">
+<input id="numerodetelefono" type="number" placeholder="Numero de telefono" onkeypress="return event.charCode >=48 && event.charCode <=57" >
+<input id="crear" type="submit" value="Crear Ficha">
+
+    </form>
+
+</button>
+<script>  
+const {ipcRenderer} = require('electron');
+  const form = document.querySelector('form');
+  form.addEventListener('submit', e => {
+const UserName = document.querySelector('#usuario').value;
+const mailv = document.querySelector('#mail').value;
+const domiciliov = document.querySelector('#domicilio').value;
+const numerodetelefono = document.querySelector('#numerodetelefono').value;
+console.log(UserName, mail, domicilio, numerodetelefono);
+
+const newFicha = {
+nombre: UserName,
+mail: mailv,
+domicilio: domiciliov,
+telefono: numerodetelefono
+} 
+
+
+ipcRenderer.send('newFicha', newFicha);
+e.preventDefault();
+
+  });
+</script>
+</body>
+</html>
