@@ -5,7 +5,7 @@
 /* Set a style for all buttons */
   
   /* Float cancel and delete buttons and add an equal width */
-  .cancelbtn, .deletebtn {
+  .cancelbtn, .deletebtn, .btn {
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -16,13 +16,13 @@
   }
   
   /* Add a color to the cancel button */
-  .cancelbtn {
+  .cancelbtn, .cancbtn {
     background-color: #ccc;
     color: black;
   }
   
   /* Add a color to the delete button */
-  .deletebtn {
+  .deletebtn, .delbtn {
     background-color: #f44336;
   }
   

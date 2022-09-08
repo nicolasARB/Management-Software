@@ -180,11 +180,32 @@ if(nab.innerHTML == "Stock"){
     })
 })
 
+
+var on = (function(){
+    if (window.addEventListener) {
+        console.log("esta funcando1");
+        return function(target, type, listener){
+            target.addEventListener(type, listener, false);
+
+        };
+    }
+    else {
+        return function(object, sEvent, fpNotify){
+            console.log("esta funcando2");
+            object.attachEvent("on" + sEvent, fpNotify);
+        };
+    }
+}());
+
+
 var jsonlength = 0;
 var jsonlengthclientes = 0;
 var numero = 0;
-var modal = document.querySelector('.modal');
+var modal = document.querySelector('.modal1');
+var modal2 = document.querySelector('.modal2');
+var modal3 = document.querySelector('.modal3');
 var clicked = false;
+var stockhtml
 setInterval(() => {
 
 productname = document.querySelector("#productname");
@@ -503,77 +524,119 @@ clt.forEach(cltobj =>{
     allproducts = document.querySelectorAll(".nombre");
 
 var previousproductname
-    $('.nombre').on('focus',function(){
-       console.log(this.value + " esta focuseado");
-       previousproductname = this.value;
-       clicked = false;
-       numero = 0;
-    }).on('blur',function(){
-           var product2name = this.value;
-        if(product2name === previousproductname){
-            if(numero < 1){
-                numero = 1;
-            }
+$('.nombre').on('focus',function(){
+    console.log(this.value + " esta focuseado");
+    previousproductname = this.value;
+    clicked = false;
+    numero = 0;
+ }).on('blur',function(){
+        var product2name = this.value;
+     if(product2name === previousproductname){
+         if(numero < 1){
+             numero = 1;
+         }
 
-        }else{
-        if(numero < 1){
-            var productttname = this.value;
-            var changeproduct = document.querySelector('.deletebtn');
-            var cancelproduct = document.querySelector('.cancelbtn');
-        console.log(this.value + " no esta focuseado");
-            numero = 1;
-            modal.style = "display: block";
-            changeproduct.addEventListener('click', ()=>{
-                if(clicked == false){
-                    clicked = true;
-        fs.readFile('C:/Users/Public/data1.json', function (err, data) {
-            var json = JSON.parse(data)
-            var valoresunidos = JSON.stringify(json);
-            console.log(valoresunidos);
-            var val
-            var objs = Object.entries(json);
-                objs.forEach(elem =>{
-                 var objs2 = Object.entries(elem[1]);
-                 var producto =`{"${objs2[0][0]}":"${objs2[0][1]}","${objs2[1][0]}":${objs2[1][1]},"${objs2[2][0]}":${objs2[2][1]}}`;
-        })                                 
-                                          console.log(previousproductname);
-                                          if(valoresunidos.includes(`${previousproductname}`)){
-                                            val = valoresunidos.replace(`"${previousproductname}"`, `"${productttname}"`);
+     }else{
+     if(numero < 1){
+         var productname = this;
+         var changeproduct = document.querySelector('.deletebtnname');
+         var cancelproduct = document.querySelector('.cancelbtnname');
+     console.log(this.value + " no esta focuseado");
+     modal3.style = "display: block";
 
-                                        }
- 
-        console.log(`previous name: ${previousproductname} actual name: ${productttname}`);
-        fs.writeFile( 'C:/Users/Public/data1.json', val, (error) => {
-            if(error){
-                console.log(`error: ${error}`);
-            }else{
-            }
-        })
-          })
-        
-        }    })
-        cancelproduct.addEventListener('click', ()=>{
-            if(clicked == false){
-                clicked = true;
-            console.log(previousproductname);
-            var namesearch = document.querySelectorAll(".nombre");
-            namesearch.forEach(namesearched => {
-                if(namesearched.value == productttname){
-                    namesearched.value = previousproductname;
-                }
-            })
-            console.log(productttname = previousproductname);
-    }})    } }})
+     on(changeproduct, 'click', ()=>{
+         if(clicked == false){
+             clicked = true;
+     
+     fs.readFile('C:/Users/Public/data1.json', function (err, data) {
+         var cant
+         var valname
+         var prodprice
+         var json = JSON.parse(data)
+         var valoresunidos = JSON.stringify(json);
+         console.log(valoresunidos);
+         var val
+         var objs = Object.entries(json);
+             objs.forEach(elem =>{
+              var objs2 = Object.entries(elem[1]);
+              var producto =`{"${objs2[0][0]}":"${objs2[0][1]}","${objs2[1][0]}":${objs2[1][1]},"${objs2[2][0]}":${objs2[2][1]}}`;
+     })                                 
+                                       console.log(previousproductname);
+                                       var listaparent = productname.parentNode.parentNode;
+                                       console.log(listaparent);
+                                       for(var i=0, len = listaparent.childElementCount; i < len; ++i){
+                                     var child = listaparent.children[i];
+                                     console.log(child);
+                                     for(var b=0, lan = child.childElementCount; b < lan; ++b){
+                                         console.log(child);
+                                     console.log(child.firstChild);
+                                     if(child.firstChild.classList.contains("nombre")){
+                                         console.log("si");
+                                         console.log(child.firstChild.value);
+                                          valname = child.firstChild.value;
+                                     }
+                                     if(child.firstChild.classList.contains("cantidad")){
+                                         console.log("si");
+                                         console.log(child.firstChild.value);
+                                         cant = child.firstChild.value;
+
+                                     }
+                                      if(child.firstChild.classList.contains("number")){
+                                          console.log("si");
+                                          console.log(child.firstChild.value);
+                                          prodprice = child.firstChild.value;
+                                      }
+
+                                             }
+                                         }
+                                         var sacarpeso = prodprice.split('$')[1];
+                                         var vall = valoresunidos.replace(/},{/g, '} , {')
+                                         var valoreninputs = `{"producto":"${valname}","stock":${cant},"precio":${sacarpeso}}`;
+                                         var valorenjson = `{"producto":"${previousproductname}","stock":${cant},"precio":${sacarpeso}}`;
+                                         console.log(valorenjson);
+                                            if(valoresunidos.indexOf(`${valorenjson}`)){
+                                                 console.log(valorenjson);
+                                                 val = vall.replace(`${valorenjson}`, `${valoreninputs}`);
+                                                 console.log(val);
+
+
+      //        console.log(`previous name: ${previousprice} actual name: ${productprice.value}`);
+              fs.writeFile( 'C:/Users/Public/data1.json', val, (error) => {
+                  if(error){
+                      console.log(`error: ${error}`);
+                  }else{
+                  }
+              })             }
+
+       })
+     
+     }    })
+     on(cancelproduct, 'click', ()=>{
+         if(clicked == false){
+             clicked = true;
+         console.log(previousproductname);
+         var namesearch = document.querySelectorAll(".nombre");
+         namesearch.forEach(namesearched => {
+             if(namesearched.value == productname.value){
+                namesearched.value = previousproductname;
+             }
+         })
+         console.log(productname.value = previousproductname);
+}})  } }})
 
 
         var previousstockvalue
+        var cantst
+        var valnamest
+        var prodpricest
     $('.cantidad').on('focus',function(){
        console.log(this.value + " esta focuseado");
        previousstockvalue = this.value;
+       stockhtml = this;
        clicked = false;
        numero = 0;
     }).on('blur',function(){
-           var product2stock = this.value;
+           var product2stock = stockhtml.value;
         if(product2stock === previousstockvalue){
             if(numero < 1){
                 numero = 1;
@@ -581,20 +644,18 @@ var previousproductname
 
         }else{
         if(numero < 1){
-            var productstock = this;
-            var changeproduct = document.querySelector('.deletebtn');
-            var cancelproduct = document.querySelector('.cancelbtn');
+            var productstock = stockhtml;
+            var changeproduct = document.querySelector('.deletebtnstock');
+            var cancelproduct = document.querySelector('.cancelbtnstock');
         console.log(this.value + " no esta focuseado");
-        modal.style = "display: block";
+        modal2.style = "display: block";
 
-        changeproduct.addEventListener('click', ()=>{
+     changeproduct.addEventListener('click', ()=>{
             if(clicked == false){
                 clicked = true;
         
         fs.readFile('C:/Users/Public/data1.json', function (err, data) {
-            var cant
-            var valname
-            var prodprice
+
             var json = JSON.parse(data)
             var valoresunidos = JSON.stringify(json);
             console.log(valoresunidos);
@@ -616,25 +677,26 @@ var previousproductname
                                         if(child.firstChild.classList.contains("nombre")){
                                             console.log("si");
                                             console.log(child.firstChild.value);
-                                             valname = child.firstChild.value;
+                                             valnamest = child.firstChild.value;
                                         }
                                         if(child.firstChild.classList.contains("cantidad")){
                                             console.log("si");
                                             console.log(child.firstChild.value);
-                                            cant = child.firstChild.value;
+                                            cantst = child.firstChild.value;
 
                                         }
                                          if(child.firstChild.classList.contains("number")){
                                              console.log("si");
                                              console.log(child.firstChild.value);
-                                             prodprice = child.firstChild.value;
+                                             prodpricest = child.firstChild.value;
                                          }
 
                                                 }
                                             }
+                                            var sacarpeso = prodpricest.split('$')[1];
                                             var vall = valoresunidos.replace(/},{/g, '} , {')
-                                            var valoreninputs = `{"producto":"${valname}","stock":${cant},"precio":${prodprice}}`;
-                                            var valorenjson = `{"producto":"${valname}","stock":${previousstockvalue},"precio":${prodprice}}`;
+                                            var valoreninputs = `{"producto":"${valnamest}","stock":${cantst},"precio":${sacarpeso}}`;
+                                            var valorenjson = `{"producto":"${valnamest}","stock":${previousstockvalue},"precio":${sacarpeso}}`;
                                             console.log(valorenjson);
                                                if(valoresunidos.indexOf(`${valorenjson}`)){
                                                     console.log(valorenjson);
@@ -690,7 +752,7 @@ var previousproductname
                      numero = 1;
                      modal.style = "display: block";
 
-changeproduct.addEventListener('click', ()=>{
+on(changeproduct,'click', ()=>{
     if(clicked == false){
         clicked = true;
 
@@ -763,7 +825,7 @@ changeproduct.addEventListener('click', ()=>{
                    })
                 }
                 })
-                cancelproduct.addEventListener('click', ()=>{
+                on(cancelproduct, 'click', ()=>{
 if(clicked == false){
     clicked = true;
 

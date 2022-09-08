@@ -20,7 +20,7 @@
 </head>
 <body>
 
-  <div id="id01" class="modal">
+  <div id="id01" class="modal modal1">
    <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
     <form class="modal-content" action="/action_page.php">
       <div class="container">
@@ -34,6 +34,37 @@
       </div>
     </form>
   </div>
+
+  <div id="id02" class="modal modal2">
+    <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
+     <form class="modal-content" action="/action_page.php">
+       <div class="container">
+         <h1>Cambiar valor</h1>
+         <p>Estas seguro/a de que deseas cambiar este valor?</p>
+       
+         <div class="clearfix">
+           <button type="button" onclick="document.getElementById('id02').style.display='none'" class="deletebtnstock btn delbtn">Cambiar</button>
+           <button type="button"  onclick="document.getElementById('id02').style.display='none'" class="cancelbtnstock btn cancbtn">Cancelar</button>
+         </div>
+       </div>
+     </form>
+   </div>
+
+
+   <div id="id03" class="modal modal3">
+    <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
+     <form class="modal-content" action="/action_page.php">
+       <div class="container">
+         <h1>Cambiar valor</h1>
+         <p>Estas seguro/a de que deseas cambiar este valor?</p>
+       
+         <div class="clearfix">
+           <button type="button" onclick="document.getElementById('id03').style.display='none'" class="deletebtnname btn delbtn">Cambiar</button>
+           <button type="button"  onclick="document.getElementById('id03').style.display='none'" class="cancelbtnname btn cancbtn">Cancelar</button>
+         </div>
+       </div>
+     </form>
+   </div>
 
 
 
@@ -121,9 +152,9 @@
   <!--<label for="producto">Producto:</label>---> 
     <input type="text" id="productname" placeholder="inserte producto" name="producto">
   <!--   <label for="stock">Stock:</label>---> 
-    <input type="text" class="number" value="" id="stockvalue" placeholder="stock" name="stock">
+    <input type="text"  value="" id="stockvalue" placeholder="stock" name="stock">
   <!--    <label for="precio">Precio:</label>---> 
-    <input type="text" class="number" value="" id="precioadd" placeholder="Precio" name="precio">
+    <input type="text"  value="" id="precioadd" placeholder="Precio" name="precio">
     <button id="add">Añadir</button>
     <button id="borrar">Borrar</button>
 </footer>
