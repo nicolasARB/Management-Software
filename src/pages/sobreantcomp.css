@@ -3,9 +3,87 @@
     padding: 0;
 }
 #logoimg{
-    width: 10%;
-    height: 10%;
+    width: 15%;
+    height: 15%;
 }
 p{
     font-size: 1.8vh;
+}
+.trbfech{
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-size: 1.5rem;
+}
+
+.trb{
+    padding-left: 1.5rem;
+    font-size: 1rem;
+}
+.barranegra{
+    width: 90%;
+    position: relative;
+    left: 5%;
+    background-color: black;
+    height: 0.3rem;
+
+}
+#divtexts{
+    width: 90%;
+    position: relative;
+    left: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.textos{
+    padding-left: 1.5rem;
+    font-size: 1.3rem;
+}
+.textos2{
+    display: block;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+    width: 90%;
+    position: relative;
+    left: 3%;
+}
+.dsctotal{
+    display: inline;
+    font-size: 1rem;
+    padding-left: 2rem;
+    padding-right: 1rem;
+
+}
+.sesald{
+    display: inline;
+    font-size: 1rem;
+    padding-left: 2rem;
+    padding-right: 1rem;
+}
+
+.dsctotal2{
+    display: inline;
+    font-size: 1.2rem;
+    padding-left: 2rem;
+    padding-right: 12rem;
+
+}
+.sesald2{
+    display: inline;
+    font-size: 1.2rem;
+    padding-left: 2rem;
+    padding-right: 12rem;
+}
+.corte{
+    max-width: 100%;
+    font-size: 1.3rem;
+    color: black;
+    overflow: hidden;
+    max-height: 1rem;
+}
+
+.retiroyfechaprox{
+    font-size: 1.3rem;
+    padding-left: 1rem;
+    padding-top: 0.7rem;
 }
