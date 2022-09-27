@@ -3,8 +3,8 @@
     padding: 0;
 }
 #logoimg{
-    width: 15%;
-    height: 15%;
+    width: 10%;
+    height: 10%;
 }
 p{
     font-size: 1.8vh;
@@ -25,6 +25,7 @@ p{
     left: 5%;
     background-color: black;
     height: 0.3rem;
+    -webkit-print-color-adjust: exact;
 
 }
 #divtexts{
@@ -40,36 +41,43 @@ p{
     font-size: 1.3rem;
 }
 .textos2{
-    display: block;
+    display: flex;
+    flex-direction: column;
     padding-left: 1.5rem;
     font-size: 1rem;
     width: 90%;
     position: relative;
     left: 3%;
 }
+.desctotaldiv{
+    display: flex;
+    flex-direction: row;
+}
 .dsctotal{
-    display: inline;
-    font-size: 1rem;
+    font-size: 1.2rem;
     padding-left: 2rem;
     padding-right: 1rem;
 
 }
 .sesald{
-    display: inline;
-    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.2rem;
     padding-left: 2rem;
     padding-right: 1rem;
 }
 
 .dsctotal2{
-    display: inline;
+    display: flex;
+    flex-direction: row;
     font-size: 1.2rem;
     padding-left: 2rem;
     padding-right: 12rem;
 
 }
 .sesald2{
-    display: inline;
+    display: flex;
+    flex-direction: row;
     font-size: 1.2rem;
     padding-left: 2rem;
     padding-right: 12rem;
