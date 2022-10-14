@@ -2,9 +2,54 @@
     margin: 0;
     padding: 0;
 }
+.partederecha2{
+    position: absolute;
+    top: 53%;
+    left: 85%;
+}
+.partederecha{
+    position: absolute;
+    top: 81%;
+    left: 85%;
+}
+#p1{
+    position: relative;
+    left: -12%;  
+}
+#p2{
+    position: relative;
+    left: -15%;
+}
+#p3{
+    position: relative;
+    left: 13%;
+}
+#p4{
+    position: relative;
+    left: -10%;
+}
+
+
+.whatsappimg{
+width: 10%;
+display: inline;
+}
+.logopartederecha{
+    width: 60%;
+    height: 6vh;
+}
+.num{
+    display: inline;
+    position: absolute;
+    top: 85%;
+}
 #logoimg{
-    width: 10%;
-    height: 10%;
+    width: 20%;
+    height: 20%;
+}
+.inputs{
+    border: none;
+    width: 30%;
 }
 p{
     font-size: 1.8vh;
@@ -41,46 +86,49 @@ p{
     font-size: 1.3rem;
 }
 .textos2{
-    display: flex;
-    flex-direction: column;
+    display: block;
     padding-left: 1.5rem;
     font-size: 1rem;
     width: 90%;
     position: relative;
     left: 3%;
 }
+.txtinp{
+    width: 13%;
+}
+
 .desctotaldiv{
-    display: flex;
-    flex-direction: row;
+
 }
 .dsctotal{
+    display: inline;
     font-size: 1.2rem;
     padding-left: 2rem;
     padding-right: 1rem;
 
 }
 .sesald{
-    display: flex;
-    flex-direction: row;
+    display: inline;
     font-size: 1.2rem;
     padding-left: 2rem;
     padding-right: 1rem;
 }
 
 .dsctotal2{
-    display: flex;
-    flex-direction: row;
+    display: inline;
     font-size: 1.2rem;
     padding-left: 2rem;
-    padding-right: 12rem;
+    padding-right: 7rem;
 
 }
 .sesald2{
-    display: flex;
-    flex-direction: row;
+    display: inline;
     font-size: 1.2rem;
     padding-left: 2rem;
-    padding-right: 12rem;
+    padding-right: 7rem;
+}
+.txtinp2{
+    width: 7%;
 }
 .corte{
     max-width: 100%;
@@ -94,4 +142,171 @@ p{
     font-size: 1.3rem;
     padding-left: 1rem;
     padding-top: 0.7rem;
+    padding-bottom: 3rem;
 }
+#primerseparacion{
+    width: 100%; 
+    height: 0.5rem;
+}
+#segundaseparacion{
+    width: 100%; 
+    height: 0.5rem;
+}
+
+@media print {
+
+    body {
+      margin: 0;
+      color: #000;
+      background-color: #fff;
+    }
+    #logoimg{
+        width: 25%;
+        height: 25%;
+    }
+    p{
+        font-size: 2.5vh;
+    }
+    .trbfech{
+        padding-left: 2rem;
+        padding-right: 2rem;
+        font-size: 2rem;
+    }
+    
+    .trb{
+        padding-left: 1.5rem;
+        font-size: 1.5rem;
+    }
+    .barranegra{
+        width: 90%;
+        position: relative;
+        left: 5%;
+        background-color: black;
+        height: 0.4rem;
+        -webkit-print-color-adjust: exact;
+    
+    }
+    #divtexts{
+        width: 90%;
+        position: relative;
+        left: 5%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    #corte1{
+        position: relative;
+    }
+   #primerseparacion{
+    width: 100%; 
+    height: 1rem;
+   }
+   #segundaseparacion{
+    width: 100%; 
+    height: 1rem;
+}
+    .textos{
+        padding-left: 1.5rem;
+        font-size: 1.6rem;
+    }
+    .textos2{
+display: block;
+        padding-left: 1.5rem;
+        font-size: 1.5rem;
+        width: 90%;
+        position: relative;
+        left: 3%;
+    }
+
+    .dsctotal{
+        display: inline;
+        font-size: 1.5rem;
+        padding-left: 2rem;
+        padding-right: 1rem;
+    
+    }
+    .sesald{
+        display: inline;
+
+        font-size: 1.5rem;
+        padding-left: 2rem;
+        padding-right: 1rem;
+    }
+    
+    .dsctotal2{
+        display: inline;
+        font-size: 1.5rem;
+        padding-left: 2rem;
+        padding-right: 12rem;
+    
+    }
+    .sesald2{
+        display: inline;
+        font-size: 1.5rem;
+        padding-left: 2rem;
+        padding-right: 12rem;
+    }
+    .txtinp2{
+        font-size: 1rem;
+    }
+    .corte{
+        max-width: 100%;
+        font-size: 1.3rem;
+        color: black;
+        overflow: hidden;
+        max-height: 1rem;
+    }
+    
+    .retiroyfechaprox{
+        font-size: 1.5rem;
+        padding-left: 1rem;
+        padding-top: 0.7rem;
+    }
+    .partederecha{
+        position: absolute;
+        top: 82%;
+        left: 70%;
+    }
+    #p1{
+        position: relative;
+        left: -12%;  
+        font-size: 1rem;
+    }
+    #p2{
+        position: relative;
+        left: -15%;
+        font-size: 1rem;
+    }
+    #p3{
+        position: relative;
+        left: 13%;
+        font-size: 1rem;
+    }
+    #p4{
+        position: relative;
+        left: -10%;
+        font-size: 1rem;
+    }
+    
+    
+    .whatsappimg{
+    width: 10%;
+    display: inline;
+    
+    }
+    .logopartederecha{
+        width: 60%;
+        height: 6vh;
+    }
+    .num{
+        display: inline;
+        position: absolute;
+        top: 85%;
+        font-size: 1rem;
+    }
+    .partederecha2{
+        position: absolute;
+        top: 53%;
+        left: 70%;
+    }
+  }

@@ -5,79 +5,114 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="sobreantcomp.css">
+    <script src="sobreantcomp.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <img id="logoimg" src="imagenes/logo2.jpeg">
-    <div>
-        <p style="display: inline;" class="trbfech trabajo">Trabajo n°:</p>
-        <p style="display: inline;" class="trbfech fecha">Fecha:</p>
-    </div>
-    <div>
-        <p class="trb" id="nombre">Nombre y apellido:</p>
-        <p class="trb" id="domicilio">Domicilio:</p>
-        <p class="trb" id="dni">Dni:</p>
-        <p class="trb" id="celular">Celular:</p>
-        <p class="trb" id="mail">Email:</p>
-    </div>
+        <img id="logoimg" src="imagenes/logo2.jpeg">
+        <button id="imprimir">Imprimir</button>
+        <div>
+            <p style="display: inline;" class="trbfech trabajo">Trabajo n°:</p>
+            <p style="display: inline;" class="trbfech fecha">Fecha:</p>
+        </div>
+        <div id="trbdiv">
+            <p class="trb" id="nombre">Nombre y apellido: <input type="text" class="inputs txtinp" ></p>
+            <p class="trb" id="domicilio">Domicilio: <input type="text" class="inputs txtinp" ></p>
+            <p class="trb" id="dni">Dni: <input type="text" class="inputs txtinp" ></p>
+            <p class="trb" id="celular">Celular: <input type="text" class="inputs txtinp" ></p>
+            <p class="trb" id="mail">Email: <input type="text" class="inputs txtinp" ></p>
+        </div>
+        
+
+        <div style="width: 100%; height: 0.5rem;"></div>
+        <div class="barranegra"></div>
+        <div id="divtexts">
+    <p class="textos">Esf: <input type="text" class="inputs" placeholder="0"> </p>
+    <p class="textos">Cil: <input type="text" class="inputs" placeholder="0"> </p>
+    <p class="textos">DIP: <input type="text" class="inputs" placeholder="0"></p>
+    <p class="textos">ALT:  <input type="text" class="inputs" placeholder="0"></p>
+        </div>
+        <div style="width: 100%; height: 0.7rem;"></div>
+    
+    <p class="textos2">OD: <input type="text" class="inputs txtinp" placeholder="0"></p>
+    <p class="textos2">OI: <input type="text" class="inputs txtinp" placeholder="0"></p>
+    <p class="textos2">Cristales: <input type="text" class="inputs txtinp"></p>
+    <p class="textos2">Armazón: <input type="text" class="inputs txtinp" ></p>
     <div style="width: 100%; height: 0.5rem;"></div>
     <div class="barranegra"></div>
-    <div id="divtexts">
-<p class="textos">Esf </p>
-<p class="textos">Cil </p>
-<p class="textos">DIP: </p>
-<p class="textos">ALT: </p>
-    </div>
-    <div style="width: 100%; height: 0.7rem;"></div>
-
-<p class="textos2">OD:</p>
-<p class="textos2">OI:</p>
-<p class="textos2">Cristales:</p>
-<p class="textos2">Armazón:</p>
-<div class="barranegra"></div>
-<div style="width: 100%; height: 0.5rem;"></div>
-<div class="desctotaldiv">
-<p class="dsctotal">Dsc:</p>
-<p class="dsctotal">Total:</p>
-</div>
-<div class="desctotaldiv">
-<p class="sesald">Seña:</p>
-<p class="sesald">Saldo:</p>
-</div>
-<div style="width: 100%; height: 0.5rem;"></div>
-<p class="corte">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-<div style="width: 100%; height: 0.5rem;"></div>
-<p style="display: inline;" class="trbfech trabajo">Trabajo n°:</p>
-<p style="display: inline;" class="trbfech fecha">Fecha:</p>
-<div style="width: 100%; height: 0.5rem;"></div>
-
-<div class="desctotaldiv">
-    <p class="dsctotal2">Dsc:</p>
-    <p class="dsctotal2">Total:</p>
+    <div style="width: 100%; height: 0.5rem;"></div>
+    <div class="desctotaldiv">
+    <p class="dsctotal">Dsc: <input type="text" class="inputs txtinp2" ></p>
+    <p class="dsctotal">Total: <input type="text" class="inputs txtinp2" ></p>
     </div>
     <div class="desctotaldiv">
-    <p class="sesald2">Seña:</p>
-    <p class="sesald2">Saldo:</p></div>
+    <p class="sesald">Seña: <input type="text" class="inputs txtinp2" ></p>
+    <p class="sesald">Saldo: <input type="text" class="inputs txtinp2" ></p>
+    </div>
+    <div id="primerseparacion"></div>
 
-    <p class="retiroyfechaprox">Fecha aproximada de retiro:</p>
-    <p class="corte">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+<p id="corte1" class="corte">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+    <div style="width: 100%; height: 0.5rem;"></div>
+    <p style="display: inline;" class="trbfech trabajo">Trabajo n°:</p>
+    <p style="display: inline;" class="trbfech fecha">Fecha:</p>
+    <div style="width: 100%; height: 0.5rem;"></div>
+    
+    <div class="desctotaldiv">
+        <p class="dsctotal2">Dsc: <input type="text" class="inputs txtinp2"></p>
+        <p class="dsctotal2">Total: <input type="text" class="inputs txtinp2"></p>
+        </div>
+        <div class="desctotaldiv">
+        <p class="sesald2">Seña: <input type="text" class="inputs txtinp2"></p>
+        <p class="sesald2">Saldo: <input type="text" class="inputs txtinp2"></p></div>
+    
+        <p class="retiroyfechaprox">Fecha aproximada de retiro: <input type="text" class="inputs txtinp" ></p>
+
+    <p class="corte">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+
     <div style="width: 100%; height: 0.5rem;"></div>
     <p style="display: inline;" class="trbfech trabajo">Trabajo n°:</p>
 <p style="display: inline;" class="trbfech fecha">Fecha:</p>
 <div style="width: 100%; height: 0.5rem;"></div>
 <div id="divtexts">
-    <p class="textos">Esf </p>
-    <p class="textos">Cil </p>
-    <p class="textos">DIP </p>
-    <p class="textos">ALT </p>
+    <p class="textos">Esf <input type="text" class="inputs" placeholder="0"></p>
+    <p class="textos">Cil <input type="text" class="inputs" placeholder="0"></p>
+    <p class="textos">DIP <input type="text" class="inputs" placeholder="0"></p>
+    <p class="textos">ALT <input type="text" class="inputs" placeholder="0"></p>
         </div>
-        <div style="width: 100%; height: 0.4rem;"></div>
-        <p class="textos2">OD:</p>
-<p class="textos2">OI:</p>
+        <div id="segundaseparacion" ></div>
+        <p class="textos2">OD: <input type="text" class="inputs txtinp" placeholder="0"></p>
+<p class="textos2">OI: <input type="text" class="inputs txtinp" placeholder="0"></p>
 <div style="width: 100%; height: 0.5rem;"></div>
-<p class="textos2">Cristales:</p>
-<p class="textos2">Armazón:</p>
+<p class="textos2">Cristales: <input type="text" class="inputs txtinp" ></p>
+<p class="textos2">Armazón: <input type="text" class="inputs txtinp" ></p>
 
-<p class="retiroyfechaprox">Pedido para:</p>
+<p class="retiroyfechaprox">Pedido para: <input type="text" class="inputs" > </p>
+   
+
+
+
+<section class="partederecha2">
+    <img class="logopartederecha" src="imagenes/logo2.jpeg">
+    <p id="p1">
+    Av.Federico Lacroze 3211.
+    </p>
+    <p id="p2"> Lunes a viernes de 10hs a 13hs.</p>
+    <p id="p3">14hs a 19hs.</p>
+    <p id="p4">Sabados de 10hs a 14hs.</p>
+<img class="whatsappimg" src="imagenes/whatsapp.jpg"   > <p class="num">11-2500-4960.</p>
+
+</section>
+
+<section class="partederecha">
+    <img class="logopartederecha" src="imagenes/logo2.jpeg">
+    <p id="p1">
+    Av.Federico Lacroze 3211.
+    </p>
+    <p id="p2"> Lunes a viernes de 10hs a 13hs.</p>
+    <p id="p3">14hs a 19hs.</p>
+    <p id="p4">Sabados de 10hs a 14hs.</p>
+<img class="whatsappimg" src="imagenes/whatsapp.jpg"   > <p class="num">11-2500-4960.</p>
+
+</section>
 </body>
 </html>
