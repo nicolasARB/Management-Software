@@ -54,8 +54,8 @@ function crearsobre(){
       });
   }
   
-ipcMain.on('abrirsobre', (e, datos) =>{
-    crearsobre();
+ipcMain.on('abrirsobre', (e, datos, datos2) =>{
+    crearsobre(datos, datos2);
     });
 
 const templateMenu = [
