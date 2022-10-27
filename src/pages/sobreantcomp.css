@@ -168,6 +168,83 @@ p{
 }
 
 
+
+@media(min-height:600px) and (max-height:699px){
+    #logoimg{
+        width: 7%;
+        height: 7%;
+    }
+    .retiroyfechaprox{
+        padding-top: 0.4rem;
+        padding-bottom: 1.3rem;
+    }
+    #div1{
+        height: 0rem;
+    }
+#div2{
+     height: 0.3rem;
+}
+
+#div3{
+height: 0rem;
+}
+
+.corte{
+    max-width: 95%;
+    font-size: 1.15rem;
+    color: black;
+    overflow: hidden;
+    max-height: 0.8rem;
+}
+#primerseparacion{
+    height: 0rem;
+   }
+
+   .partederecha2{
+    position: absolute;
+    width: 15%;
+    top: 51%;
+    left: 82%;
+}
+.partederecha{
+    position: absolute;
+    width: 15%;
+    top: 81%;
+    left: 82%;
+}
+
+.logopartederecha{
+    width: 40%;
+    height: 6vh;
+
+}
+
+#p3{
+    position: relative;
+    left: 10%;
+}
+
+.trbfech{
+    font-size: 1.2rem;
+}
+.trb{
+    font-size: 0.8;
+}
+
+.pedidopara{
+    padding-bottom: 0;
+    padding-top: 0.3rem;
+}
+}
+
+
+
+
+
+
+
+
+
 @media(min-height:700px) and (max-height:780px){
     #logoimg{
         width: 7%;

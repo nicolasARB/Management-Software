@@ -149,29 +149,58 @@ var mailsobre
 var telefonosobre
 var domiciliosobre
 var documentodiv
-const delay = ms => new Promise(res => setTimeout(res, ms));
+var abrirsobreclicked = false;
+var buttoncerca = document.querySelector("#buttoncerca");
+var buttonlejos = document.querySelector("#buttonlejos");
+
 crearsobre.addEventListener('click', e =>{
 var id02 = document.querySelector("#id02")
    id02.style = "display: block";
-
-do{
-    var yourFunction = async () => {
-        await delay(500);
-        console.log("Waited 0.5s");
-      };
-
-}while(id02.classList.contains("selectedlejos") || id02.classList.contains("selectedcerca"));
-
-
+abrirsobreclicked = true;
 console.log("abrir");
-fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}"}`, (error) => {
-    if(error){
-        console.log(`error: ${error}`);
+
+        
+
+
+}
+
+)
+buttoncerca.addEventListener("click", e =>{
+if(abrirsobreclicked == true){
+    abrirsobreclicked = false;
+    nombresobre = document.querySelector("#nombresobre").innerHTML;
+    mailsobre = document.querySelector("#mailsobre").innerHTML;
+    telefonosobre = document.querySelector("#telefonosobre").innerHTML;
+    domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
+    documentodiv = document.querySelector("#documentosobre").innerHTML;
+    fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}", "lente": "cerca"}`,  (error) => {
+        if(error){
+            console.log(`error: ${error}`);
+        }
+    })
+        ipcRenderer.send("abrirsobre");
+}
+})
+buttonlejos.addEventListener("click", e =>{
+    if(abrirsobreclicked == true){
+        abrirsobreclicked = false;
+        nombresobre = document.querySelector("#nombresobre").innerHTML;
+        mailsobre = document.querySelector("#mailsobre").innerHTML;
+        telefonosobre = document.querySelector("#telefonosobre").innerHTML;
+        domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
+        documentodiv = document.querySelector("#documentosobre").innerHTML;
+        fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}", "lente": "cerca"}`, (error) => {
+            if(error){
+                console.log(`error: ${error}`);
+            }
+        })
+            ipcRenderer.send("abrirsobre");
     }
-})
-    ipcRenderer.send("abrirsobre");
-    e.preventDefault();
-})
+    })
+/*
+if(abrirsobreclicked == true){
+    if
+}*/
 
 var content = document.querySelector("#contenido");
 var navbara = document.querySelectorAll(".botonav");
