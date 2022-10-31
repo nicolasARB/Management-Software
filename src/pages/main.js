@@ -34,7 +34,7 @@ var clientedocumento
 //
 var agregar = document.querySelector("#add");
 var addcliente = document.querySelector("#addcliente");
-
+/*
 objetos.forEach(element =>{
 var objeto = Object.entries(element);
 objeto.forEach(arr =>{
@@ -50,15 +50,9 @@ joinn += val;
     joinn += val;
 }
  })
- 
- var container = document.querySelector("#fichas");
- 
-var actualizarficha = document.createElement("div")
-/*
-container.append(actualizarficha);
-actualizarficha.classList.add("cliente"); */
-})
+})*/
 
+//select nav
 var nava = document.querySelectorAll("a");
 nava.forEach(nav => {
     nav.addEventListener('click', function(){
@@ -74,8 +68,10 @@ nava.forEach(nav => {
     }
     })
 })
+//
+
+//actualizar fichas de clientes
 function actualizar(objetonuevo){
-    var clientes = document.querySelectorAll(".cliente");
 var entries = Object.entries(objetonuevo);
 
 
@@ -109,6 +105,8 @@ entries.forEach(element =>{
     
 
 }
+//
+
 const {ipcRenderer} = require('electron');
 
 ipcRenderer.on('newFicha', (e, newFicha) => {
@@ -142,6 +140,7 @@ ipcRenderer.on('newFicha', (e, newFicha) => {
     }
 
 });
+
 var fs = require('fs');
 var crearsobre = document.querySelector("#crearsobre")
 var nombresobre
@@ -165,6 +164,8 @@ console.log("abrir");
 }
 
 )
+
+//modals abrir sobre
 buttoncerca.addEventListener("click", e =>{
 if(abrirsobreclicked == true){
     abrirsobreclicked = false;
@@ -181,6 +182,7 @@ if(abrirsobreclicked == true){
         ipcRenderer.send("abrirsobre");
 }
 })
+
 buttonlejos.addEventListener("click", e =>{
     if(abrirsobreclicked == true){
         abrirsobreclicked = false;
@@ -197,15 +199,14 @@ buttonlejos.addEventListener("click", e =>{
             ipcRenderer.send("abrirsobre");
     }
     })
-/*
-if(abrirsobreclicked == true){
-    if
-}*/
+
+//
 
 var content = document.querySelector("#contenido");
 var navbara = document.querySelectorAll(".botonav");
 var contenidostock = document.querySelector("#contenidostock");
 var contenidostockfooter = document.querySelector("#agregarproductos");
+// actualizar nav
 navbara.forEach(nab =>{
     console.log(nab);
     nab.addEventListener('click', function(){
@@ -220,12 +221,14 @@ if(nab.innerHTML == "Stock"){
 }
     })
 })
+//
 
 var jsonlength = 0;
 var jsonlengthclientes = 0;
 var numero = 0;
 var modal = document.querySelector('.modal');
 var clicked = false;
+
 setInterval(() => {
 
 productname = document.querySelector("#productname");
@@ -237,6 +240,8 @@ clientetelefono = document.querySelector("#userphone");
 clientedomicilio = document.querySelector("#userhome");
 clientedocumento = document.querySelector("#userdocument");
 var elementss = document.querySelectorAll(".elementos")
+
+//actualizar divs
 elementss.forEach(ell =>{
     if(ell != null){
         nombresobre = document.querySelector("#nombresobre").innerHTML;
@@ -248,6 +253,7 @@ elementss.forEach(ell =>{
 
     }
 })
+//
 
 /*
 
@@ -266,8 +272,7 @@ amount.forEach(element => {
 var seleccion = document.querySelectorAll(".cliente");
 seleccion.forEach(selec =>{
 selec.addEventListener('click', function(){
-  //  var numerito = this.innerHTML.substring(8, 10);
-   // numerito = numerito.trim();
+
    var username = selec.innerHTML.substr(0, selec.innerHTML.indexOf('-')); 
    console.log(username);
     objetos.forEach(element =>{
@@ -342,58 +347,29 @@ selec.addEventListener('click', function(){
        })
 })
    })})
-
+//search clientes
    $("#search").on("keyup", function() {
     var value = $(this).val().toLowerCase();
     $(".cliente").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 });
+//
+
+//search stock
 $("#buscadorstock").on("keyup", function() {
     var value = $(this).val().toLowerCase();
     $(".descripciones").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 });
+//
 
-// detect length
-var listadoproductos = document.querySelector("#listadodeproductos");
+
 var listadeproductos = document.querySelectorAll(".listadeproductos");
-var listadoclientes = document.querySelector("#fichas");
 var listadeclientes = document.querySelectorAll(".cliente")
-var screenwidth = screen.width;
 
-/*
-if(screenwidth > 1367){
-if(listadeproductos.length >= 40){
-    listadoproductos.style = "top: 15%;"
-} else if(listadeproductos.length > 35 && listadeproductos.length <= 40){
-    if(listadeproductos.length == 39){
-    listadoproductos.style = "top: 11.8%;"
-    }else if(listadeproductos.length == 38){
-    listadoproductos.style = "display: flex; justify-content: center; flex-direction: column; overflow-y: auto; position: absolute; top: 10.5%;"   
-} else if(listadeproductos.length == 37){
-    listadoproductos.style = "top: 8.5%;"   
-}else if(listadeproductos.length == 36){
-    listadoproductos.style = "top: 7.1%;"   
-} 
-}else{
-    listadoproductos.style = "display: flex; justify-content: center; flex-direction: column; overflow-y: auto; position: absolute; top: 7%;"
-} }else if(screenwidth > 900 && screenwidth <=1366){
-    if(listadeproductos.length >= 40){
-        listadoproductos.style = "position: absolute; top: 17%; overflow-y: scroll; display: block;"
-    } else if(listadeproductos.length > 35 && listadeproductos.length <= 40){
-        console.log( + listadeproductos.length)
-        if(listadeproductos.length == 39){
-        listadoproductos.style = "top: 11%;"
-        }else if(listadeproductos.length == 38){
-        listadoproductos.style = "display: flex; justify-content: center; flex-direction: column; overflow-y: auto; position: absolute; top: 10.5%;"   
-    } else if(listadeproductos.length == 37){
-        listadoproductos.style = "top: 8.5%;"   
-    }else if(listadeproductos.length == 36){
-        listadoproductos.style = "top: 7.1%;"   
-    } }
-} */
+//actualizar json de stock y clientes
 function actualizarstock(){
     fs.readFile('C:/Users/Public/data1.json', 'utf-8',(error, data)=>{
         if(!error ){
@@ -427,8 +403,12 @@ function actualizarstock(){
         }
     })     
     }
+    //
+
     actualizarstock();
 
+
+    //actualizar datos de stock y clientes en la app
     function actualizardatos(stt, clt){
 
         var productval
@@ -438,6 +418,7 @@ function actualizarstock(){
         var clientetel
         var clientetel
         var clientedom
+        //stock
 stt.forEach(sttobj =>{
     var obj = Object.entries(sttobj);
     obj.forEach(arr =>{
@@ -494,7 +475,7 @@ stt.forEach(sttobj =>{
 
 })
 
-
+//fichas de clientes
 clt.forEach(cltobj =>{
     var obj = Object.entries(cltobj);
     console.log(listadeclientes.length);
@@ -539,10 +520,14 @@ clt.forEach(cltobj =>{
 })
 
     }
+    //
+    
     actualizardatos(stock, objetos);
 
     allproducts = document.querySelectorAll(".nombre");
 
+
+    //editar nombre de stock
 var previousproductname
     $('.nombre').on('focus',function(){
        console.log(this.value + " esta focuseado");
@@ -605,8 +590,10 @@ var previousproductname
             })
             console.log(productttname = previousproductname);
     }})    } }})
+     //
 
 
+// editar numero de stock en stock
         var previousstockvalue
     $('.cantidad').on('focus',function(){
        console.log(this.value + " esta focuseado");
@@ -705,9 +692,11 @@ var previousproductname
                 }
             })
             console.log(productstock.value = previousstockvalue);
-  }})  } }})
+  }})  } }}) 
+  //
 
-        
+
+        //editar precio stock
         var previousprice
                $('.number').on('focus',function(){
                 console.log(this.value + " esta focuseado");
@@ -818,7 +807,10 @@ if(clicked == false){
                          }
                      })
                      console.log(productprice.value = previousprice);
-                    }   })  } }           }) 
+                    }   })  } }           }
+                    
+                    ) 
+                    //
                
                
 
@@ -826,7 +818,7 @@ if(clicked == false){
 
 
 
-
+//borrar elemento de stock
 borrar.addEventListener('click', () =>{
     if(borrar.innerHTML == "Borrar"){
     allproducts.forEach(product =>{
@@ -888,7 +880,9 @@ product.addEventListener('click', ()=>{
                 })
     }
 })
+//
 
+//crear bases de datos
 fs.readdir('C:/Users/Public', (error, archivos)=>{
         if(archivos.includes("data1.json")){
         console.log("El archivo esta ");
@@ -910,11 +904,22 @@ fs.readdir('C:/Users/Public', (error, archivos)=>{
                     }
                 })
             }
+
+            if(archivos.includes("sobres.json")){
+                console.log("El archivo esta ");
+                }else{
+                    console.log("creando archivo...");
+                                fs.writeFile( 'C:/Users/Public/sobres.json', '[]', (error) => {
+                        if(error){
+                            console.log(`error: ${error}`);
+                        }
+                    })
+                }
 })
+//
 
 
-
-
+// add stock
 agregar.addEventListener('click', ()=>{
     if(productname.value != "" && stock.value != "" && productprice.value != ""){
 console.log("ingresando dato...");
@@ -924,7 +929,6 @@ console.log("ingresando dato...");
     var valoresunidos = JSON.stringify(json);
     var lastIndex = valoresunidos.lastIndexOf("]");
     valoresunidos = valoresunidos.substring(0, lastIndex);
-   // console.log(valoresunidos);
    if(json.length == 0){
     valoresunidos += `{"producto": "${productname.value}", "stock": ${stockvalue.value}, "precio": ${productprice.value}} ]`
     
@@ -936,27 +940,20 @@ console.log("ingresando dato...");
 productname.value = "";
 stockvalue.value = "";
 productprice.value = "";
-    //console.log(valoresunidos);
     fs.writeFile( 'C:/Users/Public/data1.json', valoresunidos, (error) => {
         if(error){
             console.log(`error: ${error}`);
         }
     })
     })
-    /*
-fs.appendFile('C:/Users/USUARIO/Documents/data1.json', valoresunidos, (error) =>{
-    if(!error){
-        console.log("Contenido agregado");
 
-    }else{
-        console.log(`Error: ${error}`);
-    }
-} ) */
 }else{
     console.log("no pusiste ningun valor");
 }
 })
+//
 
+//add user
 addcliente.addEventListener('click', ()=>{
     if(clientename.value != "" && clientemail.value != "" && clientetelefono.value != "" && clientedomicilio.value != "" && clientedocumento.value != ""){
 console.log("ingresando dato...");
@@ -966,7 +963,6 @@ console.log("ingresando dato...");
     var valoresunidos = JSON.stringify(json);
     var lastIndex = valoresunidos.lastIndexOf("]");
     valoresunidos = valoresunidos.substring(0, lastIndex);
-   // console.log(valoresunidos);
    if(json.length == 0){
     valoresunidos += `{"nombre": "${clientename.value}", "mail": "${clientemail.value}", "telefono": ${clientetelefono.value}, "domicilio": "${clientedomicilio.value}", "documento": ${clientedocumento.value}} ]`
     
@@ -980,91 +976,17 @@ clientemail.value = "";
 clientetelefono.value = "";
 clientedomicilio.value = "";
 clientedocumento.value = "";
-    //console.log(valoresunidos);
     fs.writeFile( 'C:/Users/Public/clientes.json', valoresunidos, (error) => {
         if(error){
             console.log(`error: ${error}`);
         }
     })
     })
-    /*
-fs.appendFile('C:/Users/USUARIO/Documents/data1.json', valoresunidos, (error) =>{
-    if(!error){
-        console.log("Contenido agregado");
-
-    }else{
-        console.log(`Error: ${error}`);
-    }
-} ) */
 }else{
     console.log("no pusiste ningun valor");
 }
 
-
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-const express = require('express');
-const router = express.Router();
-const mongoose = require("mongoose");
-require("dotenv").config();
-const userRoutes = require("./main");
-const db = 'mongodb+srv://opticarisley:risleyoptica4856@cluster0.5p2ypqv.mongodb.net/?retryWrites=true&w=majority';
-
-
-const app = express();
-const port = process.env.port || 9000;;
-
-// middlewares
-app.use(express.json());
-
-
-
-
-// routes
-app.get('/', (req, res) => {
-    res.send("Bienvenido a mi api");
-
-})
-const userSchema = require('../models/user');
-
-router.get('/api/users', (req, res) => {
-    //res.send('create user');
-    userSchema
-    .find()
-    .then((data) => console.log(res.json(data)))
-    .catch((error) => res.json({message: error}));
-    
-    });
-
-// mongodb connection
-mongoose.connect(db)
-.then(() => console.log("Conectado a mongodb atlas"))
-.catch((error) => console.error(error));
-
-app.listen(port, () => console.log('server listo en puerto ', port)); */
-
-
-// When the user clicks anywhere outside of the modal, close it
-/*
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}*/
+//
 
 });
