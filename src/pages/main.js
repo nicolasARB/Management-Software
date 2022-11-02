@@ -983,7 +983,7 @@ clientedocumento.value = "";
     })
     })
 }else{
-    console.log("no pusiste ningun valor");
+    console.log("no value");
 }
 
 })
