@@ -19,12 +19,19 @@ window.addEventListener('load', ()=>{
 
     //informacion del anteojo
 
+    var fechahoy = new Date();
+    var año = fechahoy.getFullYear();
+    var mes = fechahoy.getMonth() + 1;
+    var dia = fechahoy.getDate();
+    var yearandmonth = dia + "/" + mes + "/" + año
+
 var trabajo = document.querySelector("#t1");
 var fec = document.querySelector("#f1");    
-    var esf = document.querySelector(".esf");
-    var cil = document.querySelector(".cil");
-    var dip = document.querySelector(".dip");
-    var alt = document.querySelector(".alt");
+fec.innerHTML = yearandmonth
+    var esf = document.querySelector("#esf");
+    var cil = document.querySelector("#cil");
+    var dip = document.querySelector("#dip");
+    var alt = document.querySelector("#alt");
 
     var od = document.querySelector("#od");
     var oi = document.querySelector("#oi");
@@ -34,8 +41,8 @@ var fec = document.querySelector("#f1");
 
     var dssc = document.querySelector("#dssc");
     var total = document.querySelector("#total");
-    var sen = document.querySelector(".sen");
-    var sal = document.querySelector(".sal")
+    var sen = document.querySelector("#sen");
+    var sal = document.querySelector("#sal")
 
     //
 
@@ -55,6 +62,18 @@ var fec = document.querySelector("#f1");
             dni.innerHTML = "Documento: " + userdocument;
             celular.innerHTML = "Celular: " + userphone;
             mail.innerHTML = "Email: " + usermail;
+
+            fs.readdir('C:/Users/Public/', function(err, archivos){
+if(archivos.includes("sobres.json")){
+
+}else{
+    fs.writeFile('C:/Users/Public/sobres.json', "[]", (err)=>{
+        if(err){
+            console.log("error", err);
+        }
+    })
+}
+            })
             
         })
 
@@ -67,25 +86,33 @@ var fec = document.querySelector("#f1");
         })
 
         function save(){
+
+            fs.readFile('C:/Users/Public/sobres.json', function (err, data) {
+                var json = JSON.parse(data);
+                console.log(json);
+                var valoresunidos = JSON.stringify(json);
+                console.log(valoresunidos);
+                console.log(json.length);
+
             var objetosobre = `{
                 "trabajonum": "${trabajo.innerHTML}",
-                "fecha": "${fec.innerHTML}",
+                "fecha": "${yearandmonth}",
                 "cliente": "${username}",
-                "documento": ${userdocument},
+                "documento": "${userdocument}",
                 "mail": "${usermail}",
                 "lente": "${userlente}",
-                "esff": ${esf.value},
-                "cill": ${cil.value},
-                "dipp": ${dip.value},
-                "altt": ${alt.value},
-                "odd": ${od.value},
-                "oii": ${oi.value},
+                "esff": "${esf.value}",
+                "cill": "${cil.value}",
+                "dipp": "${dip.value}",
+                "altt": "${alt.value}",
+                "odd": "${od.value}",
+                "oii": "${oi.value}",
                 "cristal": "${cristales.value}",
                 "armazones": "${armazon.value}",
-                "desc": ${dssc.value},
-                totall": ${total.value},
-                "sena": ${sen.value},
-                "sal": ${sal.value}
+                "desc": "${dssc.value}",
+                "totall": "${total.value}",
+                "sena": "${sen.value}",
+                "sal": "${sal.value}"
     
             }`
          //   var objs2 = Object.entries(objetosobre);
@@ -95,6 +122,8 @@ var fec = document.querySelector("#f1");
                     console.log(`error: ${error}`);
                 }
             })
+            })
+
         }
 
 document.querySelector("#imprimir").addEventListener('click', ()=>{

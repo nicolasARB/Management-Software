@@ -1,8 +1,3 @@
-const { Console } = require('console');
-const { captureRejectionSymbol } = require('events');
-const e = require('express');
-const { json } = require('express');
-const { clearInterval } = require('timers');
 
 window.addEventListener('load', function(){
     var joinn = " "
