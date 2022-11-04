@@ -33,8 +33,10 @@ fec.innerHTML = yearandmonth
     var dip = document.querySelector("#dip");
     var alt = document.querySelector("#alt");
 
-    var od = document.querySelector("#od");
-    var oi = document.querySelector("#oi");
+    var odesf = document.querySelector("#od");
+    var oiesf = document.querySelector("#oi");
+    var odcil = document.querySelector("#odcil");
+    var oicil = document.querySelector("#oicil");
     var cristales = document.querySelector("#cristales");
     var armazon = document.querySelector("#armazon");
 
@@ -78,11 +80,31 @@ if(archivos.includes("sobres.json")){
         })
 
         //
-        var previousjson = 
+        var previousjson
+        var numtrabajo
         fs.readFile('C:/Users/Public/sobres.json', function (err, data) {
         var json = JSON.parse(data);
         console.log(json);
         previousjson = json
+        if (json.length == 0){
+            numtrabajo = `010001`;
+            trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
+            }else{
+                if(json.length >=1 && json.length <10){
+                numtrabajo = `01000${json.length +1}`;
+                trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
+                }else if(json.length >=9 && json.length <100){
+                    numtrabajo = `0100${json.length +1}`;
+                    trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
+                }else if(json.length >=99 && json.length <1000){
+                    numtrabajo = `010${json.length +1}`;
+                    trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
+                }else if(json.length >=1000 && json.length <10000){
+                    numtrabajo = `0${json.length +1}`;
+                    trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
+
+                }
+            }
         })
 
         function save(){
@@ -91,33 +113,41 @@ if(archivos.includes("sobres.json")){
                 var json = JSON.parse(data);
                 console.log(json);
                 var valoresunidos = JSON.stringify(json);
+                var lastIndex = valoresunidos.lastIndexOf("]");
+                valoresunidos = valoresunidos.substring(0, lastIndex);
                 console.log(valoresunidos);
                 console.log(json.length);
-
-            var objetosobre = `{
-                "trabajonum": "${trabajo.innerHTML}",
-                "fecha": "${yearandmonth}",
-                "cliente": "${username}",
-                "documento": "${userdocument}",
-                "mail": "${usermail}",
-                "lente": "${userlente}",
-                "esff": "${esf.value}",
-                "cill": "${cil.value}",
-                "dipp": "${dip.value}",
-                "altt": "${alt.value}",
-                "odd": "${od.value}",
-                "oii": "${oi.value}",
-                "cristal": "${cristales.value}",
-                "armazones": "${armazon.value}",
-                "desc": "${dssc.value}",
-                "totall": "${total.value}",
-                "sena": "${sen.value}",
-                "sal": "${sal.value}"
-    
-            }`
+                var objetosobre = `{
+                    "trabajonum": "${numtrabajo}",
+                    "fecha": "${yearandmonth}",
+                    "cliente": "${username}",
+                    "documento": "${userdocument}",
+                    "mail": "${usermail}",
+                    "lente": "${userlente}",
+                    "esff": "${esf.value}",
+                    "cill": "${cil.value}",
+                    "dipp": "${dip.value}",
+                    "altt": "${alt.value}",
+                    "od": "${odesf.value}",
+                    "oi": "${oiesf.value}",
+                    "od": "${odcil.value}",
+                    "oi": "${oicil.value}",
+                    "cristal": "${cristales.value}",
+                    "armazones": "${armazon.value}",
+                    "desc": "${dssc.value}",
+                    "totall": "${total.value}",
+                    "sena": "${sen.value}",
+                    "sal": "${sal.value}"
+        
+                }`
+if (json.length == 0){
+valoresunidos += `${objetosobre} ]`
+}else{
+valoresunidos += ` ,${objetosobre} ]`
+}
          //   var objs2 = Object.entries(objetosobre);
         //    console.log(objs2);
-            fs.writeFile( 'C:/Users/Public/sobres.json', `[${objetosobre}]`, (error) => {
+            fs.writeFile( 'C:/Users/Public/sobres.json', valoresunidos, (error) => {
                 if(error){
                     console.log(`error: ${error}`);
                 }

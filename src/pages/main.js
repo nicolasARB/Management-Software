@@ -1,3 +1,4 @@
+const { json } = require('express');
 
 window.addEventListener('load', function(){
     var joinn = " "
@@ -160,6 +161,32 @@ console.log("abrir");
 
 )
 
+
+
+
+
+//cargar datos de sobres del cliente
+var todoslossobres;
+var todoslosclientes;
+
+fs.readFile('C:/Users/Public/sobres.json', function (err, data) {
+    var json = JSON.parse(data)
+    var valoresunidos = JSON.stringify(json);
+    console.log(valoresunidos);
+    console.log(json);
+    todoslossobres = json;
+  })
+  /*
+todoslosclientes.forEach(cliente =>{
+    cliente.addEventListener('click', function(){
+        
+    })
+})*/
+
+
+
+//
+
 //modals abrir sobre
 buttoncerca.addEventListener("click", e =>{
 if(abrirsobreclicked == true){
@@ -264,7 +291,13 @@ amount.forEach(element => {
       });
 })*/
 
+
+
+
+
 var seleccion = document.querySelectorAll(".cliente");
+var containersobres = document.querySelector("#containersobres");
+todoslosclientes = seleccion;
 seleccion.forEach(selec =>{
 selec.addEventListener('click', function(){
 
@@ -281,32 +314,32 @@ selec.addEventListener('click', function(){
             if(arr[1].nombre == username){
                        if(arr[1].nombre){
                         var val = arr[1].nombre + " ";
-                        console.log(arr[1].nombre);
+                        
                         joinn += val; 
                         }
                         if(arr[1].mail){
                             mail += arr[1].mail;
-                            console.log("mail" + mail);
+                            
                         }
                         if(arr[1].telefono){
                             tel += arr[1].telefono;
-                            console.log("tel" + mail);
+                        
                         }
                         if(arr[1].domicilio){
                             dom += arr[1].domicilio;
-                            console.log("dom" + mail);
                         }
                         if(arr[1].documento){
-                            console.log(arr[1].documento);
                             doc += arr[1].documento;
-                            console.log("doc" + doc);
                         }
                         
                 var elementoss = document.querySelectorAll(".elementos");
+                var sobresdelcliente = document.querySelectorAll(".sobrescliente");
 
         elementoss.forEach(borrar =>{
             borrar.remove();
-            console.log(borrar);
+        })
+        sobresdelcliente.forEach(borrar =>{
+            borrar.remove()
         })
                 var fichaseleccion = document.querySelector("#elementosficha");
                 var nombrediv = document.createElement("div");
@@ -315,18 +348,15 @@ selec.addEventListener('click', function(){
                 var telefonodiv = document.createElement("div");
                 var documentdiv = document.createElement("div");
                 fichaseleccion.prepend(documentdiv);
-                console.log("documento: " + doc);
                 fichaseleccion.prepend(domiciliodiv);
                 fichaseleccion.prepend(telefonodiv);
                 fichaseleccion.prepend(divmail);
                 fichaseleccion.prepend(nombrediv);
                 nombrediv.innerHTML = joinn;
-                console.log(mail);
                 divmail.innerHTML = mail;
                 domiciliodiv.innerHTML = dom;
                 telefonodiv.innerHTML = tel;
                 documentdiv.innerHTML = doc;
-                console.log("si");
                 nombrediv.classList.add("elementos");
                 nombrediv.id = "nombresobre";
                 domiciliodiv.classList.add("elementos");
@@ -337,6 +367,25 @@ selec.addEventListener('click', function(){
                 divmail.id = "mailsobre";
                 documentdiv.classList.add("elementos");
                 documentdiv.id = "documentosobre";
+
+                containersobres.append(sobrecont);
+                todoslossobres.forEach(findcliente =>{
+                    console.log(findcliente);
+                    var documentoastring = doc.toString()
+                    if(findcliente.documento == documentoastring){
+                        console.log(findcliente.documento);
+                    }
+                    
+
+                })
+                var sobrecont = document.createElement("div");
+                var divsobre = document.createElement("div");
+                var buttonsobre = document.createElement("button");
+                sobrecont.append(divsobre);
+                sobrecont.append(buttonsobre);
+                sobrecont.classList.add("sobrescliente");
+                divsobre.classList.add("sobresclientediv");
+                buttonsobre.classList.add("sobresclientebutton")
             joinn = "";
             }
        })
