@@ -1,3 +1,4 @@
+const e = require('express');
 
 window.addEventListener('load', ()=>{
 
@@ -15,6 +16,7 @@ window.addEventListener('load', ()=>{
     var userhome;
     var userdocument;
     var userlente;
+    var sobre = false
     //
 
     //informacion del anteojo
@@ -27,7 +29,7 @@ window.addEventListener('load', ()=>{
 
 var trabajo = document.querySelector("#t1");
 var fec = document.querySelector("#f1");    
-fec.innerHTML = yearandmonth
+fec.innerHTML = `Fecha: ${yearandmonth}`
     var esf = document.querySelector("#esf");
     var cil = document.querySelector("#cil");
     var dip = document.querySelector("#dip");
@@ -53,17 +55,35 @@ fec.innerHTML = yearandmonth
         fs.readFile('C:/Users/Public/senddatasobre.json', function (err, data) {
             var json = JSON.parse(data);
             console.log(json);
-            username = json.nombre;
-            usermail = json.mail;
-            userphone = json.telefono;
-            userhome = json.domicilio;
-            userdocument = json.documento;
-            userlente = json.lente;
-            nombre.innerHTML = "Nombre y apellido: " + username;
-            domicilio.innerHTML = "Domicilio " + userhome;
-            dni.innerHTML = "Documento: " + userdocument;
-            celular.innerHTML = "Celular: " + userphone;
-            mail.innerHTML = "Email: " + usermail;
+            if(json.sobre){
+                username = json.nombre;
+                usermail = json.mail;
+                userphone = json.telefono;
+                userhome = json.domicilio;
+                userdocument = json.documento;
+                userlente = json.lente;
+                nombre.innerHTML = "Nombre y apellido: " + username;
+                domicilio.innerHTML = "Domicilio " + userhome;
+                dni.innerHTML = "Documento: " + userdocument;
+                celular.innerHTML = "Celular: " + userphone;
+                mail.innerHTML = "Email: " + usermail;
+                trabajo.innerHTML = `Trabajo n°: ${json.trabajonum}`;
+                fec.innerHTML = `Fecha: ${json.fecha}`;
+                sobre = true;
+            }else{
+                username = json.nombre;
+                usermail = json.mail;
+                userphone = json.telefono;
+                userhome = json.domicilio;
+                userdocument = json.documento;
+                userlente = json.lente;
+                nombre.innerHTML = "Nombre y apellido: " + username;
+                domicilio.innerHTML = "Domicilio " + userhome;
+                dni.innerHTML = "Documento: " + userdocument;
+                celular.innerHTML = "Celular: " + userphone;
+                mail.innerHTML = "Email: " + usermail;
+            }
+
 
             fs.readdir('C:/Users/Public/', function(err, archivos){
 if(archivos.includes("sobres.json")){
@@ -86,26 +106,27 @@ if(archivos.includes("sobres.json")){
         var json = JSON.parse(data);
         console.log(json);
         previousjson = json
-        if (json.length == 0){
+        if (json.length == 0 && sobre == false){
             numtrabajo = `010001`;
             trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
             }else{
-                if(json.length >=1 && json.length <10){
+                if(json.length >=1 && json.length <10 && sobre == false){
                 numtrabajo = `01000${json.length +1}`;
                 trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
-                }else if(json.length >=9 && json.length <100){
+                }else if(json.length >=9 && json.length <100 && sobre == false){
                     numtrabajo = `0100${json.length +1}`;
                     trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
-                }else if(json.length >=99 && json.length <1000){
+                }else if(json.length >=99 && json.length <1000 && sobre == false){
                     numtrabajo = `010${json.length +1}`;
                     trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
-                }else if(json.length >=1000 && json.length <10000){
+                }else if(json.length >=1000 && json.length <10000 && sobre == false){
                     numtrabajo = `0${json.length +1}`;
                     trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
 
                 }
             }
         })
+        sobre = false;
 
         function save(){
 
@@ -130,8 +151,8 @@ if(archivos.includes("sobres.json")){
                     "altt": "${alt.value}",
                     "od": "${odesf.value}",
                     "oi": "${oiesf.value}",
-                    "od": "${odcil.value}",
-                    "oi": "${oicil.value}",
+                    "odcil": "${odcil.value}",
+                    "oicil": "${oicil.value}",
                     "cristal": "${cristales.value}",
                     "armazones": "${armazon.value}",
                     "desc": "${dssc.value}",

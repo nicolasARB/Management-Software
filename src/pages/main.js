@@ -244,8 +244,9 @@ var jsonlengthclientes = 0;
 var numero = 0;
 var modal = document.querySelector('.modal');
 var clicked = false;
+var buttonclicked = false;
 
-
+var selcbutton;
 setInterval(() => {
 
 productname = document.querySelector("#productname");
@@ -261,16 +262,81 @@ selcbutton = document.querySelectorAll(".sobresclientebutton");
 
 
 
-
-
-var selcbutton = document.querySelectorAll(".sobresclientebutton")
-
-
 selcbutton.forEach(buttonselec =>{
     buttonselec.addEventListener("click", function(){
         var butparent = buttonselec.parentNode;
-        console.log(butparent);
-        console.log(butparent.parentNode.innerHTML);
+       // console.log(butparent.parentNode.innerHTML);
+       /*
+                                                 for(var i=0, len = listaparent.childElementCount; i < len; ++i){
+                                        var child = listaparent.children[i];
+                                        console.log(child);
+                                        for(var b=0, lan = child.childElementCount; b < lan; ++b){
+                                            console.log(child);
+                                        console.log(child.firstChild); */
+        for (var i=0, len = butparent.childElementCount; i < len; ++i){
+
+            var child = butparent.children[i]
+            console.log(child);
+            for(var b=0, lan = child.childElementCount; b < lan; ++b){
+                console.log(child);
+                console.log(child.firstChild);
+            if(child.firstChild.classList.contains("sobresclientediv") && buttonclicked == false){
+
+
+                if(buttonclicked == false){
+                    console.log(child.firstChild);
+                    var childstring = child.firstChild.innerHTML
+                    console.log(childstring);
+                    var numbers = childstring.match(/(\d+)/);
+                    var num = numbers[0].toString();
+                    console.log(num);
+                    fs.readFile("C:/Users/Public/sobres.json", function(err, data){
+                        var json = JSON.parse(data);
+                        console.log(json);
+                        json.forEach(usersobre =>{
+                            console.log(usersobre);
+                            if(usersobre.trabajonum == num){
+                               var numerodetrabajo = usersobre.trabajonum;
+                               var trabajofecha = usersobre.fecha;
+                               var esf = usersobre.esff;
+                               var cil = usersobre.cill;
+                               var dip = usersobre.dipp;
+                               var alt = usersobre.alt;
+                               var od = usersobre.od;
+                               var oi = usersobre.oi;
+                               var odcil = usersobre.odcil;
+                               var oicil = usersobre.oicil;
+                               var cristal = usersobre.cristal;
+                               var armazones = usersobre.armazones;
+                               var desc = usersobre.desc;
+                               var total = usersobre.totall;
+                               var sena = usersobre.sena;
+                               var sal = usersobre.sal; 
+
+
+                               fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{ "sobre": true, "nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}"
+                               , "lente": "lejos", "trabajonum": "${numerodetrabajo}", "fecha": "${trabajofecha}", "esff": "${esf}", "cill:": "${cil}", "dipp": "${dip}"
+                               , "altt": "${alt}", "od": "${od}", "oi": "${oi}", "odcil": "${odcil}", "oicil": "${oicil}", "cristal": "${cristal}", "armazones": "${armazones}",
+                               "desc": "${desc}", "total": "${total}", "sena": "${sena}", "sal": "${sal}"}`, (error) => {
+                                if(error){
+                                    console.log(`error: ${error}`);
+                                }
+                            })
+                            
+                            }
+                            
+                        })
+                    })
+
+
+                    ipcRenderer.send("abrirsobre");
+                    buttonclicked = true
+                }
+
+            }
+        }
+        }
+
     })
 
     
@@ -288,6 +354,7 @@ selcbutton.forEach(buttonselec =>{
       console.log(child.firstChild.value);
        valname = child.firstChild.value;
   } */
+  buttonclicked = false;
 })
 
 
