@@ -58,7 +58,7 @@ fec.innerHTML = yearandmonth
             userphone = json.telefono;
             userhome = json.domicilio;
             userdocument = json.documento;
-            lente = json.lente;
+            userlente = json.lente;
             nombre.innerHTML = "Nombre y apellido: " + username;
             domicilio.innerHTML = "Domicilio " + userhome;
             dni.innerHTML = "Documento: " + userdocument;
@@ -145,8 +145,6 @@ valoresunidos += `${objetosobre} ]`
 }else{
 valoresunidos += ` ,${objetosobre} ]`
 }
-         //   var objs2 = Object.entries(objetosobre);
-        //    console.log(objs2);
             fs.writeFile( 'C:/Users/Public/sobres.json', valoresunidos, (error) => {
                 if(error){
                     console.log(`error: ${error}`);

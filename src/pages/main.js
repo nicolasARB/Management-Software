@@ -169,13 +169,7 @@ console.log("abrir");
 var todoslossobres;
 var todoslosclientes;
 
-fs.readFile('C:/Users/Public/sobres.json', function (err, data) {
-    var json = JSON.parse(data)
-    var valoresunidos = JSON.stringify(json);
-    console.log(valoresunidos);
-    console.log(json);
-    todoslossobres = json;
-  })
+
   /*
 todoslosclientes.forEach(cliente =>{
     cliente.addEventListener('click', function(){
@@ -213,7 +207,7 @@ buttonlejos.addEventListener("click", e =>{
         telefonosobre = document.querySelector("#telefonosobre").innerHTML;
         domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
         documentodiv = document.querySelector("#documentosobre").innerHTML;
-        fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}", "lente": "cerca"}`, (error) => {
+        fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}", "lente": "lejos"}`, (error) => {
             if(error){
                 console.log(`error: ${error}`);
             }
@@ -251,6 +245,7 @@ var numero = 0;
 var modal = document.querySelector('.modal');
 var clicked = false;
 
+
 setInterval(() => {
 
 productname = document.querySelector("#productname");
@@ -261,7 +256,40 @@ clientemail = document.querySelector("#usermail");
 clientetelefono = document.querySelector("#userphone");
 clientedomicilio = document.querySelector("#userhome");
 clientedocumento = document.querySelector("#userdocument");
-var elementss = document.querySelectorAll(".elementos")
+var elementss = document.querySelectorAll(".elementos");
+selcbutton = document.querySelectorAll(".sobresclientebutton");
+
+
+
+
+
+var selcbutton = document.querySelectorAll(".sobresclientebutton")
+
+
+selcbutton.forEach(buttonselec =>{
+    buttonselec.addEventListener("click", function(){
+        var butparent = buttonselec.parentNode;
+        console.log(butparent);
+        console.log(butparent.parentNode.innerHTML);
+    })
+
+    
+/*
+    var listaparent = productstock.parentNode.parentNode;
+    console.log(listaparent);
+    for(var i=0, len = listaparent.childElementCount; i < len; ++i){
+  var child = listaparent.children[i];
+  console.log(child);
+  for(var b=0, lan = child.childElementCount; b < lan; ++b){
+      console.log(child);
+  console.log(child.firstChild);
+  if(child.firstChild.classList.contains("nombre")){
+      console.log("si");
+      console.log(child.firstChild.value);
+       valname = child.firstChild.value;
+  } */
+})
+
 
 //actualizar divs
 elementss.forEach(ell =>{
@@ -294,10 +322,16 @@ amount.forEach(element => {
 
 
 
-
+fs.readFile('C:/Users/Public/sobres.json', function (err, data) {
+    var json = JSON.parse(data)
+    var valoresunidos = JSON.stringify(json);
+    todoslossobres = json;
+  })
 var seleccion = document.querySelectorAll(".cliente");
 var containersobres = document.querySelector("#containersobres");
 todoslosclientes = seleccion;
+
+
 seleccion.forEach(selec =>{
 selec.addEventListener('click', function(){
 
@@ -367,30 +401,35 @@ selec.addEventListener('click', function(){
                 divmail.id = "mailsobre";
                 documentdiv.classList.add("elementos");
                 documentdiv.id = "documentosobre";
-
-                containersobres.append(sobrecont);
+                
                 todoslossobres.forEach(findcliente =>{
-                    console.log(findcliente);
                     var documentoastring = doc.toString()
                     if(findcliente.documento == documentoastring){
-                        console.log(findcliente.documento);
+                        var sobrecont = document.createElement("div");
+                        containersobres.append(sobrecont);
+                        var divsobre = document.createElement("div");
+                        divsobre.innerHTML = `Trabajo numero ${findcliente.trabajonum}, ${findcliente.lente}`;
+                        var buttonsobre = document.createElement("button");
+                        buttonsobre.innerHTML = "Abrir"
+                        sobrecont.append(divsobre);
+                        sobrecont.append(buttonsobre);
+                        sobrecont.classList.add("sobrescliente");
+                        divsobre.classList.add("sobresclientediv");
+                        buttonsobre.classList.add("sobresclientebutton");
                     }
                     
 
                 })
-                var sobrecont = document.createElement("div");
-                var divsobre = document.createElement("div");
-                var buttonsobre = document.createElement("button");
-                sobrecont.append(divsobre);
-                sobrecont.append(buttonsobre);
-                sobrecont.classList.add("sobrescliente");
-                divsobre.classList.add("sobresclientediv");
-                buttonsobre.classList.add("sobresclientebutton")
+
             joinn = "";
             }
        })
 })
    })})
+
+
+
+
 //search clientes
    $("#search").on("keyup", function() {
     var value = $(this).val().toLowerCase();
@@ -450,8 +489,7 @@ function actualizarstock(){
     //
 
     actualizarstock();
-
-
+    
     //actualizar datos de stock y clientes en la app
     function actualizardatos(stt, clt){
 
@@ -859,6 +897,9 @@ if(clicked == false){
                
 
  }, 300);
+
+
+
 
 
 
