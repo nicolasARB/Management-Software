@@ -46,8 +46,12 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
     var dssc = document.querySelector("#dssc");
     var total = document.querySelector("#total");
     var sen = document.querySelector("#sen");
-    var sal = document.querySelector("#sal")
+    var sal = document.querySelector("#sal");
 
+    var retiroaprox = document.querySelector("#retiroaprox");
+    var pedidopara = document.querySelector("#pedidopara")
+
+//    console.log(array.length);
     //
 
     //tomar datos del cliente
@@ -69,6 +73,50 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 mail.innerHTML = "Email: " + usermail;
                 trabajo.innerHTML = `Trabajo n°: ${json.trabajonum}`;
                 fec.innerHTML = `Fecha: ${json.fecha}`;
+                esf.value = json.esf;
+                cil.value = json.cil;
+                dip.value = json.dip;
+                alt.value = json.alt;
+                odesf.value = json.od;
+                oiesf.value = json.oi;
+                odcil.value = json.odcil;
+                oicil.value = `  ${json.oicil}`;
+                total.value = `$${json.total}`;
+                sen.value = `$${json.sena}`;
+                sal.value = `$${json.sal}`;
+                dssc.value = json.desc;
+                cristales.value = json.cristal;
+                armazon.value = json.armazones;
+                var arrayelem = ["esf", "cil", "dip", "alt", "od", "oi", "odcil", "oicil", "cristales", "armazon", "dssc"
+                , "total", "sen", "sal", "retiroaprox", "pedidopara"];
+                arrayelem.forEach(elem =>{
+                    console.log(elem);
+                    var elemento = document.querySelector(`#${elem}`);
+                    if(elemento.value == "undefined"){
+                        elemento.value = "";
+                    }
+                })
+                var arrayelem2 = ["esfx", "cilx", "dipx", "altx", "odx", "oix", "odcilx", "oicilx", "cristalx", "armazonesx", "senax", "salx", "descx", "totalx"]
+
+                arrayelem2.forEach(elem =>{ 
+                    var elemento = document.querySelectorAll(`.${elem}`);
+                    var elmslice = elem.slice(0, elem.indexOf("x"));
+                    console.log(elemento);
+                    elemento.forEach(seleccionado =>{ 
+                        console.log(seleccionado);  
+                            seleccionado.value = json[elmslice];       
+                            if(seleccionado.value == "undefined"){
+                                seleccionado.value = ""
+                            }else if(seleccionado.classList.contains("senax") || seleccionado.classList.contains("salx") || seleccionado.classList.contains("totalx")){
+                                seleccionado.value = `$${json[elmslice]}`
+                            }
+
+
+                    })
+                    
+                   
+                })
+
                 sobre = true;
             }else{
                 username = json.nombre;
@@ -145,10 +193,10 @@ if(archivos.includes("sobres.json")){
                     "documento": "${userdocument}",
                     "mail": "${usermail}",
                     "lente": "${userlente}",
-                    "esff": "${esf.value}",
-                    "cill": "${cil.value}",
-                    "dipp": "${dip.value}",
-                    "altt": "${alt.value}",
+                    "esf": "${esf.value}",
+                    "cil": "${cil.value}",
+                    "dip": "${dip.value}",
+                    "alt": "${alt.value}",
                     "od": "${odesf.value}",
                     "oi": "${oiesf.value}",
                     "odcil": "${odcil.value}",
@@ -158,7 +206,9 @@ if(archivos.includes("sobres.json")){
                     "desc": "${dssc.value}",
                     "totall": "${total.value}",
                     "sena": "${sen.value}",
-                    "sal": "${sal.value}"
+                    "sal": "${sal.value}",
+                    "retiroaprox": "${retiroaprox.value}",
+                    "pedidopara": "${pedidopara.value}"
         
                 }`
 if (json.length == 0){

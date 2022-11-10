@@ -277,15 +277,15 @@ selcbutton.forEach(buttonselec =>{
 
             var child = butparent.children[i]
             console.log(child);
-            for(var b=0, lan = child.childElementCount; b < lan; ++b){
-                console.log(child);
-                console.log(child.firstChild);
-            if(child.firstChild.classList.contains("sobresclientediv") && buttonclicked == false){
-
+       //     for(var b=0, lan = child.childElementCount; b < lan; ++b){
+              //  console.log(child);
+              //  console.log(child.firstChild);
+            if(child.classList.contains("sobresclientediv") && buttonclicked == false){
+console.log("encontrado");
 
                 if(buttonclicked == false){
-                    console.log(child.firstChild);
-                    var childstring = child.firstChild.innerHTML
+                    console.log(child);
+                    var childstring = child.innerHTML
                     console.log(childstring);
                     var numbers = childstring.match(/(\d+)/);
                     var num = numbers[0].toString();
@@ -298,9 +298,9 @@ selcbutton.forEach(buttonselec =>{
                             if(usersobre.trabajonum == num){
                                var numerodetrabajo = usersobre.trabajonum;
                                var trabajofecha = usersobre.fecha;
-                               var esf = usersobre.esff;
-                               var cil = usersobre.cill;
-                               var dip = usersobre.dipp;
+                               var esf = usersobre.esf;
+                               var cil = usersobre.cil;
+                               var dip = usersobre.dip;
                                var alt = usersobre.alt;
                                var od = usersobre.od;
                                var oi = usersobre.oi;
@@ -309,14 +309,14 @@ selcbutton.forEach(buttonselec =>{
                                var cristal = usersobre.cristal;
                                var armazones = usersobre.armazones;
                                var desc = usersobre.desc;
-                               var total = usersobre.totall;
+                               var total = usersobre.total;
                                var sena = usersobre.sena;
                                var sal = usersobre.sal; 
 
 
                                fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{ "sobre": true, "nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}"
-                               , "lente": "lejos", "trabajonum": "${numerodetrabajo}", "fecha": "${trabajofecha}", "esff": "${esf}", "cill:": "${cil}", "dipp": "${dip}"
-                               , "altt": "${alt}", "od": "${od}", "oi": "${oi}", "odcil": "${odcil}", "oicil": "${oicil}", "cristal": "${cristal}", "armazones": "${armazones}",
+                               , "lente": "lejos", "trabajonum": "${numerodetrabajo}", "fecha": "${trabajofecha}", "esf": "${esf}", "cil:": "${cil}", "dip": "${dip}"
+                               , "alt": "${alt}", "od": "${od}", "oi": "${oi}", "odcil": "${odcil}", "oicil": "${oicil}", "cristal": "${cristal}", "armazones": "${armazones}",
                                "desc": "${desc}", "total": "${total}", "sena": "${sena}", "sal": "${sal}"}`, (error) => {
                                 if(error){
                                     console.log(`error: ${error}`);
@@ -334,7 +334,7 @@ selcbutton.forEach(buttonselec =>{
                 }
 
             }
-        }
+      //  }
         }
 
     })
