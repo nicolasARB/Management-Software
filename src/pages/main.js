@@ -247,6 +247,16 @@ var clicked = false;
 var buttonclicked = false;
 
 var selcbutton;
+
+var productttname;
+var previousproductname;
+
+var previousstockvalue;
+var productstock;
+var productstockvalue;
+
+var previousprice;
+var productstockprice;
 setInterval(() => {
 
 productname = document.querySelector("#productname");
@@ -677,7 +687,6 @@ clt.forEach(cltobj =>{
 
 
     //editar nombre de stock
-var previousproductname
     $('.nombre').on('focus',function(){
        console.log(this.value + " esta focuseado");
        previousproductname = this.value;
@@ -692,8 +701,10 @@ var previousproductname
 
         }else{
         if(numero < 1){
-            var productttname = this.value;
-            var changeproduct = document.querySelector('.deletebtn');
+            console.log(this);
+            productttname = this.value;
+            console.log(productttname);
+                        var changeproduct = document.querySelector('.deletebtn');
             var cancelproduct = document.querySelector('.cancelbtn');
         console.log(this.value + " no esta focuseado");
             numero = 1;
@@ -716,7 +727,7 @@ var previousproductname
                                             val = valoresunidos.replace(`"${previousproductname}"`, `"${productttname}"`);
 
                                         }
- 
+ console.log(this.value);
         console.log(`previous name: ${previousproductname} actual name: ${productttname}`);
         fs.writeFile( 'C:/Users/Public/data1.json', val, (error) => {
             if(error){
@@ -743,7 +754,7 @@ var previousproductname
 
 
 // editar numero de stock en stock
-        var previousstockvalue
+
     $('.cantidad').on('focus',function(){
        console.log(this.value + " esta focuseado");
        previousstockvalue = this.value;
@@ -758,7 +769,8 @@ var previousproductname
 
         }else{
         if(numero < 1){
-            var productstock = this;
+            productstock = this;
+            productstockvalue = this.value;
             var changeproduct = document.querySelector('.deletebtnstock');
             var cancelproduct = document.querySelector('.cancelbtnstock');
         console.log(this.value + " no esta focuseado");
@@ -846,7 +858,7 @@ var previousproductname
 
 
         //editar precio stock
-        var previousprice
+
                $('.number').on('focus',function(){
                 console.log(this.value + " esta focuseado");
                 previousprice = this.value;
@@ -862,7 +874,7 @@ var previousproductname
                  }else{
 
                  if(numero < 1){
-                     var productprice = this;
+                      productstockprice = this;
                      var changeproduct = document.querySelector('.deletebtn');
                      var cancelproduct = document.querySelector('.cancelbtn');
                  console.log(this.value + " no esta focuseado");
@@ -888,7 +900,7 @@ changeproduct.addEventListener('click', ()=>{
                           var producto =`{"${objs2[0][0]}":"${objs2[0][1]}","${objs2[1][0]}":${objs2[1][1]},"${objs2[2][0]}":${objs2[2][1]}}`;
                  })                                 
                                                    console.log(previousprice);
-                                                   var listaparent = productprice.parentNode.parentNode;
+                                                   var listaparent = productstockprice.parentNode.parentNode;
                                                    console.log(listaparent);
                                                    for(var i=0, len = listaparent.childElementCount; i < len; ++i){
                                                  var child = listaparent.children[i];
@@ -923,13 +935,13 @@ changeproduct.addEventListener('click', ()=>{
                                                      console.log(valorenjson);
                                                   if(valoresunidos.indexOf(`${valorenjson}`)){
                                                     console.log(valorenjson);
-                                                    console.log(productprice.value);
+                                                    console.log(productstockprice.value);
                                                     val = vall.replace(`${valorenjson}`, `${valoreninputs}`);
                                                     console.log(val);
                                
 
 
-                 console.log(`previous name: ${previousprice} actual name: ${productprice.value}`);
+                 console.log(`previous name: ${previousprice} actual name: ${productstockprice.value}`);
                  fs.writeFile( 'C:/Users/Public/data1.json', val, (error) => {
                      if(error){
                          console.log(`error: ${error}`);
@@ -937,7 +949,7 @@ changeproduct.addEventListener('click', ()=>{
                      }
                  })             }
     
-                 productprice.value = "$" + productprice.value; 
+                 productstockprice.value = `$${productstockprice.value}`; 
                 
                    })
                 }
