@@ -180,7 +180,8 @@ todoslosclientes.forEach(cliente =>{
 
 
 //
-
+var changeproduct = document.querySelector('.deletebtn');
+var cancelproduct = document.querySelector('.cancelbtn');
 //modals abrir sobre
 buttoncerca.addEventListener("click", e =>{
 if(abrirsobreclicked == true){
@@ -242,8 +243,12 @@ if(nab.innerHTML == "Stock"){
 var jsonlength = 0;
 var jsonlengthclientes = 0;
 var numero = 0;
-var modal = document.querySelector('.modal');
+var modalname = document.querySelector('.modalname');
+var modalstock = document.querySelector('.modalstock');
+var modalprice = documento.querySelector('.modalprice');
 var clicked = false;
+var clickedstock = false;
+var clickedprice = false;
 var buttonclicked = false;
 
 var selcbutton;
@@ -704,12 +709,77 @@ clt.forEach(cltobj =>{
             console.log(this);
             productttname = this.value;
             console.log(productttname);
-                        var changeproduct = document.querySelector('.deletebtn');
-            var cancelproduct = document.querySelector('.cancelbtn');
+
         console.log(this.value + " no esta focuseado");
             numero = 1;
-            modal.style = "display: block";
-            changeproduct.addEventListener('click', ()=>{
+            modalname.style = "display: block";
+    } }})
+     //
+
+
+// editar numero de stock en stock
+
+    $('.cantidad').on('focus',function(){
+       console.log(this.value + " esta focuseado");
+       previousstockvalue = this.value;
+       clickedstock = false;
+       numero = 0;
+    }).on('blur',function(){
+           var product2stock = this.value;
+        if(product2stock === previousstockvalue){
+            if(numero < 1){
+                numero = 1;
+            }
+
+        }else{
+        if(numero < 1){
+            productstock = this;
+            productstockvalue = this.value;
+        console.log(this.value + " no esta focuseado");
+            numero = 1;
+            modalstock.style = "display: block";
+
+  } }}) 
+  //
+
+
+        //editar precio stock
+
+               $('.number').on('focus',function(){
+                console.log(this.value + " esta focuseado");
+                previousprice = this.value;
+                clicked = false;
+                numero = 0;
+             }).on('blur',function(){
+                    var product2price = this.value;
+                 if(product2price === previousprice){
+                     if(numero < 1){
+                         numero = 1;
+                     }
+         
+                 }else{
+
+                 if(numero < 1){
+                      productstockprice = this;
+                 console.log(this.value + " no esta focuseado");
+                     numero = 1;
+                     modalprice.style = "display: block";
+
+  } }           }
+                    
+                    ) 
+                    //
+               
+               
+
+ }, 300);
+
+
+
+
+
+
+             changeproduct.addEventListener('click', ()=>{
                 if(clicked == false){
                     clicked = true;
         fs.readFile('C:/Users/Public/data1.json', function (err, data) {
@@ -749,141 +819,182 @@ clt.forEach(cltobj =>{
                 }
             })
             console.log(productttname = previousproductname);
-    }})    } }})
-     //
+    }})
 
 
-// editar numero de stock en stock
 
-    $('.cantidad').on('focus',function(){
-       console.log(this.value + " esta focuseado");
-       previousstockvalue = this.value;
-       clicked = false;
-       numero = 0;
-    }).on('blur',function(){
-           var product2stock = this.value;
-        if(product2stock === previousstockvalue){
-            if(numero < 1){
-                numero = 1;
-            }
 
-        }else{
-        if(numero < 1){
-            productstock = this;
-            productstockvalue = this.value;
-            var changeproduct = document.querySelector('.deletebtnstock');
-            var cancelproduct = document.querySelector('.cancelbtnstock');
-        console.log(this.value + " no esta focuseado");
-        modal.style = "display: block";
+var changestockvalue = document.querySelector(".changestockvalue");
+var cancelstockvalue = document.querySelector(".cancelstockvalue")
 
-        changeproduct.addEventListener('click', ()=>{
-            if(clicked == false){
-                clicked = true;
-        
-        fs.readFile('C:/Users/Public/data1.json', function (err, data) {
-            var cant
-            var valname
-            var prodprice
-            var json = JSON.parse(data)
-            var valoresunidos = JSON.stringify(json);
-            console.log(valoresunidos);
-            var val
-            var objs = Object.entries(json);
-                objs.forEach(elem =>{
-                 var objs2 = Object.entries(elem[1]);
-                 var producto =`{"${objs2[0][0]}":"${objs2[0][1]}","${objs2[1][0]}":${objs2[1][1]},"${objs2[2][0]}":${objs2[2][1]}}`;
-        })                                 
-                                          console.log(previousstockvalue);
-                                          var listaparent = productstock.parentNode.parentNode;
-                                          console.log(listaparent);
-                                          for(var i=0, len = listaparent.childElementCount; i < len; ++i){
-                                        var child = listaparent.children[i];
-                                        console.log(child);
-                                        for(var b=0, lan = child.childElementCount; b < lan; ++b){
-                                            console.log(child);
-                                        console.log(child.firstChild);
-                                        if(child.firstChild.classList.contains("nombre")){
-                                            console.log("si");
-                                            console.log(child.firstChild.value);
-                                             valname = child.firstChild.value;
-                                        }
-                                        if(child.firstChild.classList.contains("cantidad")){
-                                            console.log("si");
-                                            console.log(child.firstChild.value);
-                                            cant = child.firstChild.value;
+changestockvalue.addEventListener('click', ()=>{
+    if(clickedstock == false){
+        clickedstock = true;
+
+fs.readFile('C:/Users/Public/data1.json', function (err, data) {
+    var cant
+    var valname
+    var prodprice
+    var json = JSON.parse(data)
+    var valoresunidos = JSON.stringify(json);
+    console.log(valoresunidos);
+    var val
+    var objs = Object.entries(json);
+        objs.forEach(elem =>{
+         var objs2 = Object.entries(elem[1]);
+         var producto =`{"${objs2[0][0]}":"${objs2[0][1]}","${objs2[1][0]}":${objs2[1][1]},"${objs2[2][0]}":${objs2[2][1]}}`;
+})                                 
+                                  console.log(previousstockvalue);
+                                  var listaparent = productstock.parentNode.parentNode;
+                                  console.log(listaparent);
+                                  for(var i=0, len = listaparent.childElementCount; i < len; ++i){
+                                var child = listaparent.children[i];
+                                console.log(child);
+                                for(var b=0, lan = child.childElementCount; b < lan; ++b){
+                                    console.log(child);
+                                console.log(child.firstChild);
+                                if(child.firstChild.classList.contains("nombre")){
+                                    console.log("si");
+                                    console.log(child.firstChild.value);
+                                     valname = child.firstChild.value;
+                                }
+                                if(child.firstChild.classList.contains("cantidad")){
+                                    console.log("si");
+                                    console.log(child.firstChild.value);
+                                    cant = child.firstChild.value;
+
+                                }
+                                 if(child.firstChild.classList.contains("number")){
+                                     console.log("si");
+                                     console.log(child.firstChild.value);
+                                     prodprice = child.firstChild.value;
+                                 }
 
                                         }
-                                         if(child.firstChild.classList.contains("number")){
-                                             console.log("si");
-                                             console.log(child.firstChild.value);
-                                             prodprice = child.firstChild.value;
-                                         }
-
-                                                }
-                                            }
-                                            var vall = valoresunidos.replace(/},{/g, '} , {')
-                                            var valoreninputs = `{"producto":"${valname}","stock":${cant},"precio":${prodprice}}`;
-                                            var valorenjson = `{"producto":"${valname}","stock":${previousstockvalue},"precio":${prodprice}}`;
+                                    }
+                                    var sacarpeso = prodprice.split("$")[1];
+                                    var vall = valoresunidos.replace(/},{/g, '} , {')
+                                    var valoreninputs = `{"producto":"${valname}","stock":${cant},"precio":${sacarpeso}}`;
+                                    var valorenjson = `{"producto":"${valname}","stock":${previousstockvalue},"precio":${sacarpeso}}`;
+                                    console.log(valorenjson);
+                                    
+                                       if(valoresunidos.indexOf(`${valorenjson}`)){
                                             console.log(valorenjson);
-                                               if(valoresunidos.indexOf(`${valorenjson}`)){
-                                                    console.log(valorenjson);
-                                                    val = vall.replace(`${valorenjson}`, `${valoreninputs}`);
-                                                    console.log(val);
+                                            console.log(vall);
+                                            val = vall.replace(`${valorenjson}`, `${valoreninputs}`);
+                                            console.log(val);
+                                            console.log(productstockvalue)
+               
+
+         console.log(`previous name: ${previousstockvalue} actual name: ${productstockvalue}`);
+         fs.writeFile( 'C:/Users/Public/data1.json', val, (error) => {
+            if(error){
+                 console.log(`error: ${error}`);
+             }else{
+             }
+         })             }
+
+  })
+
+}    })
+cancelstockvalue.addEventListener('click', ()=>{
+    if(clickedstock == false){
+        clickedstock = true;
+    console.log(previousproductname);
+    var stocksearch = document.querySelectorAll(".cantidad");
+    stocksearch.forEach(stocksearched => {
+        if(stocksearched.value == productstockvalue){
+            stocksearched.value = previousstockvalue;
+        }
+    })
+    console.log(productstock.value = previousstockvalue);
+}})
 
 
-         //        console.log(`previous name: ${previousprice} actual name: ${productprice.value}`);
-                 fs.writeFile( 'C:/Users/Public/data1.json', val, (error) => {
-                     if(error){
-                         console.log(`error: ${error}`);
-                     }else{
-                     }
-                 })             }
 
-          })
+
+//borrar elemento de stock
+borrar.addEventListener('click', () =>{
+    if(borrar.innerHTML == "Borrar"){
+    allproducts.forEach(product =>{
         
-        }    })
-        cancelproduct.addEventListener('click', ()=>{
-            if(clicked == false){
-                clicked = true;
-            console.log(previousproductname);
-            var stocksearch = document.querySelectorAll(".cantidad");
-            stocksearch.forEach(stocksearched => {
-                if(stocksearched.value == productstock.value){
-                    stocksearched.value = previousstockvalue;
-                }
-            })
-            console.log(productstock.value = previousstockvalue);
-  }})  } }}) 
-  //
+product.classList.add("seleccion")
+borrar.innerHTML ="Selecciona que borrar";
+product.addEventListener('click', ()=>{
+    if(product.classList.contains("seleccionado")){
+        product.classList.remove("seleccionado");
+    }else if(borrar.innerHTML == "Selecciona que borrar"){
+    product.classList.add("seleccionado"); }
+})
+    })} else{
+        allproducts.forEach(products =>{
+            console.log(products);
+            if(products.classList.contains("seleccionado")){
+                console.log("removido")
+                console.log(products.parentNode);
+                fs.readFile('C:/Users/Public/data1.json', function (err, data) {
+                    var json = JSON.parse(data)
+                    var valoresunidos = JSON.stringify(json);
+                    console.log(valoresunidos);
+
+                    var objs = Object.entries(json);
+                        objs.forEach(elem =>{
+                         var objs2 = Object.entries(elem[1]);
+                         var producto =`{"${objs2[0][0]}":"${objs2[0][1]}","${objs2[1][0]}":${objs2[1][1]},"${objs2[2][0]}":${objs2[2][1]}}`;
+                  var productoreal = `{"producto":"armazon5","stock":100,"precio":10000}`
+                  var val
+                                                  console.log(producto);
+                                                  console.log(productoreal);
+                                                  if(valoresunidos.includes(`,${producto}`)){
+                                                    val = valoresunidos.replace(`,${producto}`, "");
+                                                  }else if(valoresunidos.includes(`${producto},`)){
+                                                    val = valoresunidos.replace(`${producto},`, "");
+                                                  }else{
+                                                    val = valoresunidos.replace(`${producto}`, "");
+                                                  }
+                console.log(val);
+                producto = ""
+                fs.writeFile( 'C:/Users/Public/data1.json', val, (error) => {
+                    if(error){
+                        console.log(`error: ${error}`);
+                    }else{
+                    }
+                })
+                })
+           var intervalo = setInterval(() => {
+                    console.log("eliminado");
+                products.parentNode.remove();
+                clearInterval(intervalo);
+            }, 1000);
+                        })
+
+            }
+            products.classList.remove("seleccionado");
+            borrar.innerHTML ="Borrar";
+
+                })
+    }
+})
 
 
-        //editar precio stock
 
-               $('.number').on('focus',function(){
-                console.log(this.value + " esta focuseado");
-                previousprice = this.value;
-                clicked = false;
-                numero = 0;
-             }).on('blur',function(){
-                    var product2price = this.value;
-                 if(product2price === previousprice){
-                     if(numero < 1){
-                         numero = 1;
-                     }
-         
-                 }else{
 
-                 if(numero < 1){
-                      productstockprice = this;
-                     var changeproduct = document.querySelector('.deletebtn');
-                     var cancelproduct = document.querySelector('.cancelbtn');
-                 console.log(this.value + " no esta focuseado");
-                     numero = 1;
-                     modal.style = "display: block";
 
-changeproduct.addEventListener('click', ()=>{
-    if(clicked == false){
-        clicked = true;
+
+
+
+
+
+
+
+
+
+var changepricestock = document.querySelector(".changepricevalue");
+var cancelpricestock = document.querySelector(".cancelpricevalue");
+
+changepricestock.addEventListener('click', ()=>{
+    if(clickedprice == false){
+        clickedprice = true;
 
 
                  fs.readFile('C:/Users/Public/data1.json', function (err, data) {
@@ -954,9 +1065,9 @@ changeproduct.addEventListener('click', ()=>{
                    })
                 }
                 })
-                cancelproduct.addEventListener('click', ()=>{
-if(clicked == false){
-    clicked = true;
+                cancelpricestock.addEventListener('click', ()=>{
+if(clickedprice == false){
+    clickedprice = true;
 
 
   
@@ -968,83 +1079,36 @@ if(clicked == false){
                          }
                      })
                      console.log(productprice.value = previousprice);
-                    }   })  } }           }
-                    
-                    ) 
-                    //
-               
-               
-
- }, 300);
+                    }   })
 
 
 
 
 
 
-//borrar elemento de stock
-borrar.addEventListener('click', () =>{
-    if(borrar.innerHTML == "Borrar"){
-    allproducts.forEach(product =>{
-        
-product.classList.add("seleccion")
-borrar.innerHTML ="Selecciona que borrar";
-product.addEventListener('click', ()=>{
-    if(product.classList.contains("seleccionado")){
-        product.classList.remove("seleccionado");
-    }else if(borrar.innerHTML == "Selecciona que borrar"){
-    product.classList.add("seleccionado"); }
-})
-    })} else{
-        allproducts.forEach(products =>{
-            console.log(products);
-            if(products.classList.contains("seleccionado")){
-                console.log("removido")
-                console.log(products.parentNode);
-                fs.readFile('C:/Users/Public/data1.json', function (err, data) {
-                    var json = JSON.parse(data)
-                    var valoresunidos = JSON.stringify(json);
-                    console.log(valoresunidos);
 
-                    var objs = Object.entries(json);
-                        objs.forEach(elem =>{
-                         var objs2 = Object.entries(elem[1]);
-                         var producto =`{"${objs2[0][0]}":"${objs2[0][1]}","${objs2[1][0]}":${objs2[1][1]},"${objs2[2][0]}":${objs2[2][1]}}`;
-                  var productoreal = `{"producto":"armazon5","stock":100,"precio":10000}`
-                  var val
-                                                  console.log(producto);
-                                                  console.log(productoreal);
-                                                  if(valoresunidos.includes(`,${producto}`)){
-                                                    val = valoresunidos.replace(`,${producto}`, "");
-                                                  }else if(valoresunidos.includes(`${producto},`)){
-                                                    val = valoresunidos.replace(`${producto},`, "");
-                                                  }else{
-                                                    val = valoresunidos.replace(`${producto}`, "");
-                                                  }
-                console.log(val);
-                producto = ""
-                fs.writeFile( 'C:/Users/Public/data1.json', val, (error) => {
-                    if(error){
-                        console.log(`error: ${error}`);
-                    }else{
-                    }
-                })
-                })
-           var intervalo = setInterval(() => {
-                    console.log("eliminado");
-                products.parentNode.remove();
-                clearInterval(intervalo);
-            }, 1000);
-                        })
 
-            }
-            products.classList.remove("seleccionado");
-            borrar.innerHTML ="Borrar";
 
-                })
-    }
-})
+
+
+
+
 //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //crear bases de datos
 fs.readdir('C:/Users/Public', (error, archivos)=>{

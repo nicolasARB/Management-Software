@@ -20,7 +20,7 @@
 </head>
 <body>
 
-  <div id="id01" class="modal">
+  <div id="id01" class="modal modalname">
    <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
     <form class="modal-content" action="/action_page.php">
       <div class="container">
@@ -28,13 +28,15 @@
         <p>Estas seguro/a de que deseas cambiar este valor?</p>
       
         <div class="clearfix">
-          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="deletebtn">Cambiar</button>
-          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancelar</button>
+          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="deletebtn changenamestock">Cambiar</button>
+          <button type="button" onclick="document.getElementById('id01').style.display='none'"  class="cancelbtn cancelnamestock">Cancelar</button>
         </div>
       </div>
     </form>
   </div>
-  <div id="id01" class="modal">
+
+
+  <div id="id03" class="modal modalstock">
     <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
      <form class="modal-content" action="/action_page.php">
        <div class="container">
@@ -42,12 +44,48 @@
          <p>Estas seguro/a de que deseas cambiar este valor?</p>
        
          <div class="clearfix">
-           <button type="button" onclick="document.getElementById('id01').style.display='none'" class="deletebtnstock bt">Cambiar</button>
-           <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtnstock bt">Cancelar</button>
+           <button type="button" onclick="document.getElementById('id03').style.display='none'" class="changestockvalue">Cambiar</button>
+           <button type="button" onclick="document.getElementById('id03').style.display='none'"  class="cancelstockvalue">Cancelar</button>
          </div>
        </div>
      </form>
    </div>
+
+
+   <div id="id04" class="modal modalprice">
+    <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
+     <form class="modal-content" action="/action_page.php">
+       <div class="container">
+         <h1>Cambiar valor</h1>
+         <p>Estas seguro/a de que deseas cambiar este valor?</p>
+       
+         <div class="clearfix">
+           <button type="button" onclick="document.getElementById('id04').style.display='none'" class="changepricevalue">Cambiar</button>
+           <button type="button" onclick="document.getElementById('id04').style.display='none'"  class="cancelpricevalue">Cancelar</button>
+         </div>
+       </div>
+     </form>
+   </div>
+
+
+
+    <!--
+  <div id="id01" class="modal">
+ <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+     <form class="modal-content" action="/action_page.php">
+       <div class="container">
+         <h1>Cambiar valor</h1>
+         <p>Estas seguro/a de que deseas cambiar este valor?</p>
+       
+         <div class="clearfix">
+           <button type="button" onclick="document.getElementById('id01').style.display='none'" id="#changenamestock" class="deletebtnstock bt">Cambiar</button>
+           <button type="button" onclick="document.getElementById('id01').style.display='none'" id="#cancelnamestock" class="cancelbtnstock bt">Cancelar</button>
+         </div>
+       </div>
+     </form>
+   </div>
+   -->
+
 
 
 
