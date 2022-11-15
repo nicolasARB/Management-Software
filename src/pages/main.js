@@ -245,7 +245,7 @@ var jsonlengthclientes = 0;
 var numero = 0;
 var modalname = document.querySelector('.modalname');
 var modalstock = document.querySelector('.modalstock');
-var modalprice = documento.querySelector('.modalprice');
+var modalprice = document.querySelector('.modalprice');
 var clicked = false;
 var clickedstock = false;
 var clickedprice = false;
@@ -324,13 +324,13 @@ console.log("encontrado");
                                var cristal = usersobre.cristal;
                                var armazones = usersobre.armazones;
                                var desc = usersobre.desc;
-                               var total = usersobre.total;
+                               var total = usersobre.totall;
                                var sena = usersobre.sena;
                                var sal = usersobre.sal; 
 
 
                                fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{ "sobre": true, "nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}"
-                               , "lente": "lejos", "trabajonum": "${numerodetrabajo}", "fecha": "${trabajofecha}", "esf": "${esf}", "cil:": "${cil}", "dip": "${dip}"
+                               , "lente": "lejos", "trabajonum": "${numerodetrabajo}", "fecha": "${trabajofecha}", "esf": "${esf}", "cil": "${cil}", "dip": "${dip}"
                                , "alt": "${alt}", "od": "${od}", "oi": "${oi}", "odcil": "${odcil}", "oicil": "${oicil}", "cristal": "${cristal}", "armazones": "${armazones}",
                                "desc": "${desc}", "total": "${total}", "sena": "${sena}", "sal": "${sal}"}`, (error) => {
                                 if(error){
@@ -1211,10 +1211,61 @@ clientedocumento.value = "";
     })
     })
 }else{
-    console.log("no value");
+
 }
 
 })
 //
+var textsobrebuscador = document.querySelector("#textbuscadorsobre");
+var buscarsobre = document.querySelector("#abrirsobrebuscador");
+var buscando = false;
+buscarsobre.addEventListener('click', function(){
+console.log(textsobrebuscador.value);    
+
+fs.readFile("C:/Users/Public/sobres.json", function(err, data){
+    var json = JSON.parse(data);
+    console.log(json);
+    json.forEach(usersobre =>{
+        console.log(usersobre);
+        if(usersobre.trabajonum == textsobrebuscador.value && buscando == false){
+           var numerodetrabajo = usersobre.trabajonum;
+           var trabajofecha = usersobre.fecha;
+           var esf = usersobre.esf;
+           var cil = usersobre.cil;
+           var dip = usersobre.dip;
+           var alt = usersobre.alt;
+           var od = usersobre.od;
+           var oi = usersobre.oi;
+           var odcil = usersobre.odcil;
+           var oicil = usersobre.oicil;
+           var cristal = usersobre.cristal;
+           var armazones = usersobre.armazones;
+           var desc = usersobre.desc;
+           var total = usersobre.totall;
+           var sena = usersobre.sena;
+           var sal = usersobre.sal; 
+
+
+           fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{ "sobre": true, "nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}"
+           , "lente": "lejos", "trabajonum": "${numerodetrabajo}", "fecha": "${trabajofecha}", "esf": "${esf}", "cil": "${cil}", "dip": "${dip}"
+           , "alt": "${alt}", "od": "${od}", "oi": "${oi}", "odcil": "${odcil}", "oicil": "${oicil}", "cristal": "${cristal}", "armazones": "${armazones}",
+           "desc": "${desc}", "total": "${total}", "sena": "${sena}", "sal": "${sal}"}`, (error) => {
+            if(error){
+                console.log(`error: ${error}`);
+            }
+        })
+        ipcRenderer.send("abrirsobre");
+buttonclicked = true
+buscando = true;
+        }else{
+            console.log(`error: no se encontro el trabajo`);
+        }
+        
+    })
+})
+
+buscando = false
+
+})
 
 });
