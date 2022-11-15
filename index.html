@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicacion de gestion</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script
+  src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+  integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+  crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+    <nav>
+        <a class="botonav selectednav">Clientes</a>
+        <a class="botonav">Stock</a>
+      <!-- <a class="botonav">Estadisticas</a> --> 
+    </nav>
+</head>
+<body>
+
+  <div id="id01" class="modal modalname">
+   <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
+    <form class="modal-content" action="/action_page.php">
+      <div class="container">
+        <h1>Cambiar valor</h1>
+        <p>Estas seguro/a de que deseas cambiar este valor?</p>
+      
+        <div class="clearfix">
+          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="deletebtn changenamestock">Cambiar</button>
+          <button type="button" onclick="document.getElementById('id01').style.display='none'"  class="cancelbtn cancelnamestock">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <div id="id03" class="modal modalstock">
+    <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
+     <form class="modal-content" action="/action_page.php">
+       <div class="container">
+         <h1>Cambiar valor</h1>
+         <p>Estas seguro/a de que deseas cambiar este valor?</p>
+       
+         <div class="clearfix">
+           <button type="button" onclick="document.getElementById('id03').style.display='none'" class="changestockvalue">Cambiar</button>
+           <button type="button" onclick="document.getElementById('id03').style.display='none'"  class="cancelstockvalue">Cancelar</button>
+         </div>
+       </div>
+     </form>
+   </div>
+
+
+   <div id="id04" class="modal modalprice">
+    <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
+     <form class="modal-content" action="/action_page.php">
+       <div class="container">
+         <h1>Cambiar valor</h1>
+         <p>Estas seguro/a de que deseas cambiar este valor?</p>
+       
+         <div class="clearfix">
+           <button type="button" onclick="document.getElementById('id04').style.display='none'" class="changepricevalue">Cambiar</button>
+           <button type="button" onclick="document.getElementById('id04').style.display='none'"  class="cancelpricevalue">Cancelar</button>
+         </div>
+       </div>
+     </form>
+   </div>
+
+
+
+    <!--
+  <div id="id01" class="modal">
+ <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+     <form class="modal-content" action="/action_page.php">
+       <div class="container">
+         <h1>Cambiar valor</h1>
+         <p>Estas seguro/a de que deseas cambiar este valor?</p>
+       
+         <div class="clearfix">
+           <button type="button" onclick="document.getElementById('id01').style.display='none'" id="#changenamestock" class="deletebtnstock bt">Cambiar</button>
+           <button type="button" onclick="document.getElementById('id01').style.display='none'" id="#cancelnamestock" class="cancelbtnstock bt">Cancelar</button>
+         </div>
+       </div>
+     </form>
+   </div>
+   -->
+
+
+
+
+
+
+
+<br>
+<section id="contenido">
+
+  <div id="id02" class="modal">
+    <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
+     <form class="modal-content" action="/action_page.php">
+       <div class="container">
+         <h1>Cambiar valor</h1>
+         <p>Estas seguro/a de que deseas cambiar este valor?</p>
+       
+         <div class="clearfix">
+           <button type="button" id="buttoncerca" onclick="document.getElementById('id02').style.display='none', document.getElementById('id02').classList.add('selectedcerca')" class="deletebtnstock bt">Cerca</button>
+           <button type="button" id="buttonlejos" onclick="document.getElementById('id02').style.display='none', document.getElementById('id02').classList.add('selectedlejos')" class="cancelbtnstock bt">Lejos</button>
+         </div>
+       </div>
+     </form>
+   </div>
+
+<div id="fichas" class="main">
+    <b><input id="search" type="text" placeholder="Busqueda"> </b>
+  <!--
+   <div class="cliente">Cliente 1 -Jose Hernandez</div>
+   <div class="cliente">Cliente 2 -Fabian Ortega</div>  
+   -->  
+   
+
+</div>
+<div id="fichaselc" class="main">
+  <div id="elementosficha">
+<!--  <div class="elementos">Nombre: Jose Hernandez </div>
+    <div class="elementos">Mail: josehernandez@gmail.com</div> -->
+  </div>  
+    <br>
+
+    <div class="contsob">Sobres</div>
+<div id="containersobres">
+ <!-- <div style="display: none;" class="sobrescliente"> 
+  <div class="sobresclientediv"> Trabajo 010001 - Cerca </div> 
+  <button class="sobresclientebutton">Abrir</button> </div> -->
+</div>
+<button id="crearsobre">crear sobre</button>
+<input type="text" > <button id="abrirsobrebuscador">Abrir</button>
+</div>
+<footer id="agregarclientes">
+  <!--<label for="producto">Producto:</label>---> 
+    <input type="text" id="username" placeholder="inserte nombre" name="nombre">
+  <!--   <label for="stock">Stock:</label>---> 
+    <input type="text" class="usermail" value="" id="usermail" placeholder="Mail" name="mail">
+  <!--    <label for="precio">Precio:</label>---> 
+    <input type="text" value="" id="userphone" placeholder="Telefono" name="telefono">
+    <input type="text" class="userhome" value="" id="userhome" placeholder="Domicilio" name="domicilio">
+    <input type="text" class="documento" value="" id="userdocument" placeholder="Documento" name="documento">
+    <button id="addcliente">Añadir</button>
+    <button id="borrarcliente">Borrar</button>
+</footer>
+</section>
+  <!--
+<section id="contenidostock">
+    <section id="cont">
+        <div id="cabecera">
+            <div class="cabeceras">Producto</div>
+            <div class="cabeceras">Precio</div>
+            <div class="cabeceras">Stock</div>
+        </div>
+        <hr>
+    <div id="productos">
+       <div class="producto">
+        <div class="descripciones"> Armazon</div>
+        <div class="descripciones"> $500</div>
+        <div class="descripciones"> 0</div>
+    
+    </div>
+       
+       
+    
+    </div>
+
+</section>
+        -->
+        <b><input id="buscadorstock" type="text" placeholder="Search here"> </b>
+<section id="contenidostock">
+        <table class="tabla" style="border-collapse: collapse; ">
+         <thead id="#tablahead" style="border: 1px solid black;">
+                <tr class="trsi">
+                    <th class="cabeceras">Producto</th>
+                    <th class="cabeceras" id="productolista">Stock</th>
+                    <th class="cabeceras">Precio unitario</th>
+                </tr>
+            </thead>
+         <tbody id="listadodeproductos" style="margin-top: 50px;">   
+  
+        </tbody> 
+
+        </table>
+</section>
+<footer id="agregarproductos">
+  <!--<label for="producto">Producto:</label>---> 
+    <input type="text" id="productname" placeholder="inserte producto" name="producto">
+  <!--   <label for="stock">Stock:</label>---> 
+    <input type="text" class="number" value="" id="stockvalue" placeholder="stock" name="stock">
+  <!--    <label for="precio">Precio:</label>---> 
+    <input type="text" class="number" value="" id="precioadd" placeholder="Precio" name="precio">
+    <button id="add">Añadir</button>
+    <button id="borrar">Borrar</button>
+</footer>
+</body>
+</html>
