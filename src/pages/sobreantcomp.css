@@ -431,7 +431,11 @@ height: 0rem;
 
 
 
-
+#buttons{
+    position: absolute;
+    left: 10%;
+    top: 1%;
+}
 
 
 

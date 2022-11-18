@@ -27,6 +27,9 @@ window.addEventListener('load', ()=>{
     var dia = fechahoy.getDate();
     var yearandmonth = dia + "/" + mes + "/" + año
 
+
+var todoslostrabajos = document.querySelectorAll(".trabajo");
+var todaslasfechas = document.querySelectorAll(".fecha");
 var trabajo = document.querySelector("#t1");
 var fec = document.querySelector("#f1");    
 fec.innerHTML = `Fecha: ${yearandmonth}`
@@ -88,6 +91,13 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 dssc.value = json.desc;
                 cristales.value = json.cristal;
                 armazon.value = json.armazones;
+                todoslostrabajos.forEach(trb =>{
+                    trb.innerHTML = trabajo.innerHTML;
+                })
+                
+                todaslasfechas.forEach(fech =>{
+                    fech.innerHTML = fec.innerHTML;
+                })
                 var arrayelem = ["esf", "cil", "dip", "alt", "od", "oi", "odcil", "oicil", "cristales", "armazon", "dssc"
                 , "total", "sen", "sal", "retiroaprox", "pedidopara"];
                 arrayelem.forEach(elem =>{
@@ -159,6 +169,7 @@ if(archivos.includes("sobres.json")){
         if (json.length == 0 && sobre == false){
             numtrabajo = `010001`;
             trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
+            
             }else{
                 if(json.length >=1 && json.length <10 && sobre == false){
                 numtrabajo = `01000${json.length +1}`;
@@ -175,12 +186,23 @@ if(archivos.includes("sobres.json")){
 
                 }
             }
+
+            todoslostrabajos.forEach(trb =>{
+                trb.innerHTML = trabajo.innerHTML;
+            })
+            
+            todaslasfechas.forEach(fech =>{
+                fech.innerHTML = fec.innerHTML;
+            })
+            
         })
 
         function save(){
 
             fs.readFile('C:/Users/Public/sobres.json', function (err, data) {
                 var json = JSON.parse(data);
+                console.log(json.length);
+                console.log(sobre);
                 if(json.length == 0 && sobre == false){
                     sobre = true;
                     console.log("yes");
@@ -212,6 +234,7 @@ if(archivos.includes("sobres.json")){
                             "sal": "${sal.value}",
                             "retiroaprox": "${retiroaprox.value}",
                             "pedidopara": "${pedidopara.value}"}`
+                            
                     if (json.length == 0){
                     valoresunidos += `${objetosobre} ]`
                     }else{
@@ -223,13 +246,15 @@ if(archivos.includes("sobres.json")){
                         }
                     })
                 }
-                json.forEach( obj =>{
+                json.forEach(obj =>{
                     console.log(numdetrabajo);
+                    console.log(numtrabajo);
                     console.log(obj.trabajonum);
 if(obj.trabajonum == numdetrabajo && sobre == true){
-    var sacartotal = total.value.split("$",[1]);
-    var sacarsen = sen.value.split("$",[1]);
-    var sacarsal = sal.value.split("$", [1])
+    var sacartotal = total.value.replace('$', '')
+    var sacarsal = sal.value.replace('$', '')
+    var sacarsen = sen.value.replace('$', '')
+    console.log(sacartotal);
 console.log(`trabajo encontrado: ${obj.trabajonum}`);
 var sobrecompleto = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${obj.cliente}","documento":"${obj.documento}","mail":"${obj.mail}","lente":"${obj.lente}","esf":"${obj.esf}","cil":"${obj.cil}","dip":"${obj.dip}","alt":"${obj.alt}","od":"${obj.od}","oi":"${obj.oi}","odcil":"${obj.odcil}","oicil":"${obj.oicil}","cristal":"${obj.cristal}","armazones":"${obj.armazones}","desc":"${obj.desc}","totall":"${obj.totall}","sena":"${obj.sena}","sal":"${obj.sal}","retiroaprox":"${obj.retiroaprox}","pedidopara":"${obj.pedidopara}"}`
 var sobrecompletohtml = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${username}","documento":"${userdocument}","mail":"${usermail}","lente":"${userlente}","esf":"${esf.value}","cil":"${cil.value}","dip":"${dip.value}","alt":"${alt.value}","od":"${od.value}","oi":"${oi.value}","odcil":"${odcil.value}","oicil":"${oicil.value}","cristal":"${cristales.value}","armazones":"${armazon.value}","desc":"${dssc.value}","totall":"${sacartotal}","sena":"${sacarsen}","sal":"${sacarsal}","retiroaprox":"${retiroaprox.value}","pedidopara":"${pedidopara.value}"}`
@@ -261,6 +286,12 @@ console.log("yes");
     valoresunidos = valoresunidos.substring(0, lastIndex);
     console.log(valoresunidos);
     console.log(json.length);
+    console.log(numtrabajo);
+    numdetrabajo = numtrabajo;
+var sacartotall = total.value.replace('$', '')
+var sacarsall = sal.value.replace('$', '')
+var sacarsenn = sen.value.replace('$', '')
+    console.log(`${sacartotall} ${sacarsall} ${sacarsenn}`)
     var objetosobre = 
     `{"trabajonum": "${numtrabajo}",
         "fecha": "${yearandmonth}",
@@ -279,9 +310,9 @@ console.log("yes");
         "cristal": "${cristales.value}",
         "armazones": "${armazon.value}",
         "desc": "${dssc.value}",
-        "totall": "${total.value}",
-        "sena": "${sen.value}",
-        "sal": "${sal.value}",
+        "totall": "${sacartotall}",
+        "sena": "${sacarsenn}",
+        "sal": "${sacarsall}",
         "retiroaprox": "${retiroaprox.value}",
         "pedidopara": "${pedidopara.value}"}`
 if (json.length == 0){
@@ -303,13 +334,20 @@ fs.writeFile( 'C:/Users/Public/sobres.json', valoresunidos, (error) => {
             })
 
         }
-
-document.querySelector("#imprimir").addEventListener('click', ()=>{
+        var savebutton = document.querySelector("#guardar");
+        var imprimir = document.querySelector("#imprimir");
+imprimir.addEventListener('click', ()=>{
+  imprimir.style.display = "none";
+  savebutton.style.display = "none";  
 window.print();
+imprimir.style.display = "inline";
+savebutton.style.display = "inline";
 })
-var savebutton = document.querySelector("#guardar");
+
 
 savebutton.addEventListener("click", ()=>{
     save()
 })
+
+
 })
