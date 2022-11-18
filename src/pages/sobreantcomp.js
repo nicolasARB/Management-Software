@@ -138,10 +138,29 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 userdocument = json.documento;
                 userlente = json.lente;
                 nombre.innerHTML = "Nombre y apellido: " + username;
-                domicilio.innerHTML = "Domicilio " + userhome;
-                dni.innerHTML = "Documento: " + userdocument;
-                celular.innerHTML = "Celular: " + userphone;
-                mail.innerHTML = "Email: " + usermail;
+                if(userhome == "undefined" || userhome == ""){
+                    domicilio.innerHTML = "Domicilio "
+                }else{
+                    domicilio.innerHTML = "Domicilio " + userhome;
+                }
+
+                if(userhome == "undefined" || userdocument == ""){
+                    dni.innerHTML = "Documento: ";
+                }else{
+                    dni.innerHTML = "Documento: " + userdocument;
+                }
+
+                if(userhome == "undefined" || userphone == ""){
+                    celular.innerHTML = "Celular: "
+                }else{
+                    celular.innerHTML = "Celular: " + userphone;
+                }
+
+                if(userhome == "undefined" || usermail == ""){
+                    mail.innerHTML = "Email: "
+                }else{
+                    mail.innerHTML = "Email: " + usermail;  
+                }
             }
 
 

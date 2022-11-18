@@ -1,3 +1,4 @@
+const e = require('express');
 const { json } = require('express');
 
 window.addEventListener('load', function(){
@@ -30,7 +31,7 @@ var clientedocumento
 //
 var agregar = document.querySelector("#add");
 var addcliente = document.querySelector("#addcliente");
-/*
+
 objetos.forEach(element =>{
 var objeto = Object.entries(element);
 objeto.forEach(arr =>{
@@ -46,7 +47,7 @@ joinn += val;
     joinn += val;
 }
  })
-})*/
+})
 
 //select nav
 var nava = document.querySelectorAll("a");
@@ -186,11 +187,19 @@ var cancelproduct = document.querySelector('.cancelbtn');
 buttoncerca.addEventListener("click", e =>{
 if(abrirsobreclicked == true){
     abrirsobreclicked = false;
-    nombresobre = document.querySelector("#nombresobre").innerHTML;
-    mailsobre = document.querySelector("#mailsobre").innerHTML;
-    telefonosobre = document.querySelector("#telefonosobre").innerHTML;
-    domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
-    documentodiv = document.querySelector("#documentosobre").innerHTML;
+    if(mailsobre != null){
+        mailsobre = document.querySelector("#mailsobre").innerHTML;
+    }
+    if(telefonosobre != null){
+        telefonosobre = document.querySelector("#telefonosobre").innerHTML;
+    }
+    if(domiciliosobre != null){
+        domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
+    }
+    if(documentodiv != null){
+        documentodiv = document.querySelector("#documentosobre").innerHTML;
+    }
+
     fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}", "lente": "cerca"}`,  (error) => {
         if(error){
             console.log(`error: ${error}`);
@@ -377,10 +386,19 @@ console.log("encontrado");
 elementss.forEach(ell =>{
     if(ell != null){
         nombresobre = document.querySelector("#nombresobre").innerHTML;
-        mailsobre = document.querySelector("#mailsobre").innerHTML;
-        telefonosobre = document.querySelector("#telefonosobre").innerHTML;
-        domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
-        documentodiv = document.querySelector("#documentosobre").innerHTML;
+        if(mailsobre != null){
+            mailsobre = document.querySelector("#mailsobre").innerHTML;
+        }
+        if(telefonosobre != null){
+            telefonosobre = document.querySelector("#telefonosobre").innerHTML;
+        }
+        if(domiciliosobre != null){
+            domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
+        }
+        if(documentodiv != null){
+            documentodiv = document.querySelector("#documentosobre").innerHTML;
+        }
+
     }else{
 
     }
@@ -459,30 +477,64 @@ selec.addEventListener('click', function(){
         })
                 var fichaseleccion = document.querySelector("#elementosficha");
                 var nombrediv = document.createElement("div");
-                var divmail = document.createElement("div");
-                var domiciliodiv = document.createElement("div");
-                var telefonodiv = document.createElement("div");
-                var documentdiv = document.createElement("div");
-                fichaseleccion.prepend(documentdiv);
-                fichaseleccion.prepend(domiciliodiv);
-                fichaseleccion.prepend(telefonodiv);
-                fichaseleccion.prepend(divmail);
                 fichaseleccion.prepend(nombrediv);
                 nombrediv.innerHTML = joinn;
-                divmail.innerHTML = mail;
-                domiciliodiv.innerHTML = dom;
-                telefonodiv.innerHTML = tel;
+                if(mail == ""){
+                    var divmail = document.createElement("div");
+                    divmail.innerHTML = mail;
+                    divmail.classList.add("elementos");
+                    divmail.id = "mailsobre";
+                    divmail.classList.add("none");
+                    fichaseleccion.prepend(divmail);
+                }else{
+                    var divmail = document.createElement("div");
+                    divmail.innerHTML = mail;
+                    divmail.classList.add("elementos");
+                    divmail.id = "mailsobre";
+                    fichaseleccion.prepend(divmail);
+                }
+                if(tel == ""){
+
+                }else{
+                    var telefonodiv = document.createElement("div");
+                    fichaseleccion.prepend(telefonodiv);
+                    telefonodiv.classList.add("elementos");
+                    telefonodiv.id = "telefonosobre";
+                    telefonodiv.innerHTML = tel;
+                    telefonodiv.classList.add("none");
+                }
+                if(dom == ""){
+                    var domiciliodiv = document.createElement("div");
+                    fichaseleccion.prepend(domiciliodiv);
+                    domiciliodiv.innerHTML = dom;
+                    domiciliodiv.classList.add("elementos");
+                    domiciliodiv.classList.add("none");
+                    domiciliodiv.id = "domiciliosobre";
+                }else{
+                    var domiciliodiv = document.createElement("div");
+                    fichaseleccion.prepend(domiciliodiv);
+                    domiciliodiv.innerHTML = dom;
+                    domiciliodiv.classList.add("elementos");
+                    domiciliodiv.id = "domiciliosobre";
+                }
+                if(doc == ""){
+                    var documentdiv = document.createElement("div");
+                                    fichaseleccion.prepend(documentdiv);
                 documentdiv.innerHTML = doc;
-                nombrediv.classList.add("elementos");
-                nombrediv.id = "nombresobre";
-                domiciliodiv.classList.add("elementos");
-                domiciliodiv.id = "domiciliosobre";
-                telefonodiv.classList.add("elementos");
-                telefonodiv.id = "telefonosobre";
-                divmail.classList.add("elementos");
-                divmail.id = "mailsobre";
+                documentdiv.classList.add("elementos");
+                documentdiv.classList.add("none");
+                documentdiv.id = "documentosobre";
+                }else{
+                    var documentdiv = document.createElement("div");
+                                    fichaseleccion.prepend(documentdiv);
+                documentdiv.innerHTML = doc;
                 documentdiv.classList.add("elementos");
                 documentdiv.id = "documentosobre";
+                }
+
+                nombrediv.classList.add("elementos");
+                nombrediv.id = "nombresobre";
+
                 
                 todoslossobres.forEach(findcliente =>{
                     var documentoastring = doc.toString()
@@ -1183,7 +1235,7 @@ productprice.value = "";
 
 //add user
 addcliente.addEventListener('click', ()=>{
-    if(clientename.value != "" && clientemail.value != "" && clientetelefono.value != "" && clientedomicilio.value != "" && clientedocumento.value != ""){
+    if(clientename.value != ""){
 console.log("ingresando dato...");
     fs.readFile('C:/Users/Public/clientes.json', function (err, data) {
 
@@ -1191,12 +1243,30 @@ console.log("ingresando dato...");
     var valoresunidos = JSON.stringify(json);
     var lastIndex = valoresunidos.lastIndexOf("]");
     valoresunidos = valoresunidos.substring(0, lastIndex);
+    var clientenum = 0;
+    if((clientemail.value = null || clientemail.value == "") && (clientetelefono.value == null || clientetelefono.value == "") && (clientedocumento.value == null || clientedocumento.value == "")){
+json.forEach(numerocliente =>{
+    console.log(numerocliente);
+    if(numerocliente.cliente != 0){
+        clientenum  = clientenum +1;
+    }
+})
+
+if(clientenum != 0){
+    clientenum = clientenum + 1;
+}
+if(clientenum == 0){
+    clientenum = 1;
+    console.log(clientenum);
+}
+    }
+    console.log("Numero de cliente:" + clientenum);
    if(json.length == 0){
-    valoresunidos += `{"nombre": "${clientename.value}", "mail": "${clientemail.value}", "telefono": ${clientetelefono.value}, "domicilio": "${clientedomicilio.value}", "documento": ${clientedocumento.value}} ]`
+    valoresunidos += `{"nombre": "${clientename.value}", "mail": "${clientemail.value}", "telefono": "${clientetelefono.value}", "domicilio": "${clientedomicilio.value}", "documento": "${clientedocumento.value}", "cliente": "${clientenum}"} ]`
     
    }else{
 
-    valoresunidos += `,{"nombre": "${clientename.value}", "mail": "${clientemail.value}", "telefono": ${clientetelefono.value}, "domicilio": "${clientedomicilio.value}", "documento": ${clientedocumento.value}} ]`
+    valoresunidos += `,{"nombre": "${clientename.value}", "mail": "${clientemail.value}", "telefono": "${clientetelefono.value}", "domicilio": "${clientedomicilio.value}", "documento": "${clientedocumento.value}", "cliente": "${clientenum}"} ]`
 }
 console.log("ingresando cliente");
 clientename.value = "";
