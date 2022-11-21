@@ -1,4 +1,4 @@
-const e = require('express');
+//const e = require('express');
 
 window.addEventListener('load', ()=>{
 
@@ -26,6 +26,7 @@ window.addEventListener('load', ()=>{
     var mes = fechahoy.getMonth() + 1;
     var dia = fechahoy.getDate();
     var yearandmonth = dia + "/" + mes + "/" + año
+    
 
 
 var todoslostrabajos = document.querySelectorAll(".trabajo");
@@ -52,9 +53,10 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
     var sal = document.querySelector("#sal");
 
     var retiroaprox = document.querySelector("#retiroaprox");
-    var pedidopara = document.querySelector("#pedidopara")
+    var pedidopara = document.querySelector("#pedidopara");
 
-    var numdetrabajo
+    var numdetrabajo;
+    var numcliente;
 //    console.log(array.length);
     //
 
@@ -64,11 +66,13 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
             var json = JSON.parse(data);
             console.log(json);
             if(json.sobre){
+
                 username = json.nombre;
                 usermail = json.mail;
                 userphone = json.telefono;
                 userhome = json.domicilio;
                 userdocument = json.documento;
+                numcliente = json.numcliente;
                 userlente = json.lente;
                 nombre.innerHTML = "Nombre y apellido: " + username;
                 domicilio.innerHTML = "Domicilio " + userhome;
@@ -136,7 +140,9 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 userphone = json.telefono;
                 userhome = json.domicilio;
                 userdocument = json.documento;
+                numcliente = json.numcliente;
                 userlente = json.lente;
+                console.log(numcliente);
                 nombre.innerHTML = "Nombre y apellido: " + username;
                 if(userhome == "undefined" || userhome == ""){
                     domicilio.innerHTML = "Domicilio "
@@ -252,7 +258,8 @@ if(archivos.includes("sobres.json")){
                             "sena": "${sen.value}",
                             "sal": "${sal.value}",
                             "retiroaprox": "${retiroaprox.value}",
-                            "pedidopara": "${pedidopara.value}"}`
+                            "pedidopara": "${pedidopara.value}",
+                            "numcliente": "${numcliente}"}`
                             
                     if (json.length == 0){
                     valoresunidos += `${objetosobre} ]`
@@ -274,9 +281,10 @@ if(obj.trabajonum == numdetrabajo && sobre == true){
     var sacarsal = sal.value.replace('$', '')
     var sacarsen = sen.value.replace('$', '')
     console.log(sacartotal);
+    console.log(userdocument);
 console.log(`trabajo encontrado: ${obj.trabajonum}`);
-var sobrecompleto = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${obj.cliente}","documento":"${obj.documento}","mail":"${obj.mail}","lente":"${obj.lente}","esf":"${obj.esf}","cil":"${obj.cil}","dip":"${obj.dip}","alt":"${obj.alt}","od":"${obj.od}","oi":"${obj.oi}","odcil":"${obj.odcil}","oicil":"${obj.oicil}","cristal":"${obj.cristal}","armazones":"${obj.armazones}","desc":"${obj.desc}","totall":"${obj.totall}","sena":"${obj.sena}","sal":"${obj.sal}","retiroaprox":"${obj.retiroaprox}","pedidopara":"${obj.pedidopara}"}`
-var sobrecompletohtml = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${username}","documento":"${userdocument}","mail":"${usermail}","lente":"${userlente}","esf":"${esf.value}","cil":"${cil.value}","dip":"${dip.value}","alt":"${alt.value}","od":"${od.value}","oi":"${oi.value}","odcil":"${odcil.value}","oicil":"${oicil.value}","cristal":"${cristales.value}","armazones":"${armazon.value}","desc":"${dssc.value}","totall":"${sacartotal}","sena":"${sacarsen}","sal":"${sacarsal}","retiroaprox":"${retiroaprox.value}","pedidopara":"${pedidopara.value}"}`
+var sobrecompleto = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${obj.cliente}","documento":"${obj.documento}","mail":"${obj.mail}","lente":"${obj.lente}","esf":"${obj.esf}","cil":"${obj.cil}","dip":"${obj.dip}","alt":"${obj.alt}","od":"${obj.od}","oi":"${obj.oi}","odcil":"${obj.odcil}","oicil":"${obj.oicil}","cristal":"${obj.cristal}","armazones":"${obj.armazones}","desc":"${obj.desc}","totall":"${obj.totall}","sena":"${obj.sena}","sal":"${obj.sal}","retiroaprox":"${obj.retiroaprox}","pedidopara":"${obj.pedidopara}","numcliente":"${numcliente}"}`
+var sobrecompletohtml = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${username}","documento":"${userdocument}","mail":"${usermail}","lente":"${userlente}","esf":"${esf.value}","cil":"${cil.value}","dip":"${dip.value}","alt":"${alt.value}","od":"${od.value}","oi":"${oi.value}","odcil":"${odcil.value}","oicil":"${oicil.value}","cristal":"${cristales.value}","armazones":"${armazon.value}","desc":"${dssc.value}","totall":"${sacartotal}","sena":"${sacarsen}","sal":"${sacarsal}","retiroaprox":"${retiroaprox.value}","pedidopara":"${pedidopara.value}","numcliente":"${numcliente}"}`
 
 var valoresunidos = JSON.stringify(json);
 var valunidos
@@ -333,7 +341,8 @@ var sacarsenn = sen.value.replace('$', '')
         "sena": "${sacarsenn}",
         "sal": "${sacarsall}",
         "retiroaprox": "${retiroaprox.value}",
-        "pedidopara": "${pedidopara.value}"}`
+        "pedidopara": "${pedidopara.value}",
+        "numcliente": "${numcliente}"}`
 if (json.length == 0){
 valoresunidos += `${objetosobre} ]`
 }else{

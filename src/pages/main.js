@@ -140,11 +140,12 @@ ipcRenderer.on('newFicha', (e, newFicha) => {
 
 var fs = require('fs');
 var crearsobre = document.querySelector("#crearsobre")
-var nombresobre
-var mailsobre
-var telefonosobre
-var domiciliosobre
-var documentodiv
+var nombresobre;
+var mailsobre;
+var telefonosobre;
+var domiciliosobre;
+var documentodiv;
+var clientesobre;
 var abrirsobreclicked = false;
 var buttoncerca = document.querySelector("#buttoncerca");
 var buttonlejos = document.querySelector("#buttonlejos");
@@ -184,23 +185,56 @@ todoslosclientes.forEach(cliente =>{
 var changeproduct = document.querySelector('.deletebtn');
 var cancelproduct = document.querySelector('.cancelbtn');
 //modals abrir sobre
+var telfijado;
+var nomfijado;
+var mailfijado;
+var docfijado;
+var domfijado;
+
+
+
+
+
 buttoncerca.addEventListener("click", e =>{
 if(abrirsobreclicked == true){
     abrirsobreclicked = false;
-    if(mailsobre != null){
-        mailsobre = document.querySelector("#mailsobre").innerHTML;
-    }
-    if(telefonosobre != null){
-        telefonosobre = document.querySelector("#telefonosobre").innerHTML;
-    }
-    if(domiciliosobre != null){
-        domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
-    }
-    if(documentodiv != null){
-        documentodiv = document.querySelector("#documentosobre").innerHTML;
-    }
+    console.log(mailsobre);
+        mailsobre = document.querySelector("#mailsobre");
+        var mailinnerhtml = "";
+        if(mailsobre == null){
 
-    fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}", "lente": "cerca"}`,  (error) => {
+        }else{
+            mailinnerhtml = mailsobre.innerHTML;
+            console.log(mailinnerhtml);
+        }
+      
+        var telinnerhtml;
+        telefonosobre = document.querySelector("#telefonosobre");
+        if(telefonosobre == null){
+        telinnerhtml = "";
+        }else{
+            telinnerhtml = telefonosobre.innerHTML;
+        }
+        console.log(telinnerhtml);
+var domicilioinnerhtml;
+        domiciliosobre = document.querySelector("#domiciliosobre");
+        if(domiciliosobre == null){
+  
+        }else{
+            domicilioinnerhtml = domiciliosobre.innerHTML;
+        }
+
+    var documentoinnerhtml;
+        documentodiv = document.querySelector("#documentosobre");
+        if(documentodiv == null){
+        }else{
+            documentoinnerhtml = documentodiv.innerHTML
+        }
+
+    console.log(clientesobre);
+    console.log(mailsobre);
+
+    fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nombresobre}", "mail": "${mailfijado}", "telefono": "${telfijado}", "domicilio": "${domfijado}", "documento": "${docfijado}", "lente": "cerca", "numcliente": "${clientesobre}"}`,  (error) => {
         if(error){
             console.log(`error: ${error}`);
         }
@@ -212,12 +246,22 @@ if(abrirsobreclicked == true){
 buttonlejos.addEventListener("click", e =>{
     if(abrirsobreclicked == true){
         abrirsobreclicked = false;
-        nombresobre = document.querySelector("#nombresobre").innerHTML;
+       nombresobre = document.querySelector("#nombresobre").innerHTML;
+
+       if(mailsobre != null){
         mailsobre = document.querySelector("#mailsobre").innerHTML;
+    }
+    if(telefonosobre != null){
         telefonosobre = document.querySelector("#telefonosobre").innerHTML;
+    }
+    if(domiciliosobre != null){
         domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
+    }
+    if(documentodiv != null){
         documentodiv = document.querySelector("#documentosobre").innerHTML;
-        fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}", "lente": "lejos"}`, (error) => {
+    }
+        console.log(clientesobre);
+        fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nomfijado}", "mail": "${mailfijado}", "telefono": "${telfijado}", "domicilio": "${domfijado}", "documento": "${docfijado}", "lente": "lejos", "numcliente": "${clientesobre}"}`, (error) => {
             if(error){
                 console.log(`error: ${error}`);
             }
@@ -336,12 +380,36 @@ console.log("encontrado");
                                var total = usersobre.totall;
                                var sena = usersobre.sena;
                                var sal = usersobre.sal; 
+                               var maildelsobre;
+                               var telefonodelsobre;
+                               var documentodelsobre;
+                               var domiciliodelsobre;
+                               if(mailsobre == null || mailsobre == "undefined"){
+                               maildelsobre = "";
+                               }else{
+                                maildelsobre = mailsobre;
+                               }
+                               if(telefonosobre == null || telefonosobre == "undefined"){
+                                telefonodelsobre = "";
+                               }else{
+                                telefonodelsobre = telefonosobre;
+                               }
+                               if(documentodiv == null || documentodiv == "undefined"){
+                                documentodelsobre = "";
+                               }else{
+                                documentodelsobre = documentodiv;
+                               }
+                               if(domiciliosobre == null || domiciliosobre == "undefined"){
+                                domiciliodelsobre = "";
+                               }else{
+                                domiciliodelsobre = domiciliosobre;
+                               }
+                               
 
-
-                               fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{ "sobre": true, "nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}"
+                               fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{ "sobre": true, "nombre": "${nombresobre}", "mail": "${mailfijado}", "telefono": "${telfijado}", "domicilio": "${domfijado}", "documento": "${docfijado}"
                                , "lente": "lejos", "trabajonum": "${numerodetrabajo}", "fecha": "${trabajofecha}", "esf": "${esf}", "cil": "${cil}", "dip": "${dip}"
                                , "alt": "${alt}", "od": "${od}", "oi": "${oi}", "odcil": "${odcil}", "oicil": "${oicil}", "cristal": "${cristal}", "armazones": "${armazones}",
-                               "desc": "${desc}", "total": "${total}", "sena": "${sena}", "sal": "${sal}"}`, (error) => {
+                               "desc": "${desc}", "total": "${total}", "sena": "${sena}", "sal": "${sal}", "numcliente": "${clientesobre}"}`, (error) => {
                                 if(error){
                                     console.log(`error: ${error}`);
                                 }
@@ -445,6 +513,8 @@ selec.addEventListener('click', function(){
             var tel = ""
             var dom = ""
             var doc = ""
+            clientesobre;
+            console.log(clientesobre);
             if(arr[1].nombre == username){
                        if(arr[1].nombre){
                         var val = arr[1].nombre + " ";
@@ -465,7 +535,12 @@ selec.addEventListener('click', function(){
                         if(arr[1].documento){
                             doc += arr[1].documento;
                         }
-                        
+                        if(arr[1].cliente){
+                            console.log("bueno lo encontro");
+                            clientesobre = arr[1].cliente.toString();
+                        }
+
+                        console.log(clientesobre);
                 var elementoss = document.querySelectorAll(".elementos");
                 var sobresdelcliente = document.querySelectorAll(".sobrescliente");
 
@@ -477,18 +552,22 @@ selec.addEventListener('click', function(){
         })
                 var fichaseleccion = document.querySelector("#elementosficha");
                 var nombrediv = document.createElement("div");
-                fichaseleccion.prepend(nombrediv);
                 nombrediv.innerHTML = joinn;
+                nomfijado = joinn;
+                mailfijado = mail;
+                telfijado = tel;
+                domfijado = dom;
+                docfijado = doc;
                 if(mail == ""){
                     var divmail = document.createElement("div");
                     divmail.innerHTML = mail;
                     divmail.classList.add("elementos");
-                    divmail.id = "mailsobre";
                     divmail.classList.add("none");
+                    divmail.id = "mailsobre";
                     fichaseleccion.prepend(divmail);
                 }else{
                     var divmail = document.createElement("div");
-                    divmail.innerHTML = mail;
+                    divmail.innerHTML = `Mail: ${mail}`;
                     divmail.classList.add("elementos");
                     divmail.id = "mailsobre";
                     fichaseleccion.prepend(divmail);
@@ -500,7 +579,7 @@ selec.addEventListener('click', function(){
                     fichaseleccion.prepend(telefonodiv);
                     telefonodiv.classList.add("elementos");
                     telefonodiv.id = "telefonosobre";
-                    telefonodiv.innerHTML = tel;
+                    telefonodiv.innerHTML = `Tel: ${tel}`;
                     telefonodiv.classList.add("none");
                 }
                 if(dom == ""){
@@ -513,7 +592,7 @@ selec.addEventListener('click', function(){
                 }else{
                     var domiciliodiv = document.createElement("div");
                     fichaseleccion.prepend(domiciliodiv);
-                    domiciliodiv.innerHTML = dom;
+                    domiciliodiv.innerHTML = `Domicilio: ${dom}`;
                     domiciliodiv.classList.add("elementos");
                     domiciliodiv.id = "domiciliosobre";
                 }
@@ -527,18 +606,19 @@ selec.addEventListener('click', function(){
                 }else{
                     var documentdiv = document.createElement("div");
                                     fichaseleccion.prepend(documentdiv);
-                documentdiv.innerHTML = doc;
+                documentdiv.innerHTML = `Documento: ${doc}`;
                 documentdiv.classList.add("elementos");
                 documentdiv.id = "documentosobre";
                 }
 
                 nombrediv.classList.add("elementos");
                 nombrediv.id = "nombresobre";
-
+                fichaseleccion.prepend(nombrediv);  
                 
                 todoslossobres.forEach(findcliente =>{
-                    var documentoastring = doc.toString()
-                    if(findcliente.documento == documentoastring){
+                    var documentoastring = doc.toString();
+                    var teltostring = tel.toString();
+                    if(findcliente.documento == documentoastring || findcliente.mail == mail || findcliente.tel == teltostring || (findcliente.numcliente == clientesobre && findcliente.numcliente != "0") ){
                         var sobrecont = document.createElement("div");
                         containersobres.append(sobrecont);
                         var divsobre = document.createElement("div");
@@ -1244,7 +1324,7 @@ console.log("ingresando dato...");
     var lastIndex = valoresunidos.lastIndexOf("]");
     valoresunidos = valoresunidos.substring(0, lastIndex);
     var clientenum = 0;
-    if((clientemail.value = null || clientemail.value == "") && (clientetelefono.value == null || clientetelefono.value == "") && (clientedocumento.value == null || clientedocumento.value == "")){
+    if((clientemail.value == null || clientemail.value == "") && (clientetelefono.value == null || clientetelefono.value == "") && (clientedocumento.value == null || clientedocumento.value == "")){
 json.forEach(numerocliente =>{
     console.log(numerocliente);
     if(numerocliente.cliente != 0){
@@ -1261,6 +1341,10 @@ if(clientenum == 0){
 }
     }
     console.log("Numero de cliente:" + clientenum);
+    console.log(clientemail.value);
+    if(clientemail.value == "true" || clientemail.value == true || clientemail.value == "false" || clientemail.value == false ){
+        clientemail.value = "";
+    }
    if(json.length == 0){
     valoresunidos += `{"nombre": "${clientename.value}", "mail": "${clientemail.value}", "telefono": "${clientetelefono.value}", "domicilio": "${clientedomicilio.value}", "documento": "${clientedocumento.value}", "cliente": "${clientenum}"} ]`
     
