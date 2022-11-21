@@ -380,10 +380,6 @@ console.log("encontrado");
                                var total = usersobre.totall;
                                var sena = usersobre.sena;
                                var sal = usersobre.sal; 
-                               var maildelsobre;
-                               var telefonodelsobre;
-                               var documentodelsobre;
-                               var domiciliodelsobre;
                                if(mailsobre == null || mailsobre == "undefined"){
                                maildelsobre = "";
                                }else{
@@ -625,7 +621,15 @@ selec.addEventListener('click', function(){
                 todoslossobres.forEach(findcliente =>{
                     var documentoastring = doc.toString();
                     var teltostring = tel.toString();
-                    if(findcliente.documento == documentoastring || findcliente.mail == mail || findcliente.tel == teltostring || (findcliente.numcliente == clientesobre && findcliente.numcliente != "0") ){
+                    console.log(findcliente);
+                    console.log(findcliente.documento);
+                    console.log(documentoastring);
+                    console.log(findcliente.telefono);
+                    console.log(telfijado);
+                    console.log(teltostring);
+                    console.log(findcliente.mail);
+                    console.log(mailfijado);
+                    if(findcliente.documento == documentoastring && findcliente.mail == mail && findcliente.telefono == teltostring ){
                         var sobrecont = document.createElement("div");
                         containersobres.append(sobrecont);
                         var divsobre = document.createElement("div");

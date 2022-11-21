@@ -242,6 +242,7 @@ if(archivos.includes("sobres.json")){
                             "cliente": "${username}",
                             "documento": "${userdocument}",
                             "mail": "${usermail}",
+                            "telefono": "${userphone}",
                             "lente": "${userlente}",
                             "esf": "${esf.value}",
                             "cil": "${cil.value}",
@@ -283,8 +284,8 @@ if(obj.trabajonum == numdetrabajo && sobre == true){
     console.log(sacartotal);
     console.log(userdocument);
 console.log(`trabajo encontrado: ${obj.trabajonum}`);
-var sobrecompleto = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${obj.cliente}","documento":"${obj.documento}","mail":"${obj.mail}","lente":"${obj.lente}","esf":"${obj.esf}","cil":"${obj.cil}","dip":"${obj.dip}","alt":"${obj.alt}","od":"${obj.od}","oi":"${obj.oi}","odcil":"${obj.odcil}","oicil":"${obj.oicil}","cristal":"${obj.cristal}","armazones":"${obj.armazones}","desc":"${obj.desc}","totall":"${obj.totall}","sena":"${obj.sena}","sal":"${obj.sal}","retiroaprox":"${obj.retiroaprox}","pedidopara":"${obj.pedidopara}","numcliente":"${numcliente}"}`
-var sobrecompletohtml = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${username}","documento":"${userdocument}","mail":"${usermail}","lente":"${userlente}","esf":"${esf.value}","cil":"${cil.value}","dip":"${dip.value}","alt":"${alt.value}","od":"${od.value}","oi":"${oi.value}","odcil":"${odcil.value}","oicil":"${oicil.value}","cristal":"${cristales.value}","armazones":"${armazon.value}","desc":"${dssc.value}","totall":"${sacartotal}","sena":"${sacarsen}","sal":"${sacarsal}","retiroaprox":"${retiroaprox.value}","pedidopara":"${pedidopara.value}","numcliente":"${numcliente}"}`
+var sobrecompleto = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${obj.cliente}","documento":"${obj.documento}","mail":"${obj.mail}","telefono":"${obj.telefono}","lente":"${obj.lente}","esf":"${obj.esf}","cil":"${obj.cil}","dip":"${obj.dip}","alt":"${obj.alt}","od":"${obj.od}","oi":"${obj.oi}","odcil":"${obj.odcil}","oicil":"${obj.oicil}","cristal":"${obj.cristal}","armazones":"${obj.armazones}","desc":"${obj.desc}","totall":"${obj.totall}","sena":"${obj.sena}","sal":"${obj.sal}","retiroaprox":"${obj.retiroaprox}","pedidopara":"${obj.pedidopara}","numcliente":"${numcliente}"}`
+var sobrecompletohtml = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${username}","documento":"${userdocument}","mail":"${usermail}","telefono":"${userphone}","lente":"${userlente}","esf":"${esf.value}","cil":"${cil.value}","dip":"${dip.value}","alt":"${alt.value}","od":"${od.value}","oi":"${oi.value}","odcil":"${odcil.value}","oicil":"${oicil.value}","cristal":"${cristales.value}","armazones":"${armazon.value}","desc":"${dssc.value}","totall":"${sacartotal}","sena":"${sacarsen}","sal":"${sacarsal}","retiroaprox":"${retiroaprox.value}","pedidopara":"${pedidopara.value}","numcliente":"${numcliente}"}`
 
 var valoresunidos = JSON.stringify(json);
 var valunidos
@@ -325,6 +326,7 @@ var sacarsenn = sen.value.replace('$', '')
         "cliente": "${username}",
         "documento": "${userdocument}",
         "mail": "${usermail}",
+        "telefono": "${userphone}",
         "lente": "${userlente}",
         "esf": "${esf.value}",
         "cil": "${cil.value}",
