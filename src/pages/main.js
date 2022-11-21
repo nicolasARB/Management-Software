@@ -573,14 +573,21 @@ selec.addEventListener('click', function(){
                     fichaseleccion.prepend(divmail);
                 }
                 if(tel == ""){
-
-                }else{
+                    console.log("bien");
                     var telefonodiv = document.createElement("div");
                     fichaseleccion.prepend(telefonodiv);
                     telefonodiv.classList.add("elementos");
                     telefonodiv.id = "telefonosobre";
-                    telefonodiv.innerHTML = `Tel: ${tel}`;
+                    telefonodiv.innerHTML = telfijado;
                     telefonodiv.classList.add("none");
+
+                }else{
+                    console.log("bien");
+                    var telefonodiv = document.createElement("div");
+                    fichaseleccion.prepend(telefonodiv);
+                    telefonodiv.classList.add("elementos");
+                    telefonodiv.id = "telefonosobre";
+                    telefonodiv.innerHTML = `Telefono: ${telfijado}`;
                 }
                 if(dom == ""){
                     var domiciliodiv = document.createElement("div");
