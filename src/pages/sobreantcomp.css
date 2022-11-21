@@ -539,6 +539,7 @@ display: block;
     }
     .txtinp2{
         font-size: 1rem;
+        width: 30%;
     }
     .corte{
         max-width: 100%;
@@ -555,7 +556,7 @@ display: block;
     }
     .partederecha{
         position: absolute;
-        top: 82%;
+        top: 87%;
         left: 70%;
     }
     #p1{
@@ -597,7 +598,7 @@ display: block;
     }
     .partederecha2{
         position: absolute;
-        top: 53%;
+        top: 58%;
         left: 70%;
     }
   }
