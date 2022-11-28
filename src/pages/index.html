@@ -15,17 +15,18 @@
     <nav>
         <a class="botonav selectednav">Clientes</a>
         <a class="botonav">Stock</a>
+        <a class="botonav">Estadisticas</a>
       <!-- <a class="botonav">Estadisticas</a> --> 
     </nav>
 </head>
 <body>
 
-  <div id="id01" class="modal modalclientes modalname">
+  <div id="id01" class="modal modalname">
    <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
     <form class="modal-content" action="/action_page.php">
       <div class="container">
         <h1>Cambiar valor</h1>
-        <p>Estas seguro/a de que deseas cambiar este nombre?</p>
+        <p>Estas seguro/a de que deseas cambiar este valor?</p>
       
         <div class="clearfix">
           <button type="button" onclick="document.getElementById('id01').style.display='none'" class="deletebtn changenamestock">Cambiar</button>
@@ -36,12 +37,12 @@
   </div>
 
 
-  <div id="id03" class="modal modalclientes modalstock">
+  <div id="id03" class="modal modalstock">
     <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
      <form class="modal-content" action="/action_page.php">
        <div class="container">
          <h1>Cambiar valor</h1>
-         <p>Estas seguro/a de que deseas cambiar este numero de stock?</p>
+         <p>Estas seguro/a de que deseas cambiar este valor?</p>
        
          <div class="clearfix">
            <button type="button" onclick="document.getElementById('id03').style.display='none'" class="changestockvalue">Cambiar</button>
@@ -52,12 +53,12 @@
    </div>
 
 
-   <div id="id04" class="modal modalclientes modalprice">
+   <div id="id04" class="modal modalprice">
     <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
      <form class="modal-content" action="/action_page.php">
        <div class="container">
          <h1>Cambiar valor</h1>
-         <p>Estas seguro/a de que deseas cambiar este precio?</p>
+         <p>Estas seguro/a de que deseas cambiar este valor?</p>
        
          <div class="clearfix">
            <button type="button" onclick="document.getElementById('id04').style.display='none'" class="changepricevalue">Cambiar</button>
@@ -95,12 +96,13 @@
 <br>
 <section id="contenido">
 
-  <div id="id02" class="modal modalclientes">
+  <div id="id02" class="modal">
     <!-- <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>-->
      <form class="modal-content" action="/action_page.php">
        <div class="container">
-         <h1>Elegir lente</h1>
-         <p></p>
+         <h1>Cambiar valor</h1>
+         <p>Estas seguro/a de que deseas cambiar este valor?</p>
+       
          <div class="clearfix">
            <button type="button" id="buttoncerca" onclick="document.getElementById('id02').style.display='none', document.getElementById('id02').classList.add('selectedcerca')" class="deletebtnstock bt">Cerca</button>
            <button type="button" id="buttonlejos" onclick="document.getElementById('id02').style.display='none', document.getElementById('id02').classList.add('selectedlejos')" class="cancelbtnstock bt">Lejos</button>
@@ -132,7 +134,7 @@
   <button class="sobresclientebutton">Abrir</button> </div> -->
 </div>
 <button id="crearsobre">crear sobre</button>
-<input id="textbuscadorsobre" type="text"> <button id="abrirsobrebuscador">Abrir</button>
+<input type="text" > <button id="abrirsobrebuscador">Abrir</button>
 </div>
 <footer id="agregarclientes">
   <!--<label for="producto">Producto:</label>---> 

@@ -1,4 +1,4 @@
-//const e = require('express');
+const e = require('express');
 
 window.addEventListener('load', ()=>{
 
@@ -26,11 +26,7 @@ window.addEventListener('load', ()=>{
     var mes = fechahoy.getMonth() + 1;
     var dia = fechahoy.getDate();
     var yearandmonth = dia + "/" + mes + "/" + año
-    
 
-
-var todoslostrabajos = document.querySelectorAll(".trabajo");
-var todaslasfechas = document.querySelectorAll(".fecha");
 var trabajo = document.querySelector("#t1");
 var fec = document.querySelector("#f1");    
 fec.innerHTML = `Fecha: ${yearandmonth}`
@@ -53,10 +49,9 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
     var sal = document.querySelector("#sal");
 
     var retiroaprox = document.querySelector("#retiroaprox");
-    var pedidopara = document.querySelector("#pedidopara");
+    var pedidopara = document.querySelector("#pedidopara")
 
-    var numdetrabajo;
-    var numcliente;
+    var numdetrabajo
 //    console.log(array.length);
     //
 
@@ -66,13 +61,11 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
             var json = JSON.parse(data);
             console.log(json);
             if(json.sobre){
-
                 username = json.nombre;
                 usermail = json.mail;
                 userphone = json.telefono;
                 userhome = json.domicilio;
                 userdocument = json.documento;
-                numcliente = json.numcliente;
                 userlente = json.lente;
                 nombre.innerHTML = "Nombre y apellido: " + username;
                 domicilio.innerHTML = "Domicilio " + userhome;
@@ -95,19 +88,12 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 dssc.value = json.desc;
                 cristales.value = json.cristal;
                 armazon.value = json.armazones;
-                todoslostrabajos.forEach(trb =>{
-                    trb.innerHTML = trabajo.innerHTML;
-                })
-                
-                todaslasfechas.forEach(fech =>{
-                    fech.innerHTML = fec.innerHTML;
-                })
                 var arrayelem = ["esf", "cil", "dip", "alt", "od", "oi", "odcil", "oicil", "cristales", "armazon", "dssc"
                 , "total", "sen", "sal", "retiroaprox", "pedidopara"];
                 arrayelem.forEach(elem =>{
                     console.log(elem);
                     var elemento = document.querySelector(`#${elem}`);
-                    if(elemento.value == "undefined" || elemento.value.trim().length == 0){
+                    if(elemento.value == "undefined"){
                         elemento.value = "";
                     }
                 })
@@ -120,10 +106,9 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                     elemento.forEach(seleccionado =>{ 
                         console.log(seleccionado);  
                             seleccionado.value = json[elmslice];       
-                            if(seleccionado.value == "undefined" || seleccionado.value.trim().length == 0){
+                            if(seleccionado.value == "undefined"){
                                 seleccionado.value = ""
                             }else if(seleccionado.classList.contains("senax") || seleccionado.classList.contains("salx") || seleccionado.classList.contains("totalx")){
-                                console.log(seleccionado.value.trim())
                                 seleccionado.value = `$${json[elmslice]}`
                             }
 
@@ -140,33 +125,12 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 userphone = json.telefono;
                 userhome = json.domicilio;
                 userdocument = json.documento;
-                numcliente = json.numcliente;
                 userlente = json.lente;
-                console.log(numcliente);
                 nombre.innerHTML = "Nombre y apellido: " + username;
-                if(userhome == "undefined" || userhome == ""){
-                    domicilio.innerHTML = "Domicilio "
-                }else{
-                    domicilio.innerHTML = "Domicilio " + userhome;
-                }
-
-                if(userhome == "undefined" || userdocument == ""){
-                    dni.innerHTML = "Documento: ";
-                }else{
-                    dni.innerHTML = "Documento: " + userdocument;
-                }
-
-                if(userhome == "undefined" || userphone == ""){
-                    celular.innerHTML = "Celular: "
-                }else{
-                    celular.innerHTML = "Celular: " + userphone;
-                }
-
-                if(userhome == "undefined" || usermail == ""){
-                    mail.innerHTML = "Email: "
-                }else{
-                    mail.innerHTML = "Email: " + usermail;  
-                }
+                domicilio.innerHTML = "Domicilio " + userhome;
+                dni.innerHTML = "Documento: " + userdocument;
+                celular.innerHTML = "Celular: " + userphone;
+                mail.innerHTML = "Email: " + usermail;
             }
 
 
@@ -194,7 +158,6 @@ if(archivos.includes("sobres.json")){
         if (json.length == 0 && sobre == false){
             numtrabajo = `010001`;
             trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
-            
             }else{
                 if(json.length >=1 && json.length <10 && sobre == false){
                 numtrabajo = `01000${json.length +1}`;
@@ -211,122 +174,49 @@ if(archivos.includes("sobres.json")){
 
                 }
             }
-
-            todoslostrabajos.forEach(trb =>{
-                trb.innerHTML = trabajo.innerHTML;
-            })
-            
-            todaslasfechas.forEach(fech =>{
-                fech.innerHTML = fec.innerHTML;
-            })
-            
         })
+        sobre = false;
 
         function save(){
 
             fs.readFile('C:/Users/Public/sobres.json', function (err, data) {
                 var json = JSON.parse(data);
-                console.log(json.length);
-                console.log(sobre);
-                if(json.length == 0 && sobre == false){
-                    sobre = true;
-                    console.log("yes");
-                        var valoresunidos = JSON.stringify(json);
-                        var lastIndex = valoresunidos.lastIndexOf("]");
-                        valoresunidos = valoresunidos.substring(0, lastIndex);
-                        console.log(valoresunidos);
-                        console.log(json.length);
-                        var objetosobre = 
-                        `{"trabajonum": "${numtrabajo}",
-                            "fecha": "${yearandmonth}",
-                            "cliente": "${username}",
-                            "documento": "${userdocument}",
-                            "mail": "${usermail}",
-                            "telefono": "${userphone}",
-                            "lente": "${userlente}",
-                            "esf": "${esf.value}",
-                            "cil": "${cil.value}",
-                            "dip": "${dip.value}",
-                            "alt": "${alt.value}",
-                            "od": "${odesf.value}",
-                            "oi": "${oiesf.value}",
-                            "odcil": "${odcil.value}",
-                            "oicil": "${oicil.value}",
-                            "cristal": "${cristales.value}",
-                            "armazones": "${armazon.value}",
-                            "desc": "${dssc.value}",
-                            "totall": "${total.value}",
-                            "sena": "${sen.value}",
-                            "sal": "${sal.value}",
-                            "retiroaprox": "${retiroaprox.value}",
-                            "pedidopara": "${pedidopara.value}",
-                            "numcliente": "${numcliente}"}`
-                            
-                    if (json.length == 0){
-                    valoresunidos += `${objetosobre} ]`
-                    }else{
-                    valoresunidos += ` ,${objetosobre} ]`
-                    }
-                    fs.writeFile( 'C:/Users/Public/sobres.json', valoresunidos, (error) => {
-                        if(error){
-                            console.log(`error: ${error}`);
-                        }
-                    })
-                }
-                json.forEach(obj =>{
+                console.log(json);
+                json.forEach( obj =>{
                     console.log(numdetrabajo);
-                    console.log(numtrabajo);
                     console.log(obj.trabajonum);
-if(obj.trabajonum == numdetrabajo && sobre == true){
-    var sacartotal = total.value.replace('$', '')
-    var sacarsal = sal.value.replace('$', '')
-    var sacarsen = sen.value.replace('$', '')
-    console.log(sacartotal);
-    console.log(userdocument);
-console.log(`trabajo encontrado: ${obj.trabajonum}`);
-var sobrecompleto = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${obj.cliente}","documento":"${obj.documento}","mail":"${obj.mail}","telefono":"${obj.telefono}","lente":"${obj.lente}","esf":"${obj.esf}","cil":"${obj.cil}","dip":"${obj.dip}","alt":"${obj.alt}","od":"${obj.od}","oi":"${obj.oi}","odcil":"${obj.odcil}","oicil":"${obj.oicil}","cristal":"${obj.cristal}","armazones":"${obj.armazones}","desc":"${obj.desc}","totall":"${obj.totall}","sena":"${obj.sena}","sal":"${obj.sal}","retiroaprox":"${obj.retiroaprox}","pedidopara":"${obj.pedidopara}","numcliente":"${numcliente}"}`
-var sobrecompletohtml = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${username}","documento":"${userdocument}","mail":"${usermail}","telefono":"${userphone}","lente":"${userlente}","esf":"${esf.value}","cil":"${cil.value}","dip":"${dip.value}","alt":"${alt.value}","od":"${od.value}","oi":"${oi.value}","odcil":"${odcil.value}","oicil":"${oicil.value}","cristal":"${cristales.value}","armazones":"${armazon.value}","desc":"${dssc.value}","totall":"${sacartotal}","sena":"${sacarsen}","sal":"${sacarsal}","retiroaprox":"${retiroaprox.value}","pedidopara":"${pedidopara.value}","numcliente":"${numcliente}"}`
+if(obj.trabajonum == numdetrabajo){
+console.log("trabajo encontrado");
+var sobrecompleto = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${obj.cliente}","documento":"${obj.documento}","mail":"${obj.mail}","lente":"${obj.lente}","esf":"${obj.esf}","cil":"${obj.cil}","dip":"${obj.dip}","alt":"${obj.alt}","od":"${obj.od}","oi":"${obj.oi}","odcil":"${obj.odcil}","oicil":"${obj.oicil}","cristal":"${obj.cristal}","armazones":"${obj.armazones}","desc":"${obj.desc}","totall":"${obj.totall}","sena":"${obj.sena}","sal":"${obj.sal}","retiroaprox":"${obj.retiroaprox}","pedidopara":"${obj.pedidopara}"}`
+var sobrecompletohtml = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${username}","documento":"${userdocument}","mail":"${usermail}","lente":"${userlente}","esf":"${esf.value}","cil":"${cil.value}","dip":"${dip.value}","alt":"${alt.value}","od":"${od.value}","oi":"${oi.value}","odcil":"${odcil.value}","oicil":"${oicil.value}","cristal":"${cristales.value}","armazones":"${armazon.value}","desc":"${dssc.value}","totall":"${total.value}","sena":"${sen.value}","sal":"${sal.value}","retiroaprox":"${retiroaprox.value}","pedidopara":"${pedidopara.value}"}`
 
 var valoresunidos = JSON.stringify(json);
 var valunidos
 console.log(valoresunidos);
 if(valoresunidos.indexOf(`${sobrecompleto}`)){
     console.log(sobrecompleto);
-    console.log(sobrecompletohtml);
-    console.log(valoresunidos);
+    console.log(sobrecompletohtml)
     valunidos = valoresunidos.replace(`${sobrecompleto}`, `${sobrecompletohtml}`);
+
     console.log(valunidos);
 
-    
-    fs.writeFile( 'C:/Users/Public/sobres.json', valunidos, (error) => {
-        if(error){
-            console.log(`error: ${error}`);
-        }
-    })
-    
+
 }
 
-}else if(obj.trabajonum != numdetrabajo && sobre == false){
-sobre = true;
-console.log("yes");
+}else{
+
+
     var valoresunidos = JSON.stringify(json);
     var lastIndex = valoresunidos.lastIndexOf("]");
     valoresunidos = valoresunidos.substring(0, lastIndex);
     console.log(valoresunidos);
     console.log(json.length);
-    console.log(numtrabajo);
-    numdetrabajo = numtrabajo;
-var sacartotall = total.value.replace('$', '')
-var sacarsall = sal.value.replace('$', '')
-var sacarsenn = sen.value.replace('$', '')
-    console.log(`${sacartotall} ${sacarsall} ${sacarsenn}`)
-    var objetosobre = 
-    `{"trabajonum": "${numtrabajo}",
+    var objetosobre = `{
+        "trabajonum": "${numtrabajo}",
         "fecha": "${yearandmonth}",
         "cliente": "${username}",
         "documento": "${userdocument}",
         "mail": "${usermail}",
-        "telefono": "${userphone}",
         "lente": "${userlente}",
         "esf": "${esf.value}",
         "cil": "${cil.value}",
@@ -339,12 +229,13 @@ var sacarsenn = sen.value.replace('$', '')
         "cristal": "${cristales.value}",
         "armazones": "${armazon.value}",
         "desc": "${dssc.value}",
-        "totall": "${sacartotall}",
-        "sena": "${sacarsenn}",
-        "sal": "${sacarsall}",
+        "totall": "${total.value}",
+        "sena": "${sen.value}",
+        "sal": "${sal.value}",
         "retiroaprox": "${retiroaprox.value}",
-        "pedidopara": "${pedidopara.value}",
-        "numcliente": "${numcliente}"}`
+        "pedidopara": "${pedidopara.value}"
+
+    }`
 if (json.length == 0){
 valoresunidos += `${objetosobre} ]`
 }else{
@@ -359,25 +250,17 @@ fs.writeFile( 'C:/Users/Public/sobres.json', valoresunidos, (error) => {
 
 }
                 })
-        
 
             })
 
         }
-        var savebutton = document.querySelector("#guardar");
-        var imprimir = document.querySelector("#imprimir");
-imprimir.addEventListener('click', ()=>{
-  imprimir.style.display = "none";
-  savebutton.style.display = "none";  
-window.print();
-imprimir.style.display = "inline";
-savebutton.style.display = "inline";
-})
 
+document.querySelector("#imprimir").addEventListener('click', ()=>{
+window.print();
+})
+var savebutton = document.querySelector("#guardar");
 
 savebutton.addEventListener("click", ()=>{
     save()
 })
-
-
 })
