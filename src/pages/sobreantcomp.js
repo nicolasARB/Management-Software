@@ -29,6 +29,8 @@ window.addEventListener('load', ()=>{
 
 var trabajo = document.querySelector("#t1");
 var fec = document.querySelector("#f1");    
+var todoslostrabajos = document.querySelectorAll(".trabajo");
+var todaslasfechas = document.querySelectorAll(".fecha");
 fec.innerHTML = `Fecha: ${yearandmonth}`
     var esf = document.querySelector("#esf");
     var cil = document.querySelector("#cil");
@@ -74,6 +76,12 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 mail.innerHTML = "Email: " + usermail;
                 trabajo.innerHTML = `Trabajo n°: ${json.trabajonum}`;
                 fec.innerHTML = `Fecha: ${json.fecha}`;
+                todoslostrabajos.forEach(trb =>{
+                    trb.innerHTML = `Trabajo n°: ${json.trabajonum}`;
+                })
+                todaslasfechas.forEach(fechadiv =>{
+                    fechadiv.innerHTML = `Fecha:${json.fecha}`;
+                })
                 esf.value = json.esf;
                 cil.value = json.cil;
                 dip.value = json.dip;
@@ -126,6 +134,9 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 userhome = json.domicilio;
                 userdocument = json.documento;
                 userlente = json.lente;
+                todaslasfechas.forEach(fechadiv =>{
+                    fechadiv.innerHTML = `Fecha:${yearandmonth}`;
+                })
                 nombre.innerHTML = "Nombre y apellido: " + username;
                 domicilio.innerHTML = "Domicilio " + userhome;
                 dni.innerHTML = "Documento: " + userdocument;
@@ -174,6 +185,9 @@ if(archivos.includes("sobres.json")){
 
                 }
             }
+            todoslostrabajos.forEach(trb =>{
+                trb.innerHTML = `Trabajo n°: ${numtrabajo}`;
+            })
         })
         sobre = false;
 

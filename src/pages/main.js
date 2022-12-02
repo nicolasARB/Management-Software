@@ -1,4 +1,5 @@
 const { json } = require('express');
+const { join } = require('path');
 
 window.addEventListener('load', function(){
     var joinn = " "
@@ -65,77 +66,7 @@ nava.forEach(nav => {
     })
 })
 //
-
-//actualizar fichas de clientes
-function actualizar(objetonuevo){
-var entries = Object.entries(objetonuevo);
-
-
-entries.forEach(element =>{
-        if(element[0] == "numero"){
-        var val = "Cliente " + element[1] + " -"; 
-        joinn +=val;
-        console.log(joinn);
-        }else if(element[0] == "nombre"){
-        var val = element[1] + " ";
-        joinn += val; 
-        }else if(element[0] == "apellido"){
-            var val = element[1] + "";
-            joinn += val; 
-        console.log(joinn);
-        }
-            
-})
-        console.log(objetonuevo);
-        console.log(entries[0]);
-         var container = document.querySelector("#fichas");
-        var actualizarficha = document.createElement("div")
-        objetos.push(objetonuevo);
-        console.log(objetos);
-        container.append(actualizarficha);
-        actualizarficha.classList.add("cliente");
-        actualizarficha.innerHTML = joinn;
-        joinn = ""
-        seleccion = document.querySelectorAll(".cliente");
-        
-    
-
-}
-//
-
 const {ipcRenderer} = require('electron');
-
-ipcRenderer.on('newFicha', (e, newFicha) => {
-    console.log(newFicha)
-    var nuevoobjeto = {};
-    for(i = 0; i < objetos.length; i++){
-        if(i = objetos.length){
-            i++;
-         newFicha["numero"] = i;
-         var entries = Object.entries(newFicha);
-         console.log("El numero donde esta numero es: " + entries.indexOf("numero"));
-         entries.forEach(function(elemento, pos) {
-            console.log(elemento)
-            if(elemento[0] == "numero"){
-                console.log("Numero es: " + elemento[1]); 
-                console.log(elemento);
-            
-              nuevoobjeto[elemento[0]] = elemento[1];
-              console.log(nuevoobjeto);
-              delete entries[pos];
-              console.log(entries);
-              entries.forEach(nuevo =>{
-              nuevoobjeto[nuevo[0]] = nuevo[1];
-              })
-              console.log(nuevoobjeto);
-              actualizar(nuevoobjeto);
-            }
-         })
-
-        }
-    }
-
-});
 
 var fs = require('fs');
 var crearsobre = document.querySelector("#crearsobre")
@@ -182,15 +113,26 @@ todoslosclientes.forEach(cliente =>{
 //
 var changeproduct = document.querySelector('.deletebtn');
 var cancelproduct = document.querySelector('.cancelbtn');
+
+
+
+
+
 //modals abrir sobre
 buttoncerca.addEventListener("click", e =>{
 if(abrirsobreclicked == true){
     abrirsobreclicked = false;
-    nombresobre = document.querySelector("#nombresobre").innerHTML;
-    mailsobre = document.querySelector("#mailsobre").innerHTML;
-    telefonosobre = document.querySelector("#telefonosobre").innerHTML;
-    domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
-    documentodiv = document.querySelector("#documentosobre").innerHTML;
+  //  nombresobre = document.querySelector("#nombresobre").innerHTML;
+ //   mailsobre = document.querySelector("#mailsobre").innerHTML;
+ //   telefonosobre = document.querySelector("#telefonosobre").innerHTML;
+ //   domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
+ //   documentodiv = document.querySelector("#documentosobre").innerHTML;
+ nombresobre = nombresobre.substring(nombresobre.indexOf(":") + 1);
+ domiciliosobre = domiciliosobre.substring(domiciliosobre.indexOf(":") + 1);
+ telefonosobre = telefonosobre.substring(telefonosobre.indexOf(":") + 1);
+ documentodiv = documentodiv.substring(documentodiv.indexOf(":") + 1);
+ mailsobre = mailsobre.substring(mailsobre.indexOf(":") + 1);
+
     fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}", "lente": "cerca"}`,  (error) => {
         if(error){
             console.log(`error: ${error}`);
@@ -203,11 +145,17 @@ if(abrirsobreclicked == true){
 buttonlejos.addEventListener("click", e =>{
     if(abrirsobreclicked == true){
         abrirsobreclicked = false;
+        /*
         nombresobre = document.querySelector("#nombresobre").innerHTML;
         mailsobre = document.querySelector("#mailsobre").innerHTML;
         telefonosobre = document.querySelector("#telefonosobre").innerHTML;
         domiciliosobre = document.querySelector("#domiciliosobre").innerHTML;
-        documentodiv = document.querySelector("#documentosobre").innerHTML;
+        documentodiv = document.querySelector("#documentosobre").innerHTML;*/
+        nombresobre = nombresobre.substring(nombresobre.indexOf(":") + 1);
+        domiciliosobre = domiciliosobre.substring(domiciliosobre.indexOf(":") + 1);
+        telefonosobre = telefonosobre.substring(telefonosobre.indexOf(":") + 1);
+        documentodiv = documentodiv.substring(documentodiv.indexOf(":") + 1);
+        mailsobre = mailsobre.substring(mailsobre.indexOf(":") + 1);
         fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{"nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}", "lente": "lejos"}`, (error) => {
             if(error){
                 console.log(`error: ${error}`);
@@ -336,7 +284,11 @@ console.log("encontrado");
                                var total = usersobre.totall;
                                var sena = usersobre.sena;
                                var sal = usersobre.sal; 
-
+                               nombresobre = nombresobre.substring(nombresobre.indexOf(":") + 1);
+                               domiciliosobre = domiciliosobre.substring(domiciliosobre.indexOf(":") + 1);
+                               telefonosobre = telefonosobre.substring(telefonosobre.indexOf(":") + 1);
+                               documentodiv = documentodiv.substring(documentodiv.indexOf(":") + 1);
+                               mailsobre = mailsobre.substring(mailsobre.indexOf(":") + 1);
 
                                fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{ "sobre": true, "nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}"
                                , "lente": "lejos", "trabajonum": "${numerodetrabajo}", "fecha": "${trabajofecha}", "esf": "${esf}", "cil:": "${cil}", "dip": "${dip}"
@@ -477,11 +429,41 @@ selec.addEventListener('click', function(){
                 fichaseleccion.prepend(telefonodiv);
                 fichaseleccion.prepend(divmail);
                 fichaseleccion.prepend(nombrediv);
-                nombrediv.innerHTML = joinn;
-                divmail.innerHTML = mail;
-                domiciliodiv.innerHTML = dom;
-                telefonodiv.innerHTML = tel;
-                documentdiv.innerHTML = doc;
+               // nombrediv.innerHTML = "Cliente:" + joinn;
+                if(joinn.trim() != "" || null){
+                    nombrediv.innerHTML = "Cliente:" + joinn;
+                }else{
+                    nombrediv.style = "display: none;"
+                }
+                if(mail.trim() != "" || null){
+                    divmail.innerHTML = "Mail:" + mail;
+                }else{
+                    divmail.style = "display: none;"
+                }
+      //          divmail.innerHTML = "Mail:" + mail;
+                if(dom.trim() != "" || null){
+                    domiciliodiv.innerHTML = "Domicilio:" + dom;
+                }else{
+                    domiciliodiv.style = "display: none;"
+                }
+                if(tel.trim() != "" || null){
+                    telefonodiv.style = "display: none;"
+                }else{
+                    telefonodiv.innerHTML = tel;
+                }
+                if(doc.trim() != "" || null){
+                    documentdiv.style = "display: none;"
+                }else{
+                    documentdiv.innerHTML = doc;
+                    documentdiv.style = "display: none;"
+                }
+                nombresobre = joinn;
+                mailsobre = mail;
+                telefonosobre = tel;
+                domiciliosobre = dom;
+                documentodiv = doc;
+
+             //   documentdiv.innerHTML = "Documento:" + doc;
                 nombrediv.classList.add("elementos");
                 nombrediv.id = "nombresobre";
                 domiciliodiv.classList.add("elementos");
