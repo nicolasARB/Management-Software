@@ -167,11 +167,11 @@ if(archivos.includes("sobres.json")){
         console.log(json);
         previousjson = json
         if (json.length == 0 && sobre == false){
-            numtrabajo = `010001`;
+            numtrabajo = `010003`;
             trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
             }else{
                 if(json.length >=1 && json.length <10 && sobre == false){
-                numtrabajo = `01000${json.length +1}`;
+                numtrabajo = `01000${json.length +3}`;
                 trabajo.innerHTML = `Trabajo n°: ${numtrabajo}`;
                 }else if(json.length >=9 && json.length <100 && sobre == false){
                     numtrabajo = `0100${json.length +1}`;
@@ -196,6 +196,7 @@ if(archivos.includes("sobres.json")){
             fs.readFile('C:/Users/Public/sobres.json', function (err, data) {
                 var json = JSON.parse(data);
                 console.log(json);
+                if (json.length > 0){
                 json.forEach( obj =>{
                     console.log(numdetrabajo);
                     console.log(obj.trabajonum);
@@ -217,7 +218,7 @@ if(valoresunidos.indexOf(`${sobrecompleto}`)){
 
 }
 
-}else{
+}else if(sobre == false){
 
 
     var valoresunidos = JSON.stringify(json);
@@ -260,10 +261,49 @@ fs.writeFile( 'C:/Users/Public/sobres.json', valoresunidos, (error) => {
         console.log(`error: ${error}`);
     }
 })
-
+sobre = true;
+numdetrabajo = numtrabajo;
 
 }
+                })}else{
+                    console.log("no hay length");
+                    var valoresunidos = JSON.stringify(json);
+                    var lastIndex = valoresunidos.lastIndexOf("]");
+                    valoresunidos = valoresunidos.substring(0, lastIndex);
+                    console.log(valoresunidos);
+                    console.log(json.length);
+                    var objetosobre = `{
+                        "trabajonum": "${numtrabajo}",
+                        "fecha": "${yearandmonth}",
+                        "cliente": "${username}",
+                        "documento": "${userdocument}",
+                        "mail": "${usermail}",
+                        "lente": "${userlente}",
+                        "esf": "${esf.value}",
+                        "cil": "${cil.value}",
+                        "dip": "${dip.value}",
+                        "alt": "${alt.value}",
+                        "od": "${odesf.value}",
+                        "oi": "${oiesf.value}",
+                        "odcil": "${odcil.value}",
+                        "oicil": "${oicil.value}",
+                        "cristal": "${cristales.value}",
+                        "armazones": "${armazon.value}",
+                        "desc": "${dssc.value}",
+                        "totall": "${total.value}",
+                        "sena": "${sen.value}",
+                        "sal": "${sal.value}",
+                        "retiroaprox": "${retiroaprox.value}",
+                        "pedidopara": "${pedidopara.value}"
+                
+                    }`
+                valoresunidos += `${objetosobre} ]`
+                fs.writeFile( 'C:/Users/Public/sobres.json', valoresunidos, (error) => {
+                    if(error){
+                        console.log(`error: ${error}`);
+                    }
                 })
+                }
 
             })
 

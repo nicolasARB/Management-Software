@@ -172,6 +172,7 @@ var navbara = document.querySelectorAll(".botonav");
 var buscadorstock = document.querySelector("#buscadorstock");
 var contenidostock = document.querySelector("#contenidostock");
 var contenidostockfooter = document.querySelector("#agregarproductos");
+var estadisticas = document.querySelector("#estadisticas");
 // actualizar nav
 navbara.forEach(nab =>{
     console.log(nab);
@@ -181,16 +182,19 @@ if(nab.innerHTML == "Stock"){
     contenidostock.style = "display: flex;";
     contenidostockfooter.style = "display: inline;";
     buscadorstock.style = "display: inline;";
+    estadisticas.style = "display: none;"
 } else if(nab.innerHTML == "Clientes"){
     content.style = "display: flex;";
     contenidostock.style = "display: none;";
     contenidostockfooter.style = "display: none;";
     buscadorstock.style = "display: none;";
+    estadisticas.style = "display: none;"
 }else if(nab.innerHTML == "Estadisticas"){
     content.style = "display: none;";
     contenidostock.style = "display: none;";
     contenidostockfooter.style = "display: none;";
     buscadorstock.style = "display: none;";
+    estadisticas.style = "display: inline;"
 
 }
     })
@@ -445,16 +449,17 @@ selec.addEventListener('click', function(){
                     domiciliodiv.innerHTML = "Domicilio:" + dom;
                 }else{
                     domiciliodiv.style = "display: none;"
+
                 }
                 if(tel.trim() != "" || null){
-                    telefonodiv.style = "display: none;"
+                    telefonodiv.innerHTML = `Tel: ${tel}`;
                 }else{
-                    telefonodiv.innerHTML = tel;
+                    telefonodiv.style = "display: none;"
                 }
                 if(doc.trim() != "" || null){
+                    documentdiv.innerHTML = `Documento: ${doc}`;
                     documentdiv.style = "display: none;"
                 }else{
-                    documentdiv.innerHTML = doc;
                     documentdiv.style = "display: none;"
                 }
                 nombresobre = joinn;
@@ -1183,11 +1188,11 @@ console.log("ingresando dato...");
     var lastIndex = valoresunidos.lastIndexOf("]");
     valoresunidos = valoresunidos.substring(0, lastIndex);
    if(json.length == 0){
-    valoresunidos += `{"nombre": "${clientename.value}", "mail": "${clientemail.value}", "telefono": ${clientetelefono.value}, "domicilio": "${clientedomicilio.value}", "documento": "${clientedocumento.value}"} ]`
+    valoresunidos += `{"nombre": "${clientename.value}", "mail": "${clientemail.value}", "telefono": "${clientetelefono.value}", "domicilio": "${clientedomicilio.value}", "documento": "${clientedocumento.value}"} ]`
     
    }else{
 
-    valoresunidos += `,{"nombre": "${clientename.value}", "mail": "${clientemail.value}", "telefono": ${clientetelefono.value}, "domicilio": "${clientedomicilio.value}", "documento": "${clientedocumento.value}"} ]`
+    valoresunidos += `,{"nombre": "${clientename.value}", "mail": "${clientemail.value}", "telefono": "${clientetelefono.value}", "domicilio": "${clientedomicilio.value}", "documento": "${clientedocumento.value}"} ]`
 }
 console.log("ingresando cliente");
 clientename.value = "";
