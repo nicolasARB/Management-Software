@@ -90,10 +90,10 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 oiesf.value = json.oi;
                 odcil.value = json.odcil;
                 oicil.value = `  ${json.oicil}`;
-                total.value = `$${json.total}`;
-                sen.value = `$${json.sena}`;
-                sal.value = `$${json.sal}`;
-                dssc.value = json.desc;
+             //   total.value = `$${json.total}`;
+           //     sen.value = `$${json.sena}`;
+              //  sal.value = `$${json.sal}`;
+               // dssc.value = json.desc;
                 cristales.value = json.cristal;
                 armazon.value = json.armazones;
                 var arrayelem = ["esf", "cil", "dip", "alt", "od", "oi", "odcil", "oicil", "cristales", "armazon", "dssc"
@@ -116,8 +116,6 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                             seleccionado.value = json[elmslice];       
                             if(seleccionado.value == "undefined"){
                                 seleccionado.value = ""
-                            }else if(seleccionado.classList.contains("senax") || seleccionado.classList.contains("salx") || seleccionado.classList.contains("totalx")){
-                                seleccionado.value = `$${json[elmslice]}`
                             }
 
 
@@ -203,7 +201,7 @@ if(archivos.includes("sobres.json")){
 if(obj.trabajonum == numdetrabajo){
 console.log("trabajo encontrado");
 var sobrecompleto = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${obj.cliente}","documento":"${obj.documento}","mail":"${obj.mail}","lente":"${obj.lente}","esf":"${obj.esf}","cil":"${obj.cil}","dip":"${obj.dip}","alt":"${obj.alt}","od":"${obj.od}","oi":"${obj.oi}","odcil":"${obj.odcil}","oicil":"${obj.oicil}","cristal":"${obj.cristal}","armazones":"${obj.armazones}","desc":"${obj.desc}","totall":"${obj.totall}","sena":"${obj.sena}","sal":"${obj.sal}","retiroaprox":"${obj.retiroaprox}","pedidopara":"${obj.pedidopara}"}`
-var sobrecompletohtml = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${username}","documento":"${userdocument}","mail":"${usermail}","lente":"${userlente}","esf":"${esf.value}","cil":"${cil.value}","dip":"${dip.value}","alt":"${alt.value}","od":"${od.value}","oi":"${oi.value}","odcil":"${odcil.value}","oicil":"${oicil.value}","cristal":"${cristales.value}","armazones":"${armazon.value}","desc":"${dssc.value}","totall":"${total.value}","sena":"${sen.value}","sal":"${sal.value}","retiroaprox":"${retiroaprox.value}","pedidopara":"${pedidopara.value}"}`
+var sobrecompletohtml = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${username}","documento":"${userdocument}","mail":"${usermail}","lente":"${userlente}","esf":"${esf.value}","cil":"${cil.value}","dip":"${dip.value}","alt":"${alt.value}","od":"${od.value}","oi":"${oi.value}","odcil":"${odcil.value.trim()}","oicil":"${oicil.value.trim()}","cristal":"${cristales.value}","armazones":"${armazon.value}","desc":"${dssc.value}","totall":"${total.value}","sena":"${sen.value}","sal":"${sal.value}","retiroaprox":"${retiroaprox.value}","pedidopara":"${pedidopara.value}"}`
 
 var valoresunidos = JSON.stringify(json);
 var valunidos

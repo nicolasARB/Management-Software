@@ -288,6 +288,7 @@ console.log("encontrado");
                                var total = usersobre.totall;
                                var sena = usersobre.sena;
                                var sal = usersobre.sal; 
+                               var lente = usersobre.lente;
                                nombresobre = nombresobre.substring(nombresobre.indexOf(":") + 1);
                                domiciliosobre = domiciliosobre.substring(domiciliosobre.indexOf(":") + 1);
                                telefonosobre = telefonosobre.substring(telefonosobre.indexOf(":") + 1);
@@ -295,7 +296,7 @@ console.log("encontrado");
                                mailsobre = mailsobre.substring(mailsobre.indexOf(":") + 1);
 
                                fs.writeFile( 'C:/Users/Public/senddatasobre.json', `{ "sobre": true, "nombre": "${nombresobre}", "mail": "${mailsobre}", "telefono": "${telefonosobre}", "domicilio": "${domiciliosobre}", "documento": "${documentodiv}"
-                               , "lente": "lejos", "trabajonum": "${numerodetrabajo}", "fecha": "${trabajofecha}", "esf": "${esf}", "cil:": "${cil}", "dip": "${dip}"
+                               , "lente": "${lente}", "trabajonum": "${numerodetrabajo}", "fecha": "${trabajofecha}", "esf": "${esf}", "cil:": "${cil}", "dip": "${dip}"
                                , "alt": "${alt}", "od": "${od}", "oi": "${oi}", "odcil": "${odcil}", "oicil": "${oicil}", "cristal": "${cristal}", "armazones": "${armazones}",
                                "desc": "${desc}", "total": "${total}", "sena": "${sena}", "sal": "${sal}"}`, (error) => {
                                 if(error){
