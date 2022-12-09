@@ -69,19 +69,23 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 userhome = json.domicilio;
                 userdocument = json.documento;
                 userlente = json.lente;
+                var trbnum = json.trabajonum;
                 nombre.innerHTML = "Nombre y apellido: " + username;
                 domicilio.innerHTML = "Domicilio " + userhome;
                 dni.innerHTML = "Documento: " + userdocument;
                 celular.innerHTML = "Celular: " + userphone;
                 mail.innerHTML = "Email: " + usermail;
-                trabajo.innerHTML = `Trabajo n°: ${json.trabajonum}`;
                 fec.innerHTML = `Fecha: ${json.fecha}`;
-                todoslostrabajos.forEach(trb =>{
-                    trb.innerHTML = `Trabajo n°: ${json.trabajonum}`;
-                })
+                console.log(json.trabajonum);
+                console.log(json);
+           /*     todoslostrabajos.forEach(trb =>{
+                    trb.innerHTML = `Trabajo n°: ${trbnum}`;
+                })*/
                 todaslasfechas.forEach(fechadiv =>{
                     fechadiv.innerHTML = `Fecha:${json.fecha}`;
                 })
+                trabajo.innerHTML = "Trabajo n°: " + json.trabajonum;
+                
                 esf.value = json.esf;
                 cil.value = json.cil;
                 dip.value = json.dip;
@@ -194,37 +198,43 @@ if(archivos.includes("sobres.json")){
             fs.readFile('C:/Users/Public/sobres.json', function (err, data) {
                 var json = JSON.parse(data);
                 console.log(json);
+                total = document.querySelector("#total");
                 if (json.length > 0){
                 json.forEach( obj =>{
                     console.log(numdetrabajo);
                     console.log(obj.trabajonum);
 if(obj.trabajonum == numdetrabajo){
 console.log("trabajo encontrado");
-var sobrecompleto = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${obj.cliente}","documento":"${obj.documento}","mail":"${obj.mail}","lente":"${obj.lente}","esf":"${obj.esf}","cil":"${obj.cil}","dip":"${obj.dip}","alt":"${obj.alt}","od":"${obj.od}","oi":"${obj.oi}","odcil":"${obj.odcil}","oicil":"${obj.oicil}","cristal":"${obj.cristal}","armazones":"${obj.armazones}","desc":"${obj.desc}","totall":"${obj.totall}","sena":"${obj.sena}","sal":"${obj.sal}","retiroaprox":"${obj.retiroaprox}","pedidopara":"${obj.pedidopara}"}`
-var sobrecompletohtml = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","cliente":"${username}","documento":"${userdocument}","mail":"${usermail}","lente":"${userlente}","esf":"${esf.value}","cil":"${cil.value}","dip":"${dip.value}","alt":"${alt.value}","od":"${od.value}","oi":"${oi.value}","odcil":"${odcil.value.trim()}","oicil":"${oicil.value.trim()}","cristal":"${cristales.value}","armazones":"${armazon.value}","desc":"${dssc.value}","totall":"${total.value}","sena":"${sen.value}","sal":"${sal.value}","retiroaprox":"${retiroaprox.value}","pedidopara":"${pedidopara.value}"}`
+var sobrecompleto = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","tel":"${obj.tel}","cliente":"${obj.cliente}","documento":"${obj.documento}","mail":"${obj.mail}","lente":"${obj.lente}","esf":"${obj.esf}","cil":"${obj.cil}","dip":"${obj.dip}","alt":"${obj.alt}","od":"${obj.od}","oi":"${obj.oi}","odcil":"${obj.odcil}","oicil":"${obj.oicil}","cristal":"${obj.cristal}","armazones":"${obj.armazones}","desc":"${obj.desc}","totall":"${obj.totall}","sena":"${obj.sena}","sal":"${obj.sal}","retiroaprox":"${obj.retiroaprox}","pedidopara":"${obj.pedidopara}"}`
+var sobrecompletohtml = `{"trabajonum":"${numdetrabajo}","fecha":"${obj.fecha}","tel":"${userphone}""cliente":"${username}","documento":"${userdocument}","mail":"${usermail}","lente":"${userlente}","esf":"${esf.value}","cil":"${cil.value}","dip":"${dip.value}","alt":"${alt.value}","od":"${od.value}","oi":"${oi.value}","odcil":"${odcil.value.trim()}","oicil":"${oicil.value.trim()}","cristal":"${cristales.value}","armazones":"${armazon.value}","desc":"${dssc.value}","totall":"${total.value}","sena":"${sen.value}","sal":"${sal.value}","retiroaprox":"${retiroaprox.value}","pedidopara":"${pedidopara.value}"}`
 
 var valoresunidos = JSON.stringify(json);
 var valunidos
 console.log(valoresunidos);
+sobre = true;
 if(valoresunidos.indexOf(`${sobrecompleto}`)){
+    console.log(total.value)
     console.log(sobrecompleto);
     console.log(sobrecompletohtml)
-    valunidos = valoresunidos.replace(`${sobrecompleto}`, `${sobrecompletohtml}`);
-
+    valunidos = valoresunidos.replace(sobrecompleto, sobrecompletohtml);
     console.log(valunidos);
-
+    fs.writeFile( 'C:/Users/Public/sobres.json', valunidos, (error) => {
+        if(error){
+            console.log(`error: ${error}`);
+        }
+    })
 
 }
 
-}else if(sobre == false){
+}})}else if(sobre == false){
 
-
+    sobre = true;
     var valoresunidos = JSON.stringify(json);
     var lastIndex = valoresunidos.lastIndexOf("]");
     valoresunidos = valoresunidos.substring(0, lastIndex);
     console.log(valoresunidos);
     console.log(json.length);
-    var objetosobre = `{
+    var objetosobre = ` {
         "trabajonum": "${numtrabajo}",
         "fecha": "${yearandmonth}",
         "cliente": "${username}",
@@ -259,11 +269,10 @@ fs.writeFile( 'C:/Users/Public/sobres.json', valoresunidos, (error) => {
         console.log(`error: ${error}`);
     }
 })
-sobre = true;
 numdetrabajo = numtrabajo;
 
 }
-                })}else{
+     /*else if(json.length === 0){
                     console.log("no hay length");
                     var valoresunidos = JSON.stringify(json);
                     var lastIndex = valoresunidos.lastIndexOf("]");
@@ -301,7 +310,7 @@ numdetrabajo = numtrabajo;
                         console.log(`error: ${error}`);
                     }
                 })
-                }
+                }*/
 
             })
 

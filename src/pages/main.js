@@ -4,10 +4,7 @@ const { join } = require('path');
 window.addEventListener('load', function(){
     var joinn = " "
 
-var objetos = [
-
-    
-]
+var objetos
 
 var stock = [
 
@@ -380,15 +377,17 @@ var containersobres = document.querySelector("#containersobres");
 todoslosclientes = seleccion;
 
 
-seleccion.forEach(selec =>{
+seleccion.forEach((selec, index) =>{
 selec.addEventListener('click', function(){
-
+console.log(index);
    var username = selec.innerHTML.substr(0, selec.innerHTML.indexOf('-')); 
    console.log(username);
-    objetos.forEach(element =>{
+    objetos.forEach((element, elemindex) =>{
         var objeto = Object.entries(element)
-        console.log(objeto);
-        objeto.forEach(arr =>{
+        objeto.forEach((arr, arrindex) =>{
+            console.log(arrindex);
+            if(arr[1].nombre == username && arr[1])
+            var nom = ""
             var mail = ""
             var tel = ""
             var dom = ""
@@ -397,7 +396,7 @@ selec.addEventListener('click', function(){
                        if(arr[1].nombre){
                         var val = arr[1].nombre + " ";
                         
-                        joinn += val; 
+                        nom += val;
                         }
                         if(arr[1].mail){
                             mail += arr[1].mail;
@@ -423,6 +422,10 @@ selec.addEventListener('click', function(){
         sobresdelcliente.forEach(borrar =>{
             borrar.remove()
         })
+        if(index == arrindex){
+            console.log(index);
+            console.log(elemindex);
+            console.log(true);
                 var fichaseleccion = document.querySelector("#elementosficha");
                 var nombrediv = document.createElement("div");
                 var divmail = document.createElement("div");
@@ -435,8 +438,8 @@ selec.addEventListener('click', function(){
                 fichaseleccion.prepend(divmail);
                 fichaseleccion.prepend(nombrediv);
                // nombrediv.innerHTML = "Cliente:" + joinn;
-                if(joinn.trim() != "" || null){
-                    nombrediv.innerHTML = "Cliente:" + joinn;
+                if(nom.trim() != "" || null){
+                    nombrediv.innerHTML = "Cliente:" + nom;
                 }else{
                     nombrediv.style = "display: none;"
                 }
@@ -463,7 +466,7 @@ selec.addEventListener('click', function(){
                 }else{
                     documentdiv.style = "display: none;"
                 }
-                nombresobre = joinn;
+                nombresobre = nom;
                 mailsobre = mail;
                 telefonosobre = tel;
                 domiciliosobre = dom;
@@ -482,8 +485,7 @@ selec.addEventListener('click', function(){
                 documentdiv.id = "documentosobre";
                 
                 todoslossobres.forEach(findcliente =>{
-                    var documentoastring = doc.toString()
-                    if(findcliente.documento == documentoastring){
+                    if(findcliente.nombre == nom && findcliente.tel == tel){
                         var sobrecont = document.createElement("div");
                         containersobres.append(sobrecont);
                         var divsobre = document.createElement("div");
@@ -502,6 +504,7 @@ selec.addEventListener('click', function(){
 
             joinn = "";
             }
+        }
        })
 })
    })})
