@@ -379,19 +379,26 @@ todoslosclientes = seleccion;
 
 seleccion.forEach((selec, index) =>{
 selec.addEventListener('click', function(){
-console.log(index);
+    var open = false;
+    console.log(index);
    var username = selec.innerHTML.substr(0, selec.innerHTML.indexOf('-')); 
-   console.log(username);
     objetos.forEach((element, elemindex) =>{
         var objeto = Object.entries(element)
-        objeto.forEach((arr, arrindex) =>{
-            console.log(arrindex);
+        console.log(elemindex);
+        console.log(element);
+        element.forEach((element2, element2index)=>{
+            console.log(element2index);
+            console.log(element2);
+
+        objeto.forEach((arr) =>{
+            var nom = "";
+            var mail = "";
+            var tel = "";
+            var dom = "";
+            var doc = "";
+            /*
             if(arr[1].nombre == username && arr[1])
-            var nom = ""
-            var mail = ""
-            var tel = ""
-            var dom = ""
-            var doc = ""
+
             if(arr[1].nombre == username){
                        if(arr[1].nombre){
                         var val = arr[1].nombre + " ";
@@ -411,21 +418,28 @@ console.log(index);
                         }
                         if(arr[1].documento){
                             doc += arr[1].documento;
-                        }
+                        } }*/
                         
-                var elementoss = document.querySelectorAll(".elementos");
-                var sobresdelcliente = document.querySelectorAll(".sobrescliente");
 
-        elementoss.forEach(borrar =>{
-            borrar.remove();
-        })
-        sobresdelcliente.forEach(borrar =>{
-            borrar.remove()
-        })
-        if(index == arrindex){
+
+        
+        if(index == element2index ){
+            var elementoss = document.querySelectorAll(".elementos");
+            var sobresdelcliente = document.querySelectorAll(".sobrescliente");
+            elementoss.forEach(borrar =>{
+                borrar.remove();
+            })
+            sobresdelcliente.forEach(borrar =>{
+                borrar.remove()
+            })
             console.log(index);
-            console.log(elemindex);
-            console.log(true);
+            console.log(element2index);
+            console.log(`${element2.nombre}   ${element2.telefono}     ${element2.mail}     ${element2.documento}      ${element2.domicilio}`)
+        nom = element2.nombre;
+        tel = element2.telefono;
+        mail = element2.mail;
+        doc = element2.documento;
+        dom = element2.domicilio;
                 var fichaseleccion = document.querySelector("#elementosficha");
                 var nombrediv = document.createElement("div");
                 var divmail = document.createElement("div");
@@ -443,6 +457,7 @@ console.log(index);
                 }else{
                     nombrediv.style = "display: none;"
                 }
+                console.log(nombrediv.innerHTML);
                 if(mail.trim() != "" || null){
                     divmail.innerHTML = "Mail:" + mail;
                 }else{
@@ -504,8 +519,8 @@ console.log(index);
 
             joinn = "";
             }
-        }
-       })
+      })
+    })
 })
    })})
 
