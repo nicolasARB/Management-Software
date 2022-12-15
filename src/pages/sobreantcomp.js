@@ -54,6 +54,7 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
     var pedidopara = document.querySelector("#pedidopara")
 
     var numdetrabajo
+    var trbnum
 //    console.log(array.length);
     //
 
@@ -69,7 +70,7 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 userhome = json.domicilio;
                 userdocument = json.documento;
                 userlente = json.lente;
-                var trbnum = json.trabajonum;
+                trbnum = json.trabajonum;
                 nombre.innerHTML = "Nombre y apellido: " + username;
                 domicilio.innerHTML = "Domicilio " + userhome;
                 dni.innerHTML = "Documento: " + userdocument;
@@ -78,9 +79,9 @@ fec.innerHTML = `Fecha: ${yearandmonth}`
                 fec.innerHTML = `Fecha: ${json.fecha}`;
                 console.log(json.trabajonum);
                 console.log(json);
-           /*     todoslostrabajos.forEach(trb =>{
+               todoslostrabajos.forEach(trb =>{
                     trb.innerHTML = `Trabajo n°: ${trbnum}`;
-                })*/
+                })
                 todaslasfechas.forEach(fechadiv =>{
                     fechadiv.innerHTML = `Fecha:${json.fecha}`;
                 })
@@ -226,6 +227,52 @@ if(valoresunidos.indexOf(`${sobrecompleto}`)){
 
 }
 
+}else if(sobre == false){
+
+    sobre = true;
+    var valoresunidos = JSON.stringify(json);
+    var lastIndex = valoresunidos.lastIndexOf("]");
+    valoresunidos = valoresunidos.substring(0, lastIndex);
+    console.log(valoresunidos);
+    console.log(json.length);
+    var objetosobre = ` {
+        "trabajonum": "${numtrabajo}",
+        "fecha": "${yearandmonth}",
+        "tel": "${userphone.trim()}",
+        "cliente": "${username}",
+        "documento": "${userdocument}",
+        "mail": "${usermail}",
+        "lente": "${userlente}",
+        "esf": "${esf.value}",
+        "cil": "${cil.value}",
+        "dip": "${dip.value}",
+        "alt": "${alt.value}",
+        "od": "${odesf.value}",
+        "oi": "${oiesf.value}",
+        "odcil": "${odcil.value}",
+        "oicil": "${oicil.value}",
+        "cristal": "${cristales.value}",
+        "armazones": "${armazon.value}",
+        "desc": "${dssc.value}",
+        "totall": "${total.value}",
+        "sena": "${sen.value}",
+        "sal": "${sal.value}",
+        "retiroaprox": "${retiroaprox.value}",
+        "pedidopara": "${pedidopara.value}"
+
+    }`
+if (json.length == 0){
+valoresunidos += `${objetosobre} ]`
+}else{
+valoresunidos += ` ,${objetosobre} ]`
+}
+fs.writeFile( 'C:/Users/Public/sobres.json', valoresunidos, (error) => {
+    if(error){
+        console.log(`error: ${error}`);
+    }
+})
+numdetrabajo = numtrabajo;
+
 }})}else if(sobre == false){
 
     sobre = true;
@@ -237,6 +284,7 @@ if(valoresunidos.indexOf(`${sobrecompleto}`)){
     var objetosobre = ` {
         "trabajonum": "${numtrabajo}",
         "fecha": "${yearandmonth}",
+        "tel": "${userphone}",
         "cliente": "${username}",
         "documento": "${userdocument}",
         "mail": "${usermail}",
@@ -324,4 +372,13 @@ var savebutton = document.querySelector("#guardar");
 savebutton.addEventListener("click", ()=>{
     save()
 })
+var newinterval = setInterval(() => {
+    console.log("si");
+    if(trabajo.innerHTML = "undefined"){
+        todoslostrabajos.forEach(trb =>{
+            trb.innerHTML = `Trabajo n°: ${trbnum}`;
+        })
+clearInterval(newinterval);
+    }
+}, 100);
 })

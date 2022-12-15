@@ -500,7 +500,12 @@ selec.addEventListener('click', function(){
                 documentdiv.id = "documentosobre";
                 
                 todoslossobres.forEach(findcliente =>{
-                    if(findcliente.nombre == nom && findcliente.tel == tel){
+                    console.log(findcliente);
+                    console.log(nom, tel);
+                    console.log(findcliente.cliente, findcliente.tel);
+                    console.log(findcliente.trabajonum);
+                    if(findcliente.cliente == nom && findcliente.tel == tel){
+                        console.log(findcliente.trabajonum);
                         var sobrecont = document.createElement("div");
                         containersobres.append(sobrecont);
                         var divsobre = document.createElement("div");
