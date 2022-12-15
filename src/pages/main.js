@@ -1,3 +1,4 @@
+const e = require('express');
 const { json } = require('express');
 const { join } = require('path');
 
@@ -1236,5 +1237,20 @@ clientedocumento.value = "";
 
 })
 //
+
+//Estadisticas
+var selectionbutton = document.querySelector("#selectionbutton");
+var open = false;
+selectionbutton.addEventListener('click', () =>{
+    if(open == false){
+        open = true;
+        selectionbutton.innerHTML = "Año V"
+    }else{
+        open = false;
+        selectionbutton.innerHTML = "Año ʌ"
+    }
+})
+
+
 
 });

@@ -460,3 +460,20 @@ footer input{
     width: 100%;
     height: 100vh;
 }
+
+#selectionbutton{
+    font-size: 1rem;
+    margin-right: 1%;
+    margin-left: 1%;
+    background-color: transparent;
+    border: none;
+
+}
+#selectionbutton:hover{
+cursor: pointer;
+background-color: orange;
+padding: 3px;
+margin-right: 0.8%;
+margin-left: 0.8%;
+border-radius: 5px;
+}
