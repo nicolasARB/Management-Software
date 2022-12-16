@@ -221,6 +221,7 @@ var productstockvalue;
 
 var previousprice;
 var productstockprice;
+
 setInterval(() => {
 
 productname = document.querySelector("#productname");
@@ -790,8 +791,8 @@ clt.forEach(cltobj =>{
                     
                     ) 
                     //
-               
-               
+                      
+
 
  }, 300);
 
@@ -1239,17 +1240,59 @@ clientedocumento.value = "";
 //
 
 //Estadisticas
-var selectionbutton = document.querySelector("#selectionbutton");
+var selectionbutton = document.querySelector(".arrowbutton");
+
+var selected = "years";
 var open = false;
-selectionbutton.addEventListener('click', () =>{
-    if(open == false){
-        open = true;
-        selectionbutton.innerHTML = "Año V"
+var monthsoryears = document.querySelector("#monthsoryears");
+function getyears(){
+var date = new Date();
+var year = date.getFullYear();
+var getallbuttons = document.querySelectorAll(".yearbutton");
+getallbuttons.forEach(elem =>{
+    elem.remove();
+})
+for(i = 1; i < 25; i++){
+
+var newbutton = document.createElement("button");
+monthsoryears.append(newbutton)
+newbutton.classList.add("yearbutton")
+newbutton.innerHTML = year;
+year = year + 1;    
+}
+
+
+}
+getyears()
+
+function displaymenu(){
+if(open == true){
+
+}else{
+
+}
+}
+selectionbutton.addEventListener('click', (e) =>{
+var clickedelem = e.target;
+if(open == false){
+    open = true;
+clickedelem.classList.add("active");
     }else{
         open = false;
-        selectionbutton.innerHTML = "Año ʌ"
+        clickedelem.classList.remove("active");
+    }
+    displaymenu()
+
+})
+var buttons = document.querySelectorAll(".yearbutton");     
+buttons.forEach(buttonelem =>{
+    buttonelem.addEventListener('click', function(){
+    if(selected == "years"){
+        console.log(buttonelem.innerHTML);
     }
 })
+})
+
 
 
 
