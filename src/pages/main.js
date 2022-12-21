@@ -48,7 +48,7 @@ joinn += val;
 })*/
 
 //select nav
-var nava = document.querySelectorAll("a");
+var nava = document.querySelectorAll(".botonav");
 nava.forEach(nav => {
     nav.addEventListener('click', function(){
     if(nav.classList.contains("selectednav")){
@@ -1291,8 +1291,26 @@ buttons.forEach(buttonelem =>{
         console.log(buttonelem.innerHTML);
     }
 })
-})
 
+
+})
+var arrow = document.querySelector(".arrowbutton");
+var submenudiv = document.querySelector("#submenu");
+var arrowtext = document.querySelector("#arrowtext");
+submenudiv.addEventListener('click', (e)=>{
+var clickedelement = e.target;
+var arrowhtml = arrowtext.innerHTML;
+var submenuhtml = clickedelement.innerHTML;
+
+console.log(clickedelement.innerHTML);
+
+console.log(arrowtext);
+console.log(submenudiv);
+submenudiv.innerHTML = arrowhtml;
+arrowtext.innerHTML = submenuhtml;
+//var afterstring = arrow.innerHTML.substring(arrow.innerHTML.indexOf('<'));
+
+})
 
 
 
