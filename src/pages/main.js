@@ -1295,19 +1295,37 @@ buttons.forEach(buttonelem =>{
 
 })
 var arrow = document.querySelector(".arrowbutton");
-var submenudiv = document.querySelector("#submenu");
+var submenudiv = document.querySelector(".submenu");
 var arrowtext = document.querySelector("#arrowtext");
 submenudiv.addEventListener('click', (e)=>{
 var clickedelement = e.target;
-var arrowhtml = arrowtext.innerHTML;
+var arrowhtml = arrow.innerHTML;
 var submenuhtml = clickedelement.innerHTML;
 
 console.log(clickedelement.innerHTML);
 
-console.log(arrowtext);
-console.log(submenudiv);
-submenudiv.innerHTML = arrowhtml;
+var string = arrow.innerHTML.substring(0, arrow.innerHTML.indexOf('<')).trim();
+var string2 = arrow.innerHTML.substring( arrow.innerHTML.indexOf('<')).trim();
+console.log(string);
+console.log(string2);
+
+arrow.innerHTML = `${submenuhtml} ${string2}`;
+newsubmenu = document.querySelector(".submenu");
+newsubmenu.innerHTML = `${string}`;
+submenudiv = newsubmenu;
+
+
+
+
+
+/*
+console.log(arrowtext.innerHTML);
+console.log(arrowtext.innerText);
+console.log(submenuhtml);
+submenudiv.innerHTML = arrowtext.innerHTML;
+console.log(arrowtext.innerHTML);
 arrowtext.innerHTML = submenuhtml;
+*/
 //var afterstring = arrow.innerHTML.substring(arrow.innerHTML.indexOf('<'));
 
 })

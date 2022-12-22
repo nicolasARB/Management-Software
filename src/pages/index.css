@@ -484,6 +484,7 @@ border-radius: 5px;
     display: block;
     background: #3890b3;
     color: white;
+    height: 1rem;
     width: 5%;
     padding: 10px;
     text-decoration: none;
@@ -529,7 +530,7 @@ border-radius: 5px;
   .arrowbutton.active .arrow::after {
     transform: rotate(45deg);
   }
-  #submenu{
+  .submenu{
 position: absolute;
 top: 99%;
 right: 10%;
@@ -539,7 +540,7 @@ padding-left: 1rem;
 padding-right: 1rem;
 cursor: pointer;
   }
-  #submenu:hover{
+  .submenu:hover{
     border: 3px solid red;
     padding-left: 0.7rem;
     padding-right: 0.7rem;
