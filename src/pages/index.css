@@ -313,7 +313,10 @@ tbody:before {   display: block;}
     resize: none;
     outline: none;
 }   
-
+#precioestadisticas{
+position: relative;
+left: 25%;
+}
 .nombre{
     -moz-appearance: textfield;
     border: none;
@@ -334,14 +337,12 @@ tbody:before {   display: block;}
     display: table;
     width: 100%;
     table-layout:fixed;
-
     top: -20%;
 }
 #listadodeproductosestadisticas tr{
     display: table;
-    width: 35%;
+    width: 50%;
     table-layout:fixed;
-
     top: -20%;
     border: 3px solid red;
 }
@@ -349,6 +350,7 @@ tbody:before {   display: block;}
     position: relative;
     top: -20%;
 }
+
 #listadodeproductos tr th{
     position: relative;
     top: -20%;
@@ -549,11 +551,11 @@ cursor: pointer;
 
   #contenidoestadisticas{
     position: relative;
-    top: 1.5rem;
+    top: 3.5rem;
     left: 2rem;
     display: none;
   }
   .tablaestadisticas{
-    width: 35%;
+    width: 50%;
 
 }

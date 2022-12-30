@@ -15,6 +15,33 @@ var sobres = {
 
 }
 
+var estadisticasjson = [
+    {
+   "2022":  {
+    "Enero": {
+"Element": {
+    "Nombre": "Hola",
+    "Precio": "5000"
+}
+    },
+
+    "Diciembre": {
+        "30": {
+        "Element": {
+            "Nombre": "Hola",
+            "Precio": "5000"
+        },
+        "Element2": {
+            "Nombre": "Hola2",
+            "Precio": "8000"
+        }
+    }
+    }
+   }
+}
+]
+console.log(estadisticasjson);
+
 //variables json
 var previouselement = document.querySelector("#productname");
 var productname  
@@ -1253,6 +1280,19 @@ var selectedyear
 var selectedmonth
 var selectedday
 var monthsarray = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+var actualdate = new Date();
+var actualday = actualdate.getDate();
+var actualyear = actualdate.getFullYear();
+var actualmonth = actualdate.getMonth()
+selectedday = actualday;
+selectedyear = actualyear;
+selectedmonth = monthsarray[actualmonth];
+console.log( selectedday, selectedyear, selectedmonth)
+
+
+
+
 function getselected(){
 var date = new Date();
 var year = date.getFullYear();
@@ -1366,6 +1406,28 @@ arrowtext.innerHTML = submenuhtml;
 //var afterstring = arrow.innerHTML.substring(arrow.innerHTML.indexOf('<'));
 
 })
+
+
+function actualizarventanadeestadisticas(){
+estadisticasjson.forEach(element =>{
+var funcyear = element[selectedyear];
+var funcmonth = funcyear[selectedmonth];
+var funcday = funcmonth[selectedday];
+console.log(funcyear);
+console.log(funcmonth);
+console.log(funcday);
+
+var objeto = Object.entries(funcday)
+objeto.forEach(getallelements =>{
+    console.log(getallelements);
+    var data = (getallelements[1]);
+    console.log(data.Precio);
+    console.log(data.Nombre);
+})
+})
+}
+
+actualizarventanadeestadisticas(selectedyear, selectedmonth, selectedday)
 
 
 
