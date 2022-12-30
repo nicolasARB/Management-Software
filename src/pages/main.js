@@ -171,6 +171,7 @@ var buscadorstock = document.querySelector("#buscadorstock");
 var contenidostock = document.querySelector("#contenidostock");
 var contenidostockfooter = document.querySelector("#agregarproductos");
 var estadisticas = document.querySelector("#estadisticas");
+var contenidoestadisticas = document.querySelector("#contenidoestadisticas");
 // actualizar nav
 navbara.forEach(nab =>{
     console.log(nab);
@@ -181,18 +182,21 @@ if(nab.innerHTML == "Stock"){
     contenidostockfooter.style = "display: inline;";
     buscadorstock.style = "display: inline;";
     estadisticas.style = "display: none;"
+    contenidoestadisticas.style = "display: none;"
 } else if(nab.innerHTML == "Clientes"){
     content.style = "display: flex;";
     contenidostock.style = "display: none;";
     contenidostockfooter.style = "display: none;";
     buscadorstock.style = "display: none;";
     estadisticas.style = "display: none;"
+    contenidoestadisticas.style = "display: none;"
 }else if(nab.innerHTML == "Estadisticas"){
     content.style = "display: none;";
     contenidostock.style = "display: none;";
     contenidostockfooter.style = "display: none;";
     buscadorstock.style = "display: none;";
     estadisticas.style = "display: inline;"
+    contenidoestadisticas.style = "display: inline;"
 
 }
     })
@@ -1240,15 +1244,21 @@ clientedocumento.value = "";
 //
 
 //Estadisticas
-var selectionbutton = document.querySelector(".arrowbutton");
-
+var selectionbutton = document.querySelector("#arrowbutton");
+var selectionbutton2 = document.querySelector(".arrow");
 var selected = "years";
 var open = false;
 var monthsoryears = document.querySelector("#monthsoryears");
-function getyears(){
+var selectedyear
+var selectedmonth
+var selectedday
+var monthsarray = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+function getselected(){
 var date = new Date();
 var year = date.getFullYear();
+var month = date.getMonth();
 var getallbuttons = document.querySelectorAll(".yearbutton");
+if(selected == "years"){
 getallbuttons.forEach(elem =>{
     elem.remove();
 })
@@ -1260,16 +1270,29 @@ newbutton.classList.add("yearbutton")
 newbutton.innerHTML = year;
 year = year + 1;    
 }
+} else if(selected == "months"){
+    getallbuttons.forEach(elem =>{
+        elem.remove();
+    })
+    for(i = 0; i < monthsarray.length; i++){
+    
+    var newbutton = document.createElement("button");
+    monthsoryears.append(newbutton)
+    newbutton.classList.add("yearbutton");
+    newbutton.classList.add("monthbutton");
+    newbutton.innerHTML = monthsarray[i];    
+    }
+}
 
 
 }
-getyears()
-
+getselected()
+var submenudiv = document.querySelector(".submenu");
 function displaymenu(){
 if(open == true){
-
+submenudiv.style = "display: inline;"
 }else{
-
+    submenudiv.style = "display: none;"
 }
 }
 selectionbutton.addEventListener('click', (e) =>{
@@ -1281,40 +1304,54 @@ clickedelem.classList.add("active");
         open = false;
         clickedelem.classList.remove("active");
     }
-    displaymenu()
+    //displaymenu()
 
 })
+
+selectionbutton2.addEventListener('click', (e) =>{
+
+        displaymenu()
+    
+    })
 var buttons = document.querySelectorAll(".yearbutton");     
 buttons.forEach(buttonelem =>{
     buttonelem.addEventListener('click', function(){
     if(selected == "years"){
         console.log(buttonelem.innerHTML);
+    }else if(selected == "months"){
+
     }
 })
 
 
 })
-var arrow = document.querySelector(".arrowbutton");
+var arrow = document.querySelector("#arrowbutton");
 var submenudiv = document.querySelector(".submenu");
-var arrowtext = document.querySelector("#arrowtext");
+var arrowtext = document.querySelector("#years");
 submenudiv.addEventListener('click', (e)=>{
 var clickedelement = e.target;
-var arrowhtml = arrow.innerHTML;
-var submenuhtml = clickedelement.innerHTML;
+var arrowhtml = arrowtext.innerHTML;
+var submenuhtml = clickedelement.innerHTML.trim();
 
 console.log(clickedelement.innerHTML);
+//var string = arrow.innerHTML.substring(0, arrow.innerHTML.indexOf('<')).trim();
+//var string2 = arrow.innerHTML.substring( arrow.innerHTML.indexOf('<')).trim();
+console.log(submenuhtml);
+console.log(arrowtext.innerHTML);   
 
-var string = arrow.innerHTML.substring(0, arrow.innerHTML.indexOf('<')).trim();
-var string2 = arrow.innerHTML.substring( arrow.innerHTML.indexOf('<')).trim();
-console.log(string);
-console.log(string2);
+arrowtext.innerHTML =  submenuhtml; //`${submenuhtml} ${string2}`;
+submenudiv.innerHTML = arrowhtml;
+selected == submenuhtml
+console.log(submenuhtml);
+if(submenuhtml == "Años"){
+    selected = "years";
+    console.log(selected);
+}else{
+    selected = "months"
+    console.log(selected);
+}
 
-arrow.innerHTML = `${submenuhtml} ${string2}`;
-newsubmenu = document.querySelector(".submenu");
-newsubmenu.innerHTML = `${string}`;
-submenudiv = newsubmenu;
-
-
+getselected()
 
 
 

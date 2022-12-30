@@ -306,13 +306,14 @@ tbody:before {   display: block;}
   resize: none;
   outline: none;
 }
-#precio{
+#precio, .number{
     -moz-appearance: textfield;
     border: none;
     background-color: transparent;
     resize: none;
     outline: none;
-}
+}   
+
 .nombre{
     -moz-appearance: textfield;
     border: none;
@@ -320,7 +321,7 @@ tbody:before {   display: block;}
     resize: none;
     outline: none;
 }
-#listadodeproductos{
+#listadodeproductos, #listadodeproductosestadisticas{
     display: block; 
     overflow-y: auto; 
     position: absolute; 
@@ -334,6 +335,18 @@ tbody:before {   display: block;}
     width: 100%;
     table-layout:fixed;
 
+    top: -20%;
+}
+#listadodeproductosestadisticas tr{
+    display: table;
+    width: 35%;
+    table-layout:fixed;
+
+    top: -20%;
+    border: 3px solid red;
+}
+#listadodeproductosestadisticas tr th{
+    position: relative;
     top: -20%;
 }
 #listadodeproductos tr th{
@@ -372,7 +385,7 @@ footer input{
 }
 @media(min-height:600px) and (max-height:768px)
 {
-    #listadodeproductos{
+    #listadodeproductos, #listadodeproductosestadisticas{
         top: 9%;
     
     }
@@ -380,28 +393,28 @@ footer input{
 
 @media(min-height:500px) and (max-height:599px)
 {
-    #listadodeproductos{
+    #listadodeproductos, #listadodeproductosestadisticas{
         top: 9.5%;
     
     }
 }
 @media(min-height:350px) and (max-height:499px)
 {
-    #listadodeproductos{
+    #listadodeproductos, #listadodeproductosestadisticas{
         top: 10%;
     
     }
 }
 @media(min-height:250px) and (max-height:349px)
 {
-    #listadodeproductos{
+    #listadodeproductos, #listadodeproductosestadisticas{
         top: 12%;
     
     }
 }
 @media(min-height:1px) and (max-height:249px)
 {
-    #listadodeproductos{
+    #listadodeproductos, #listadodeproductosestadisticas{
         top: 15%;
     
     }
@@ -411,6 +424,11 @@ footer input{
 
 
 
+
+
+
+
+/* ESTADISTICAS */
 #containerstats{
     width: 80%;
     height: 5vh;
@@ -418,23 +436,7 @@ footer input{
     align-items: center;
     background-color: none;
 
-}/*
-#containerstats::-webkit-scrollbar-track {
-    border: 1px solid #000;
-    padding: 2px 0;
-    background-color: #404040;
-  }
-  
-  #containerstats::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  #containerstats::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #737272;
-    border: 1px solid #000;
-  }*/
+}
 .yearbutton{
     margin-left: 2%;
     padding-right: 0.2rem;   
@@ -445,6 +447,12 @@ footer input{
     color: white;
     font-size: 1rem;
     cursor: pointer;
+}
+.monthbutton{
+margin-left: 3%;
+width: auto;
+font-size: 1rem;
+padding-right: 0.2rem;
 }
 #monthsoryears{
     width: 80%;
@@ -461,25 +469,8 @@ footer input{
     width: 100%;
     height: 100vh;
 }
-/*
-#selectionbutton{
-    font-size: 1rem;
-    margin-right: 1%;
-    margin-left: 1%;
-    background-color: transparent;
-    border: none;
 
-}
-#selectionbutton:hover{
-cursor: pointer;
-background-color: orange;
-padding: 3px;
-margin-right: 0.8%;
-margin-left: 0.8%;
-border-radius: 5px;
-}*/
-
-.arrowbutton {
+#arrowbutton {
     position: relative;
     display: block;
     background: #3890b3;
@@ -493,8 +484,9 @@ border-radius: 5px;
   
   .arrow {
     position: absolute;
-    top: 20px;
+    top: 7px;
     right: 15%;
+    padding: 10%;
   }
   
   .arrow::before,
@@ -519,15 +511,15 @@ border-radius: 5px;
   }
   
   
-  .arrowbutton {
+  #arrowbutton {
     background: #dea108;
   }
   
-  .arrowbutton.active .arrow::before {
+  #arrowbutton.active .arrow::before {
     transform: rotate(-45deg);
   }
   
-  .arrowbutton.active .arrow::after {
+  #arrowbutton.active .arrow::after {
     transform: rotate(45deg);
   }
   .submenu{
@@ -551,4 +543,17 @@ cursor: pointer;
     -khtml-user-select: none;
     -webkit-user-select: none;
     -o-user-select: none;
+    padding: 0px;
   }
+
+
+  #contenidoestadisticas{
+    position: relative;
+    top: 1.5rem;
+    left: 2rem;
+    display: none;
+  }
+  .tablaestadisticas{
+    width: 35%;
+
+}
