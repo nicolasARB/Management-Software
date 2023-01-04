@@ -822,7 +822,13 @@ clt.forEach(cltobj =>{
                     
                     ) 
                     //
-                      
+     /*               var buttonss = document.querySelectorAll(".yearbutton");  
+buttons.forEach(element =>{
+    element.addEventListener('click', ()=>{
+console.log(element.innerHTML)
+    })
+})*/
+
 
 
  }, 300);
@@ -1196,6 +1202,17 @@ fs.readdir('C:/Users/Public', (error, archivos)=>{
                         }
                     })
                 }
+                if(archivos.includes("estadisticas.json")){
+                    console.log("El archivo esta ");
+                    }else{
+                        console.log("creando archivo...");
+                                    fs.writeFile( 'C:/Users/Public/estadisticas.json', '[]', (error) => {
+                            if(error){
+                                console.log(`error: ${error}`);
+                            }
+                        })
+                    }
+
 })
 //
 
@@ -1293,6 +1310,19 @@ console.log( selectedday, selectedyear, selectedmonth)
 
 
 
+function getselecteddates(){
+    var getbuttons = document.querySelectorAll(".yearbutton");
+    getbuttons.forEach(element => {
+        if(element.classList.contains("monthbutton")){
+
+        }else{
+            if(element.innerHTML == selectedyear){
+                element.classList.add("selectedtest")
+            }
+        }
+    })
+}
+
 function getselected(){
 var date = new Date();
 var year = date.getFullYear();
@@ -1323,11 +1353,38 @@ year = year + 1;
     newbutton.innerHTML = monthsarray[i];    
     }
 }
-
+getselecteddates()
 
 }
 getselected()
+
+
+
+var buttonss = document.querySelectorAll(".yearbutton");  
+
+function removeothers(){
+    getallbuttons.forEach(searchall =>{
+        console.log("bueno");
+        if(searchall.classList.contains("selectedtest") && searchall.innerHTML != selectedyear){
+            searchall.classList.remove("selectedtest");
+        }
+    })
+}
+getallbuttons.forEach(element =>{
+    element.addEventListener('click', ()=>{
+console.log(element.innerHTML)
+selectedyear = element.innerHTML;
+element.classList.add("selectedtest")
+removeothers();
+    })
+})
+
+
+
+
+
 var submenudiv = document.querySelector(".submenu");
+
 function displaymenu(){
 if(open == true){
 submenudiv.style = "display: inline;"
