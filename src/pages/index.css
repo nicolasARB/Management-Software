@@ -333,6 +333,10 @@ left: 25%;
     width: 100vw;
 
 }
+#listadodeproductosestadisticas{
+    border-right: 1px solid black;
+
+}
 #listadodeproductos tr{
     display: table;
     width: 100%;
@@ -547,6 +551,28 @@ cursor: pointer;
     -o-user-select: none;
     padding: 0px;
   }
+
+#selectedstats{
+    margin-top: 2rem;
+    background-color: black;
+    width: 20%;
+    height: 5vh;
+    opacity: 0.75;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    
+}
+
+.selectedstat{
+    text-align: center;
+    color: white;
+}
+
+.selectedstatremove{
+    position: relative;
+    top:40%;
+}
 
 
   #contenidoestadisticas{

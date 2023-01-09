@@ -1379,10 +1379,6 @@ removeothers();
     })
 })
 
-
-
-
-
 var submenudiv = document.querySelector(".submenu");
 
 function displaymenu(){
