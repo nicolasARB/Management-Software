@@ -1460,7 +1460,8 @@ arrowtext.innerHTML = submenuhtml;
 
 })
 
-
+var selectedstats = document.querySelectorAll(".selectedstat")
+var selectedremove = document.querySelectorAll(".selectedstatremove")
 function actualizarventanadeestadisticas(){
 estadisticasjson.forEach(element =>{
 var funcyear = element[selectedyear];
@@ -1479,6 +1480,11 @@ objeto.forEach(getallelements =>{
 })
 })
 }
+
+selectedremove.addEventListener('click', ()=>{
+
+})
+
 
 actualizarventanadeestadisticas(selectedyear, selectedmonth, selectedday)
 
