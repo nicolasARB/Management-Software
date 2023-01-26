@@ -19,10 +19,7 @@ var estadisticasjson = [
     {
    "2022":  {
     "Enero": {
-"Element": {
-    "Nombre": "Hola",
-    "Precio": "5000"
-}
+
     },
 
     "Diciembre": {
@@ -37,6 +34,8 @@ var estadisticasjson = [
         }
     }
     }
+   }, "2023": {
+
    }
 }
 ]
@@ -1363,19 +1362,19 @@ getselected()
 var buttonss = document.querySelectorAll(".yearbutton");  
 
 function removeothers(){
-    getallbuttons.forEach(searchall =>{
+    buttonss.forEach(searchall =>{
         console.log("bueno");
         if(searchall.classList.contains("selectedtest") && searchall.innerHTML != selectedyear){
             searchall.classList.remove("selectedtest");
         }
     })
 }
-getallbuttons.forEach(element =>{
+buttonss.forEach(element =>{
     element.addEventListener('click', ()=>{
 console.log(element.innerHTML)
 selectedyear = element.innerHTML;
-element.classList.add("selectedtest")
 removeothers();
+element.classList.add("selectedtest")
     })
 })
 
@@ -1464,27 +1463,46 @@ var selectedstats = document.querySelectorAll(".selectedstat")
 var selectedremove = document.querySelectorAll(".selectedstatremove")
 function actualizarventanadeestadisticas(){
 estadisticasjson.forEach(element =>{
-var funcyear = element[selectedyear];
-var funcmonth = funcyear[selectedmonth];
-var funcday = funcmonth[selectedday];
+    var getyearstring = selectedyear.toString()
+    console.log(getyearstring)
+var funcyear = element[getyearstring];
 console.log(funcyear);
-console.log(funcmonth);
-console.log(funcday);
+console.log(element)
+console.log(funcyear[selectedmonth]);
+if(funcyear[selectedmonth]){
+console.log("Found")
+}else{
+    console.log("not found")
+    var jsonstring = JSON.stringify(estadisticasjson);
+    console.log(jsonstring.search("2023"));
+    console.log(jsonstring.indexOf("2023"))
+    
+    
+    console.log(jsonstring);
+}
+if(funcyear[selectedmonth]){
+    if(fundmonth[selectedday]){
+        console.log("found")
+    }        else{
+        console.log("Not found")
+    }
+}
+console.log(funcyear);
+//console.log(funcmonth);
+//console.log(funcday);
 
+/*
 var objeto = Object.entries(funcday)
 objeto.forEach(getallelements =>{
     console.log(getallelements);
     var data = (getallelements[1]);
     console.log(data.Precio);
     console.log(data.Nombre);
-})
+}) */
+
+
 })
 }
-
-selectedremove.addEventListener('click', ()=>{
-
-})
-
 
 actualizarventanadeestadisticas(selectedyear, selectedmonth, selectedday)
 
