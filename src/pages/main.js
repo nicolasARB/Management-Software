@@ -16,13 +16,13 @@ var sobres = {
 }
 
 var estadisticasjson = [
-    {
-   "2022":  {
+    
+  { "2022":  {
     "Enero": {
 
     },
 
-    "Diciembre": {
+    "Febrero": {
         "30": {
         "Element": {
             "Nombre": "Hola",
@@ -32,12 +32,23 @@ var estadisticasjson = [
             "Nombre": "Hola2",
             "Precio": "8000"
         }
+    }, "29": {
+        "Element": {
+            "Nombre": "hello",
+            "Precio": "9000"
+        },
+        "Element2": {
+            "Nombre": "hello2",
+            "Precio": "15000"
+        }
     }
     }
-   }, "2023": {
+} },
+   { "2023": {
 
    }
 }
+
 ]
 console.log(estadisticasjson);
 
@@ -1302,7 +1313,7 @@ var actualday = actualdate.getDate();
 var actualyear = actualdate.getFullYear();
 var actualmonth = actualdate.getMonth()
 selectedday = actualday;
-selectedyear = actualyear;
+selectedyear = 2022;
 selectedmonth = monthsarray[actualmonth];
 console.log( selectedday, selectedyear, selectedmonth)
 
@@ -1461,11 +1472,31 @@ arrowtext.innerHTML = submenuhtml;
 
 var selectedstats = document.querySelectorAll(".selectedstat")
 var selectedremove = document.querySelectorAll(".selectedstatremove")
+console.log(estadisticasjson)
 function actualizarventanadeestadisticas(){
 estadisticasjson.forEach(element =>{
+
     var getyearstring = selectedyear.toString()
-    console.log(getyearstring)
-var funcyear = element[getyearstring];
+    var object = Object.entries(element)
+ var funcyear = object[0][0];
+ if(funcyear == getyearstring){
+    console.log(funcyear);
+    console.log(object[0][0])
+ //   console.log(object[0][1]);
+
+var object2 = Object.entries(object[0][1]);
+console.log(object2);
+object2.forEach(month =>{
+  if(month[0] == selectedmonth){
+console.log(month[0]);
+month[0].forEach(month)
+  }else{
+  }
+})
+
+ }
+
+/*var funcyear = element[getyearstring];
 console.log(funcyear);
 console.log(element)
 console.log(funcyear[selectedmonth]);
@@ -1499,7 +1530,6 @@ objeto.forEach(getallelements =>{
     console.log(data.Precio);
     console.log(data.Nombre);
 }) */
-
 
 })
 }
