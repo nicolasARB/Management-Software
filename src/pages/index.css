@@ -348,11 +348,16 @@ left: 25%;
     width: 50%;
     table-layout:fixed;
     top: -20%;
-    border: 3px solid red;
+    margin-bottom:0.4rem;
+    
+    border: 1px solid blueviolet;
 }
 #listadodeproductosestadisticas tr th{
     position: relative;
     top: -20%;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    padding-right: 0.7rem;
 }
 
 #listadodeproductos tr th{
@@ -555,7 +560,8 @@ cursor: pointer;
 #selectedstats{
     margin-top: 2rem;
     background-color: black;
-    width: 20%;
+    width: auto;
+    max-width: 18%;
     height: 5vh;
     opacity: 0.75;
     display: flex;
@@ -566,6 +572,7 @@ cursor: pointer;
 
 .selectedstat{
     text-align: center;
+    margin-left: 3%;
     color: white;
 }
 
@@ -603,7 +610,7 @@ cursor: pointer;
 }
 
 #valuescontainer{
- width: 80%;
+ width: 100%;
 }
 #values{
     border: 1px solid black;

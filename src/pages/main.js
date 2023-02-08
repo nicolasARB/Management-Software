@@ -2,6 +2,8 @@ const e = require('express');
 const { json } = require('express');
 const { join } = require('path');
 
+
+
 window.addEventListener('load', function(){
     var joinn = " "
 
@@ -26,20 +28,25 @@ var estadisticasjson = [
         "30": {
         "Element": {
             "Nombre": "Hola",
-            "Precio": "5000"
+            "Precio": "5000",
+            "Hora": "17:47"
         },
         "Element2": {
             "Nombre": "Hola2",
-            "Precio": "8000"
+            "Precio": "8000",
+            "Hora": "10:22"
+            
         }
     }, "29": {
         "Element": {
             "Nombre": "hello",
-            "Precio": "9000"
+            "Precio": "9000",
+            "Hora": "12:34"
         },
         "Element2": {
             "Nombre": "hello2",
-            "Precio": "15000"
+            "Precio": "15000",
+            "Hora": "15:34"
         }
     }
     }
@@ -54,15 +61,14 @@ console.log(estadisticasjson);
 
 //variables json
 var previouselement = document.querySelector("#productname");
-var productname  
-var stockvalue 
-var productprice 
-var clientename
-var clientemail
-var clientetelefono
-var clientedomicilio
-var clientedocumento
-
+var productname;
+var stockvalue;
+var productprice;
+var clientename;
+var clientemail;
+var clientetelefono;
+var clientedomicilio;
+var clientedocumento;
 //
 var agregar = document.querySelector("#add");
 var addcliente = document.querySelector("#addcliente");
@@ -839,7 +845,40 @@ console.log(element.innerHTML)
     })
 })*/
 
+var buttonss = document.querySelectorAll(".yearbutton");  
 
+function removeothers(){
+    buttonss.forEach(searchall =>{
+        if(searchall.classList.contains("selectedtest") && searchall.innerHTML != selectedyear){
+            searchall.classList.remove("selectedtest");
+        }
+    })
+}
+buttonss.forEach(element =>{
+    element.addEventListener('click', ()=>{
+        var selectedstats = document.querySelectorAll(".selectedstat")
+var selectedremove = document.querySelectorAll(".selectedstatremove")
+
+selectedyear = element.innerHTML;
+removeothers();
+element.classList.add("selectedtest")
+console.log(element.innerHTML);
+console.log(selectedyear);
+selectedstats.forEach(select =>{
+    if(document.querySelector("#years").innerHTML == "Años"){
+        if(select.id == "statyear"){
+            console.log("years");
+            select.innerHTML = `Año: ${element.innerHTML}`;
+        }
+    }else if(document.querySelector("#years").innerHTML == "Meses"){
+        if(select.id == "statmonth"){
+            console.log("months");
+            select.innerHTML = `Mes: ${element.innerHTML}`;
+        }
+    }
+})
+    })
+})
 
  }, 300);
 
@@ -1312,9 +1351,9 @@ var actualdate = new Date();
 var actualday = actualdate.getDate();
 var actualyear = actualdate.getFullYear();
 var actualmonth = actualdate.getMonth()
-selectedday = actualday;
+selectedday = "29";
 selectedyear = 2022;
-selectedmonth = monthsarray[actualmonth];
+selectedmonth = "Febrero"// monthsarray[actualmonth];
 console.log( selectedday, selectedyear, selectedmonth)
 
 
@@ -1370,24 +1409,7 @@ getselected()
 
 
 
-var buttonss = document.querySelectorAll(".yearbutton");  
 
-function removeothers(){
-    buttonss.forEach(searchall =>{
-        console.log("bueno");
-        if(searchall.classList.contains("selectedtest") && searchall.innerHTML != selectedyear){
-            searchall.classList.remove("selectedtest");
-        }
-    })
-}
-buttonss.forEach(element =>{
-    element.addEventListener('click', ()=>{
-console.log(element.innerHTML)
-selectedyear = element.innerHTML;
-removeothers();
-element.classList.add("selectedtest")
-    })
-})
 
 var submenudiv = document.querySelector(".submenu");
 
@@ -1470,9 +1492,8 @@ arrowtext.innerHTML = submenuhtml;
 
 })
 
-var selectedstats = document.querySelectorAll(".selectedstat")
-var selectedremove = document.querySelectorAll(".selectedstatremove")
 console.log(estadisticasjson)
+
 function actualizarventanadeestadisticas(){
 estadisticasjson.forEach(element =>{
 
@@ -1487,9 +1508,61 @@ estadisticasjson.forEach(element =>{
 var object2 = Object.entries(object[0][1]);
 console.log(object2);
 object2.forEach(month =>{
+    console.log(month);
   if(month[0] == selectedmonth){
 console.log(month[0]);
-month[0].forEach(month)
+var days = Object.entries(month[1])
+
+days.forEach(getday =>{
+console.log(getday);
+var listadodeproductosestadisticas = document.querySelector("#listadodeproductosestadisticas");
+
+
+var getdayelements = Object.entries(getday[1]);
+getdayelements.forEach(dayelement =>{
+    console.log(dayelement);
+    console.log(dayelement.Nombre);
+    var newelement = document.createElement("tr");
+    newelement.classList.add("listadeproductosestadisticas");
+    listadodeproductosestadisticas.append(newelement);
+var nombre = document.createElement("th");
+var precio = document.createElement("th");
+var fecha = document.createElement("th");
+
+
+var inputnombre = document.createElement("input");
+inputnombre.classList.add("nombre")
+inputnombre.setAttribute("disabled", "")
+inputnombre.value = dayelement[1].Nombre
+nombre.append(inputnombre);
+newelement.append(nombre);
+
+var inputprecio = document.createElement("input");
+inputprecio.classList.add("number")
+inputprecio.id = "precioestadisticas";
+inputprecio.setAttribute("disabled", "")
+inputprecio.value = `$${dayelement[1].Precio}`
+precio.append(inputprecio);
+newelement.append(precio);
+
+
+var inputhora = document.createElement("input");
+inputhora.classList.add("number")
+inputhora.id = "precioestadisticas";
+inputhora.setAttribute("disabled", "")
+var getmonthindexinarray = monthsarray.indexOf(month[0]) + 1;
+console.log(getmonthindexinarray)
+inputhora.value = `${getday[0]}/${getmonthindexinarray}/${selectedyear} ${dayelement[1].Hora}`
+fecha.append(inputhora);
+newelement.append(fecha);
+
+
+nombre.classList.add("descripciones");
+precio.classList.add("descripciones");
+fecha.classList.add("descripciones");
+})
+})
+
   }else{
   }
 })
