@@ -52,7 +52,36 @@ var estadisticasjson = [
     }
 } },
    { "2023": {
+    "Enero": {
 
+    },
+
+    "Febrero": {
+        "30": {
+        "Element": {
+            "Nombre": "Hola",
+            "Precio": "5000",
+            "Hora": "17:47"
+        },
+        "Element2": {
+            "Nombre": "Hola2",
+            "Precio": "8000",
+            "Hora": "10:22"
+            
+        }
+    }, "29": {
+        "Element": {
+            "Nombre": "hello",
+            "Precio": "9000",
+            "Hora": "12:34"
+        },
+        "Element2": {
+            "Nombre": "hello2",
+            "Precio": "15000",
+            "Hora": "15:34"
+        }
+    }
+    }
    }
 }
 
@@ -846,6 +875,26 @@ console.log(element.innerHTML)
 })*/
 
 var buttonss = document.querySelectorAll(".yearbutton");  
+var removestat = document.querySelectorAll(".selectedstatremove");
+
+removestat.forEach(removestats =>{
+removestats.addEventListener("click", ()=>{
+var parent = removestats.parentNode
+console.log(parent);
+if(parent){
+    parent.remove();
+    if(parent.id == "statday"){
+selectedday = null;
+
+    }else if(parent.id == "statmonth"){
+selectedmonth = null;
+    }else if(parent.id == "statyear"){
+selectedyear = null;
+    }
+}
+
+})
+})
 
 function removeothers(){
     buttonss.forEach(searchall =>{
@@ -859,30 +908,44 @@ buttonss.forEach(element =>{
         var selectedstats = document.querySelectorAll(".selectedstat")
 var selectedremove = document.querySelectorAll(".selectedstatremove")
 
-selectedyear = element.innerHTML;
 removeothers();
 element.classList.add("selectedtest")
 console.log(element.innerHTML);
 console.log(selectedyear);
 selectedstats.forEach(select =>{
+    var selectedstats = document.querySelector("#selectedstats")
     if(document.querySelector("#years").innerHTML == "Años"){
         if(select.id == "statyear"){
             console.log("years");
-            select.innerHTML = `Año: ${element.innerHTML}`;
+            selectedyear = element.innerHTML;
+            select.innerHTML = `Año: ${element.innerHTML}   <button class="selectedstatremove">X</button>`;
+            actualizarventanadeestadisticas();
         }
     }else if(document.querySelector("#years").innerHTML == "Meses"){
         if(select.id == "statmonth"){
             console.log("months");
-            select.innerHTML = `Mes: ${element.innerHTML}`;
+            if(selectedmonth == null){
+                console.log("llega");
+                var div = document.createElement("div");
+                div.classList.add("selectedstat");
+                div.id = "statmonth";
+                var removebutton = document.createElement("button");
+                removebutton.classList.add("selectedstatremove");
+               selectedstats.append(div);
+               div.append(removebutton);
+
+            }
+            selectedmonth = element.innerHTML;
+            select.innerHTML = `Mes: ${element.innerHTML}   <button class="selectedstatremove">X</button>`;
+            actualizarventanadeestadisticas();
         }
-    }
-})
-    })
+    }})
+ })
 })
 
  }, 300);
 
-
+var using = false;
 
 
 
@@ -1495,12 +1558,19 @@ arrowtext.innerHTML = submenuhtml;
 console.log(estadisticasjson)
 
 function actualizarventanadeestadisticas(){
+    var todoslosproductos = document.querySelectorAll(".listadeproductosestadisticas");
+todoslosproductos.forEach(prod =>{
+    prod.remove();
+})
+console.log("working");
 estadisticasjson.forEach(element =>{
-
     var getyearstring = selectedyear.toString()
     var object = Object.entries(element)
  var funcyear = object[0][0];
+ console.log(getyearstring);
+ console.log(funcyear);
  if(funcyear == getyearstring){
+    console.log("working2");
     console.log(funcyear);
     console.log(object[0][0])
  //   console.log(object[0][1]);
@@ -1509,7 +1579,7 @@ var object2 = Object.entries(object[0][1]);
 console.log(object2);
 object2.forEach(month =>{
     console.log(month);
-  if(month[0] == selectedmonth){
+  if(month[0] == selectedmonth && selectedday != null){
 console.log(month[0]);
 var days = Object.entries(month[1])
 
