@@ -7,7 +7,10 @@ const { join } = require('path');
 window.addEventListener('load', function(){
     var joinn = " "
 
-var objetos
+var objetos = [
+    {"test": "1"},
+    {"test": "2"}
+]
 
 var stock = [
 
@@ -925,7 +928,7 @@ selectedstats.forEach(select =>{
         if(select.id == "statmonth"){
             console.log("months");
             if(selectedmonth == null){
-                console.log("llega");
+              
                 var div = document.createElement("div");
                 div.classList.add("selectedstat");
                 div.id = "statmonth";
@@ -1678,7 +1681,6 @@ objeto.forEach(getallelements =>{
 }
 
 actualizarventanadeestadisticas(selectedyear, selectedmonth, selectedday)
-
-
+console.log(objetos);
 
 });
