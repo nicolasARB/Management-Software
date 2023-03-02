@@ -883,6 +883,8 @@ var removestat = document.querySelectorAll(".selectedstatremove");
 removestat.forEach(removestats =>{
 removestats.addEventListener("click", ()=>{
 var parent = removestats.parentNode
+var allstats = parent.parentNode;
+console.log(allstats);
 console.log(parent);
 if(parent){
     parent.remove();
@@ -891,8 +893,19 @@ selectedday = null;
 
     }else if(parent.id == "statmonth"){
 selectedmonth = null;
+selectedday = null;
+var getdaystat = allstats.querySelector("#statday");
+getdaystat.remove();
     }else if(parent.id == "statyear"){
 selectedyear = null;
+selectedmonth = null;
+selectedday = null;
+var getdaystat = allstats.querySelector("#statday");
+console.log(getdaystat);
+getdaystat.remove();
+var getmonthstat = allstats.querySelector("#statmonth");
+console.log(getmonthstat);
+getmonthstat.remove();
     }
 }
 
@@ -915,6 +928,32 @@ removeothers();
 element.classList.add("selectedtest")
 console.log(element.innerHTML);
 console.log(selectedyear);
+var getdivcontainer = document.querySelector("#selectedstats");
+console.log(getdivcontainer.querySelector("#statmonth"));
+if(getdivcontainer.querySelector("#statmonth") == null){
+    console.log("esta null");
+}
+if(selectedstats.length == 0 || getdivcontainer.querySelector("#statyear" == null) || getdivcontainer.querySelector("#statmonth" == null) || getdivcontainer.querySelector("#statday" == null) ){
+    console.log("nothing");
+    if(getdivcontainer.querySelector("#statyear") == null && document.querySelector("#years").innerHTML == "Años"){
+        var newstatyear = document.createElement("div");
+        getdivcontainer.append(newstatyear);
+        newstatyear.classList.add("selectedstat");
+        newstatyear.id = "statyear";
+        newstatyear.innerHTML = `Año ${selectedyear}
+        <button class="selectedstatremove">X</button>`
+    }
+
+    if(getdivcontainer.querySelector("statmonth") == null && document.querySelector("#years").innerHTML == "Meses"){
+        console.log("statt");
+        var newstat = document.createElement("div");
+        getdivcontainer.append(newstat);
+        newstat.classList.add("selectedstat");
+        newstat.id = "statmonth";
+        newstat.innerHTML = `Mes ${selectedmonth}
+        <button class="selectedstatremove">X</button>`
+    }
+}
 selectedstats.forEach(select =>{
     var selectedstats = document.querySelector("#selectedstats")
     if(document.querySelector("#years").innerHTML == "Años"){
@@ -923,6 +962,9 @@ selectedstats.forEach(select =>{
             selectedyear = element.innerHTML;
             select.innerHTML = `Año: ${element.innerHTML}   <button class="selectedstatremove">X</button>`;
             actualizarventanadeestadisticas();
+        }else if(selectedstats.querySelector("#statyear") == null){
+            console.log("null");
+
         }
     }else if(document.querySelector("#years").innerHTML == "Meses"){
         if(select.id == "statmonth"){
