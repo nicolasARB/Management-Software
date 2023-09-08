@@ -1,0 +1,83 @@
+#fechast {
+    position: relative;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    flex-direction: row;
+    width: 5vw;
+
+    height: 3vh;
+    border: 2px solid black;
+}
+
+#fechast input {
+    border: none;
+    text-align: center;
+    width: 33%;
+    height: auto;
+    overflow: auto;
+    position: relative;
+}
+
+#statsingresos {
+    margin-top: 5rem;
+    width: 70%;
+    height: 70%;
+}
+
+#statsdetails {
+    border: 1px solid black;
+    align-items: center;
+}
+
+.statsdetail {
+    font-size: 1.7em;
+    font-weight: bold;
+    width: 33.3%;
+    margin-left: 10%;
+}
+
+.statsstyle {
+    font-size: 1.1em;
+    font-weight: bold;
+    width: 33.3%;
+    margin-left: 10%;
+}
+
+.statelement {
+    margin-top: 0.3rem;
+    width: 100%;
+    border: 1px solid black;
+    border-color: 2px solid green;
+}
+
+#setgastos {
+    display: flex;
+    border: 1px solid green;
+    position: absolute;
+    left: 77%;
+    top: 19%;
+    width: 15%;
+    height: 20%;
+    flex-direction: column;
+    align-items: center;
+}
+
+#setgastos h1 {
+    text-align: center;
+}
+
+#spentinput {
+    position: relative;
+    width: 85%;
+    height: auto;
+    border: 1px solid black;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#spentinput input {
+    position: relative;
+}

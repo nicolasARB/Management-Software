@@ -1,0 +1,211 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.itemsnav {
+  border-radius: 30%;
+  margin-left: 1.4vh;
+  margin-right: 1.4vh;
+  font-size: 4vh;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.itemsnav:hover {
+  padding: 0.8vh;
+  color: #0d6efd;
+  background-color: rgb(255, 166, 0);
+}
+
+.vh-75 {
+  height: 75vh;
+}
+
+.customer {
+  font-size: 2vh;
+  padding: 0.58vh;
+  margin-left: 0.7vh;
+  margin-right: 0.7vh;
+  cursor: pointer;
+}
+
+.document {
+  font-size: 2vh;
+  padding: 0.58vh;
+  margin-left: 0.7vh;
+  margin-right: 0.7vh;
+  cursor: pointer;
+}
+
+.customer:hover {
+  border: 3px solid green;
+}
+
+
+.customersections {
+  overflow: none;
+  width: 40%;
+  border: 3px solid black;
+  margin-left: 5%;
+  margin-right: 3%;
+}
+
+#page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 1rem;
+  left: 20%;
+  width: 10rem;
+  height: 3vh;
+  background-color: greenyellow;
+}
+
+.inputcustomer {
+  width: 50%;
+  height: 100%;
+
+}
+
+.arrowbuttons {
+  font-size: 1rem;
+  height: 100%;
+  background-color: white;
+  border: 2px solid black;
+  width: 100%;
+  background-color: none;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+}
+
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 35%;
+  top: 35%;
+  width: 30%;
+  height: 100%;
+  overflow: auto;
+  padding-top: 50px;
+}
+
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto;
+  width: 80%;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container {
+  padding: 16px;
+  text-align: center;
+}
+
+
+.cancelbtn,
+.deletebtn,
+.btn {
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+  float: left;
+  width: 50%;
+}
+
+
+.cancelbtn,
+.cancbtn {
+  background-color: #ccc;
+  color: black;
+}
+
+#customerdata {
+  height: 40%;
+  width: 100%;
+}
+
+#customerdata div {
+  border: 1px solid black;
+  margin: 0.5rem;
+  display: inline;
+}
+
+#documents {
+  width: 100%;
+  height: 85%;
+  overflow-y: auto;
+}
+
+#createdocument {
+  position: relative;
+  top: 5%;
+  left: 10%;
+
+}
+
+#opendocument {
+  position: relative;
+  top: 5%;
+  left: 10%;
+
+}
+
+.selectedocument {
+  border: 2px solid green;
+  margin: 5px;
+}
+
+#stock {
+  width: 100%;
+  height: 100%;
+
+}
+
+#stockdetails {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  align-items: center;
+}
+
+.stockdetail {
+  font-size: 1.7em;
+  font-weight: bold;
+  width: 33.3%;
+  margin-left: 10%;
+}
+
+.stockstyle {
+  font-size: 1.1em;
+  font-weight: bold;
+  width: 33.3%;
+  margin-left: 10%;
+}
+
+.producstk {
+  width: 100%;
+  border-color: 2px solid green;
+}
