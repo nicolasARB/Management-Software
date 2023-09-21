@@ -3,7 +3,7 @@ const { ipcRenderer, contextBridge } = require('electron');
 window.ipcRenderer = ipcRenderer;
 contextBridge.exposeInMainWorld('electronAPI', {
     invoke: async (channel, data, data2) => {
-        const validChannels = ['readFile', 'readDir', 'writeFile', 'openDocumentWindow'];
+        const validChannels = ['readFile', 'readDir', 'writeFile', 'openDocumentWindow', 'openEditWindow'];
         if (validChannels.includes(channel)) {
             try {
                 const response = await ipcRenderer.invoke(channel, data, data2);

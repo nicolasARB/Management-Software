@@ -2,11 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import './sobre.css';
 import './statistics.css';
+import './edit.css';
 import { BrowserRouter, HashRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Customers from './components/Customers'
 import Stock from './components/Stock'
 import Document from './components/Document';
+import Edit from './components/Edit'
 import Statistics from './components/Statistics';
 import Database from './components/Databases';
 function App() {
@@ -22,6 +24,7 @@ function App() {
           <Route exact path="/" element={<Customers />} />
           <Route exact path="/Stock" element={<Stock />} />
           <Route exact path="/document" element={<Document />} />
+          <Route exact path="/edit" element={<Edit />} />
           <Route exact path="/Stats" element={<Statistics />} />
         </Routes>
       </BrowserRouter>)
@@ -34,6 +37,7 @@ function App() {
           <Route exact path="/" element={<Customers />} />
           <Route exact path="/Stock" element={<Stock />} />
           <Route exact path="/document" element={<Document />} />
+          <Route exact path="/edit" element={<Edit />} />
           <Route exact path="/Stats" element={<Statistics />} />
         </Routes>
       </HashRouter>)

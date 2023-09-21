@@ -47,6 +47,27 @@ ipcMain.handle('openDocumentWindow', () => {
     documentWindow.loadURL(DocumentPage);
 });
 
+ipcMain.handle('openEditWindow', () => {
+    const documentWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            nodeIntegration: true,
+            webSecurity: false,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+
+    const DocumentPage = url.format({
+        protocol: 'file',
+        pathname: path.join(__dirname, '../build/index.html'),
+        slashes: true,
+        hash: '/edit'
+    });
+
+    documentWindow.loadURL(DocumentPage);
+});
+
 
 
 

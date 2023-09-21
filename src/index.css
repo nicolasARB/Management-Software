@@ -67,7 +67,7 @@ code {
   align-items: center;
   justify-content: center;
   position: relative;
-  margin: 1rem;
+  margin: 0.5%;
   left: 20%;
   width: 10rem;
   height: 3vh;
@@ -127,8 +127,6 @@ code {
 .cancelbtn,
 .deletebtn,
 .btn {
-  padding: 14px 20px;
-  margin: 8px 0;
   border: none;
   cursor: pointer;
   opacity: 0.9;
@@ -144,34 +142,34 @@ code {
 }
 
 #customerdata {
-  height: 40%;
+  height: 30vh;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #customerdata div {
   border: 1px solid black;
-  margin: 0.5rem;
-  display: inline;
+  margin: 0.5vw;
+  width: 20vw;
+  height: 15vh;
 }
 
 #documents {
   width: 100%;
-  height: 85%;
+  height: 65%;
   overflow-y: auto;
 }
 
 #createdocument {
   position: relative;
-  top: 5%;
-  left: 10%;
+  bottom: 0;
 
 }
 
 #opendocument {
   position: relative;
-  top: 5%;
-  left: 10%;
-
+  bottom: 0;
 }
 
 .selectedocument {
@@ -208,4 +206,9 @@ code {
 .producstk {
   width: 100%;
   border-color: 2px solid green;
+}
+
+#edit {
+  position: relative;
+  margin-left: 20%;
 }

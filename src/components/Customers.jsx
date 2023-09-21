@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Readfile, handleWriteFile } from './Databases';
 export default function Customers() {
-    const [CustomersData, setCustomerData] = useState([{ "nombre": "aslouto", "phone": "1125461264" }, { "nombre": "santiago", "phone": "11258989" }, { "nombre": "tuvieja" }, { "nombre": "ramita" }, { "nombre": "aslouto" }, { "nombre": "tuvieja" }, { "nombre": "ramita" }, { "nombre": "aslouto" }, { "nombre": "tuvieja" }, { "nombre": "ramita" }, { "nombre": "aslouto" }, { "nombre": "tuvieja" }, { "nombre": "ramita" }, { "nombre": "aslouto" }, { "nombre": "tuvieja" }, { "nombre": "ramita" }, { "nombre": "aslouto" }, { "nombre": "tuvieja" }, { "nombre": "ramita" }, { "nombre": "aslouto" }, { "nombre": "tuvieja" }, { "nombre": "ramita" }, { "nombre": "aslouto" }, { "nombre": "tuvieja" }, { "nombre": "ramita" }]);
+    const [CustomersData, setCustomerData] = useState();
     const [DocumentsData, setDocumentsData] = useState([]);
     const [CustomerDocuments, SetCustomerDocuments] = useState([]);
     const [CustomerBrowse, setCustomerbrowse] = useState([])
@@ -46,6 +46,14 @@ export default function Customers() {
             }
         }
     };
+    const openedit = async (ev) => {
+        try {
+            await window.electronAPI.invoke('openEditWindow');
+        } catch (error) {
+            console.error('Error al leer el archivo:', error);
+        }
+    };
+
     const Opencustomerdoc = async (ev) => {
         if (SelectedDocument != null) {
             var send = SelectedCustomer;
@@ -298,7 +306,7 @@ export default function Customers() {
             <input className="inline mt-3" type="textarea" id="browsersearch" placeholder="Buscar cliente" onChange={(ev) => updatebrowser(ev)}></input>
             <div className="container-fluid vh-75 mt-3 d-flex align-middle">
                 <section className="h-100 customersections" id="Customers">
-                    {mappedCustomers.length > 0 && mappedCustomers.map((customer) => (
+                    {mappedCustomers.length > 0 && mappedCustomers.reverse().map((customer) => (
                         <div className="customer" onClick={(ev) => ViewCustomerData(customer, ev)}>
                             Cliente - {customer.nombre}, {customer.phone}
                         </div>
@@ -327,10 +335,10 @@ export default function Customers() {
                                 </div>
                             ))}
                         </section>
-                        <button id="createdocument" onClick={handleModal}>crear sobre</button>
-                        <button id="opendocument" onClick={Opencustomerdoc}>abrir</button>
 
                     </section>
+                    <button id="createdocument" onClick={handleModal}>crear sobre</button>
+                    <button id="opendocument" onClick={Opencustomerdoc}>abrir</button>
                 </section>
             </div>
             <div id="page">
@@ -372,6 +380,7 @@ export default function Customers() {
                     onChange={(e) => SetNewCustomer({ ...NewCustomer, documentid: e.target.value })}
                 />
                 <button id="addcliente" onClick={CreateNewCustomer}>Añadir</button>
+                <button id="edit" onClick={openedit} >Editar</button>
             </footer>
 
 

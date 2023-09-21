@@ -9,8 +9,20 @@
 }
 
 #logo {
-    width: 15%;
-    height: 15%;
+    width: 12%;
+    height: 10%;
+}
+
+.trf {
+    font-size: 2.5vw;
+}
+
+.esfcil {
+    font-size: 1.8vw;
+}
+
+.datosp {
+    font-size: 1vw;
 }
 
 .inputs {
@@ -18,7 +30,7 @@
     padding: 0;
     border: none;
     width: 30%;
-    font-size: 1rem;
+    font-size: 1.2vw;
 }
 
 .blackline {
@@ -26,14 +38,16 @@
     position: relative;
     left: 5%;
     background-color: black;
-    height: 0.3rem;
+    height: 0.25rem;
     -webkit-print-color-adjust: exact;
 }
 
 .pedidopara {
     padding-bottom: 0;
-    padding-top: 0.3rem;
-    padding-left: 0.5rem;
+    padding-top: 0.5%;
+    font-size: 1.1vw;
+    padding-left: 0.8%;
+    margin: 0;
 }
 
 #divtexts {
@@ -50,40 +64,41 @@
 
 .corte {
     width: 100%;
-    font-size: 1.3rem;
+    font-size: 1.2vw;
     color: black;
     overflow: hidden;
-    max-height: 2vh;
+    height: 2rem;
+    margin: 0;
 }
 
 .dsctotal {
     display: inline;
-    font-size: 1.2rem;
-    padding-left: 2rem;
-    padding-right: 1rem;
+    font-size: 1.2vw;
+    padding-left: 5%;
+    padding-right: 5%;
 
 }
 
 .sesald {
     display: inline;
-    font-size: 1.2rem;
-    padding-left: 2rem;
-    padding-right: 1rem;
+    font-size: 1.2vw;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .dsctotal2 {
     display: inline;
-    font-size: 1.5rem;
-    padding-left: 2rem;
-    padding-right: 12rem;
+    font-size: 1.5vw;
+    padding-left: 5%;
+    padding-right: 5%;
 
 }
 
 .sesald2 {
     display: inline;
-    font-size: 1.5rem;
-    padding-left: 2rem;
-    padding-right: 12rem;
+    font-size: 1.5vw;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .inputs2 {
@@ -94,13 +109,13 @@
     margin: 0;
     padding: 0;
     padding-left: 1.5rem;
-    font-size: 1.15rem;
+    font-size: 1.15vw;
     width: 90%;
     position: relative;
     left: 3%;
 }
 
 .numdetrb {
-    font-size: 1em;
+    font-size: 2vw;
     font-weight: bold;
 }

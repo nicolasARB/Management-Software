@@ -58,7 +58,7 @@
     left: 77%;
     top: 19%;
     width: 15%;
-    height: 20%;
+    height: 25%;
     flex-direction: column;
     align-items: center;
 }
@@ -69,15 +69,39 @@
 
 #spentinput {
     position: relative;
-    width: 85%;
+    width: 90%;
     height: auto;
     border: 1px solid black;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
     display: flex;
     flex-direction: column;
 }
 
+#spentinput label {
+    display: flex;
+    width: 100%;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+#spentinput p {
+    width: 20%;
+}
+
 #spentinput input {
     position: relative;
+    width: 50%;
+    border: 1px solid black;
+}
+
+@media (max-width: 1367px) {
+    #setgastos {
+        height: 30%;
+    }
+
+    #spentinput {
+        width: 100%;
+    }
 }

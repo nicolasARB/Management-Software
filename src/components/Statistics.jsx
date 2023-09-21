@@ -38,9 +38,9 @@ export default function Statistics() {
             <section id='setgastos'>
                 <h1>GASTOS</h1>
                 <section id='spentinput'>
-                    <input id='spentname'></input>
-                    <input id='spentprice'></input>
-                    <input id='amount'></input>
+                    <label for="name"><p>Nombre:</p><input name='name' id='spentname'></input></label>
+                    <label for="name"><p>Precio:</p><input name='price' id='spentprice'></input></label>
+                    <label for="name"><p>Cantidad:</p><input name='amount' id='amount'></input></label>
                 </section>
                 <button>Agregar</button>
             </section>
