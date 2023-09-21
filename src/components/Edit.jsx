@@ -46,16 +46,16 @@ export default function Edit() {
     }, []);
 
     useEffect(() => {
-        const startIndex = (PageNumber - 1) * 17;
+        const startIndex = (PageNumber - 1) * 16;
         if (currentPage == "customers") {
-            const endIndex = startIndex + 17;
+            const endIndex = startIndex + 14;
             const Display = CustomerBrowse.length > 0 ? CustomerBrowse : CustomersData;
             const Slicecustomers = Display.slice(startIndex, endIndex);
 
             setMappedCustomers(Slicecustomers);
         }
         if (currentPage == "documents") {
-            const endIndex = startIndex + 17;
+            const endIndex = startIndex + 14;
             const Display = DocumentsBrowse.length > 0 ? DocumentsBrowse : DocumentsData;
             const Slicecustomers = Display.slice(startIndex, endIndex);
 

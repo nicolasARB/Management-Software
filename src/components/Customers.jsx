@@ -317,11 +317,11 @@ export default function Customers() {
 
                     <section id="customerdata">
                         <h2 className="text-center p-3">Datos personales</h2>
-                        <div id="CustomerName">Nombre:</div>
-                        <div id="CustomerMail">Email:</div>
-                        <div id="CustomerPhone">Celular:</div>
-                        <div id="CustomerAddress">Dirección:</div>
-                        <div id="CustomerDocument">DNI:</div>
+                        <div id="CustomerName" className="cusinline">Nombre:</div>
+                        <div id="CustomerMail" className="cusinline" >Email:</div>
+                        <div id="CustomerPhone" className="cusinline">Celular:</div>
+                        <div id="CustomerAddress" className="cusinline">Dirección:</div>
+                        <div id="CustomerDocument" className="cusinline">DNI:</div>
                     </section>
 
                     <section id="customerdocuments" className="h-50 w-100">
