@@ -74,31 +74,34 @@
 .dsctotal {
     display: inline;
     font-size: 1.2vw;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 4%;
+    padding-right: 4%;
 
 }
 
 .sesald {
     display: inline;
     font-size: 1.2vw;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 4%;
+    padding-right: 4%;
 }
 
 .dsctotal2 {
     display: inline;
     font-size: 1.5vw;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 4%;
+    padding-right: 4%;
 
 }
 
 .sesald2 {
     display: inline;
     font-size: 1.5vw;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+.sal, .sal1{
+padding-left: 3.1%;
 }
 
 .inputs2 {
@@ -116,8 +119,49 @@
 }
 
 .numdetrb {
-    font-size: 2vw;
+    font-size: 1.5vw;
     font-weight: bold;
+}
+#info{
+  width: 20%;
+  position: absolute;
+  left: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#infologo{
+  width: 75px;
+  height: 35px;
+  margin-left: 20px;
+}
+#infodiv p{
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+
+}
+#infodiv div{
+  display: inline;
+}
+#infodiv div img{
+  width: 20px;
+  height: 20px; 
+  display: inline;
+}
+#infodiv2{
+  display: inline;
+}
+.margg{
+  margin: 0;
+  padding: 0;
+}
+.margg p{
+  text-align: center;
+}
+#infodiv2 p{
+  display: inline;
 }
 
 @media print{
@@ -127,65 +171,80 @@
         background-color: #fff;
       }
       .blackline{
-        margin-top: 1rem;
-        margin-bottom: 1rem;
+        margin-top: 0rem;
+        margin-bottom: 0rem;
       }
       .corte{
-       padding-bottom: 1rem;
-       padding-top: 1rem; 
+       padding-bottom: 0rem;
+       padding-top: 0rem; 
       }
       #logo{
         width: 23%;
         height: 10%;
       }
       .esfcil{
-        font-size: 1.5rem;
+        font-size: 1rem;
       }
+
       .datosp, .datosp input{
         font-size: 0.9rem;
-       margin-bottom: 0.2rem;
-       margin-top: 0.2rem;
+       margin-bottom: 0rem;
+       margin-top: 0rem;
       }
-      .trf input{
-        font-size: 1.7rem;
-      }
+
+      .inputs {
+        margin: 0;
+        padding: 0;
+        border: none;
+        width: 30%;
+        font-size: 1rem;
+    }
       .trf{
         padding-left: 1.3rem;   
-    
-        font-size: 1.7rem;
+        font-size: 1rem;
+      }
+      .trf input{
+        font-size: 1rem;
       }
       .texts, .textos2{
-        font-size: 1.03rem;
-        margin-bottom: 0.2rem;
-        margin-top: 0.2rem;
+        font-size: 0.95rem;
+        margin-bottom: 0rem;
+        margin-top: 0rem;
       }
       .texts input, .textos2 input{
         font-size: 0.78rem;
       }
       .dsctotal, .dsctotal2{
-        font-size: 1.03rem;
-        margin-bottom: 0.5rem;
-        margin-top: 0.7rem;
+        font-size: 0.95rem;
+        margin-bottom: 0rem;
+        margin-top: 0rem;
       }
       .dsctotal input, .dsctotal2 input{
         font-size: 0.78rem;
-        margin-bottom: 0.5rem;
-        margin-top: 0.7rem;
+        margin-bottom: 0rem;
+        margin-top: 0rem;
       }
       .sesald, .sesald2{
-        font-size: 1.03rem;
-        margin-bottom: 0.2rem;
-        margin-top: 0.2rem;
+        font-size: 0.95rem;
+        margin-bottom: 0rem;
+        margin-top: 0rem;
       }
       .sesald input, .sesald2 input{font-size: 0.78rem;}
 .pedidopara{
-    font-size: 1.03rem;
+    font-size: 0.95rem;
     margin-bottom: 0.5rem;
     margin-top: 0.5rem;
 }
 .pedidopara input{
-    font-size: 1.03rem;
+    font-size: 0.95rem;
     margin-bottom: 0.2rem;
     margin-top: 0.2rem;
+}
+
+#imprimir{
+  visibility:hidden;
+}
+#save{
+  visibility: hidden;
 }
 }

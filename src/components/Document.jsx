@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import logo from '../images/logo2.jpeg';
+import whatsapp from '../images/whatsapp.png';
 import { Readfile, handleWriteFile } from './Databases';
 
 
@@ -277,8 +278,7 @@ export default function Document() {
 
     return (<div id="documentcontainer">
 
-        <img id="logo" src={logo}></img>
-        <button onClick={function () { window.print() }}>imprimir</button>
+        <button id="imprimir" onClick={function () { window.print() }}>imprimir</button>
         <button id="save" onClick={Save}>guardar</button>
         <section id="header1">
             {/* <h1 className="d-inline px-4">Trabajo n°{WorkNumber}</h1>  datosp px-3 esf cil px-3 fs-3*/}
@@ -286,9 +286,7 @@ export default function Document() {
             <h1 className="d-inline  trf">Fecha: <input type="text" id="" className="inputs  numdetrb" value={glassProps.fecha} onChange={(e) => SetProps({ ...glassProps, fecha: e.target.value })}></input></h1>
             <p className=" datosp nomarginpadding">Nombre y apellido: <input type="text" id="" className="inputs" value={glassProps.nombre} onChange={(e) => SetProps({ ...glassProps, nombre: e.target.value })}></input></p>
             <p className=" datosp nomarginpadding">Domicilio: <input type="text" id="" className="inputs" value={glassProps.address} onChange={(e) => SetProps({ ...glassProps, address: e.target.value })}></input></p>
-            <p className=" datosp nomarginpadding">Dni: <input type="text" id="" className="inputs" value={glassProps.documentid} onChange={(e) => SetProps({ ...glassProps, documentid: e.target.value })}></input></p>
             <p className=" datosp nomarginpadding">Celular: <input type="text" id="" className="inputs" value={glassProps.phone} onChange={(e) => SetProps({ ...glassProps, phone: e.target.value })}></input></p>
-            <p className=" datosp nomarginpadding">Email: <input type="text" id="" className="inputs" value={glassProps.mail} onChange={(e) => SetProps({ ...glassProps, mail: e.target.value })}></input></p>
             <div className="blackline"></div>
             <div className="d-flex flex-row justify-content-between " id="divtexts">
                 <p className="esfcil nomarginpadding">Esf: <input type="text" className="inputs" id="esf" value={glassProps.esf} onChange={(e) => SetProps({ ...glassProps, esf: e.target.value })}></input></p>
@@ -309,13 +307,25 @@ export default function Document() {
             </div>
             <div className="desctotaldiv">
                 <p className="sesald">Seña: <input type="text" className="inputs inputs2" id="sen" value={glassProps.sen} onChange={(e) => SetProps({ ...glassProps, sen: e.target.value })}></input></p>
-                <p className="sesald">Saldo: <input type="text" className="inputs inputs2" id="sal" value={glassProps.saldo} onChange={(e) => SetProps({ ...glassProps, saldo: e.target.value })}></input></p>
+                <p className="sesald sal1">Saldo: <input type="text" className="inputs inputs2" id="sal" value={glassProps.saldo} onChange={(e) => SetProps({ ...glassProps, saldo: e.target.value })}></input></p>
             </div>
 
         </section>
         <p className="corte">
-            ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+           ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         </p>
+        <section id="info">
+            <div id="infodiv">
+<img id="infologo" src={logo}></img>
+<p>Lunes a viernes 10hs a 13hs.</p>
+<div className="margg">
+<p >15hs a 19hs</p>
+</div>
+<p>Sabados de 10hs a 14hs.</p>
+<div id="infodiv2"> <img src={whatsapp}></img> <p>11-6613-0262.</p></div>
+            </div>
+
+        </section>
 
         <section id="header2">
             <h1 className="d-inline trf">Trabajo n° <input type="text" id="" className="inputs  numdetrb" value={WorkNumber} readOnly></input></h1>
@@ -333,23 +343,9 @@ export default function Document() {
             </p>
         </section>
         <p className="corte">
-            ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         </p>
-        <div className="d-flex flex-row justify-content-between " id="divtexts">
-            <p className="esfcil nomarginpadding">Esf: <input type="text" className="inputs" id="esf" value={glassProps.esf}></input></p>
-            <p className="esfcil nomarginpadding">Cil: <input type="text" className="inputs" id="cil" value={glassProps.cil}></input></p>
-            <p className="esfcil nomarginpadding">DIP: <input type="text" className="inputs" id="dip" value={glassProps.dip}></input></p>
-            <p className="esfcil nomarginpadding">ALT: <input type="text" className="inputs" id="alt" value={glassProps.alt}></input></p>
-        </div>
-        <p className="textos2 od">OD: <input type="text" className="inputs odx" value={glassProps.od}></input> <input type="text"
-            className="inputs odcilx" value={glassProps.odcil}></input> </p>
-        <p className="textos2 oi">OI: <input type="text" className="inputs oix" value={glassProps.oi}></input>  <input type="text"
-            className="inputs oicilx" value={glassProps.oicil}></input> </p>
-        <p className="textos2 ">Cristales: <input type="text" className="inputs cristalx cristales" value={glassProps.cristales}></input> </p>
-        <p className="textos2 ">Armazón: <input type="text" className="inputs armazonesx armazon" value={glassProps.armazon}></input> </p>
-
-        <p className="retiroyfechaprox  pedidopara">Pedido para: <input id="pedidopara" type="text" className="inputs" value={glassProps.pedidopara} onChange={(e) => SetProps({ ...glassProps, pedidopara: e.target.value })}></input>  </p>
-
+  
 
     </div >
     )
