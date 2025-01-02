@@ -85,15 +85,14 @@ export default function Customers() {
     loadnewdata();
 
     function ViewCustomerData(data, ev) {
-        //    console.log(data);
-        console.log(ev);
+        console.log(data);
         SetSelectedDocument(null);
         setSelectedDocumentIndex(null);
         SetSelectedCustomer({
             "nombre": data.nombre, "mail": data.mail, "phone": data.phone, "address": data.address, "documentid": data.documentid, "documents": data.documents, "esf": "", "cil": "", "dip": "", "alt": "", "oi": "", "oicil": "", "od": "",
             "odcil": "", "armazon": "", "cristales": "", "dsc": "", "total": "", "sen": "", "saldo": "", "fechaprox": "", "pedidopara": ""
         });
-        //     console.log(SelectedCustomer);
+        console.log(SelectedCustomer);
         CustomerName.style.display = "none";
         CustomerMail.style.display = "none";
         CustomerPhone.style.display = "none";
@@ -121,8 +120,6 @@ export default function Customers() {
         }
         const matchingDocuments = DocumentsData.filter(doc => data.documents.includes(doc.numsobre));
         SetCustomerDocuments(matchingDocuments);
-        console.log(DocumentsData);
-        console.log(CustomerDocuments);
 
         /*  matchingDocuments.forEach(doc => {
               const documentElement = document.createElement("div");
@@ -156,8 +153,6 @@ export default function Customers() {
                 const response = await Readfile("C:/Users/Public/documents.json");
                 const documents = JSON.parse(response);
                 setDocumentsData(documents);
-                console.log(DocumentsData);
-                ViewCustomerData(SelectedCustomer, DocumentsData);
             } catch (error) {
                 console.error('Error loading documents:', error);
             }
@@ -169,7 +164,7 @@ export default function Customers() {
         if (SelectedCustomer != null) {
             const matchingDocuments = DocumentsData.filter(doc => SelectedCustomer.documents.includes(doc.numsobre));
             SetCustomerDocuments(matchingDocuments);
-            //    console.log("updating selected document.");
+            console.log("updating selected document.");
             if (SelectedDocument != null) {
                 const updatedDocument = DocumentsData.find(doc => doc.numsobre === SelectedDocument.numsobre);
                 SetSelectedDocument(updatedDocument);
@@ -190,19 +185,10 @@ export default function Customers() {
     useEffect(() => {
         const intervalId = setInterval(() => {
             updateDocumentdata();
-            //  console.log("updating...");
+            console.log("updating...");
         }, 500);
         return () => clearInterval(intervalId);
-    }, [DocumentsData, CustomerDocuments, SelectedCustomer]);
-
-    useEffect(() => {
-        const intervaln = setInterval(() => {
-            //updateDocumentdata();
-            //  ViewCustomerData(SelectedCustomer);
-        }, 300);
-
-        return () => clearInterval(intervaln);
-    }, [SelectedCustomer, DocumentsData, CustomerDocuments]);
+    }, []);
 
 
     function updatebrowser(ev) {
@@ -262,10 +248,8 @@ export default function Customers() {
         } catch (error) {
             console.error('Error al leer el archivo:', error);
         }
-
         var result = filedata.find((item) => item[0] === NewCustomer.mail || NewCustomer.documentid);
         console.log(result);
-
         if (result === null || result === undefined) {
             console.log("no se encontro");
             filedata.push(NewCustomer);
@@ -273,19 +257,17 @@ export default function Customers() {
         } else {
             console.log("se encontro");
         }
-
+        console.log(filedata);
         try {
             const updatedFileData = JSON.stringify(filedata);
             await handleWriteFile("C:/Users/Public/customers.json", updatedFileData);
             console.log("Archivo actualizado con el nuevo cliente.");
-            await loadnewdata();
-            const matchingDocuments = DocumentsData.filter(doc => NewCustomer.documents.includes(doc.numsobre));
-            SetCustomerDocuments(matchingDocuments);
-
         } catch (error) {
             console.error('Error al escribir el archivo:', error);
         }
+        loadnewdata();
     }
+
     const handleModal = () => {
         console.log(SelectedCustomer);
         if (SelectedCustomer != null) {
@@ -306,15 +288,19 @@ export default function Customers() {
             {modalVisible && (
                 <div id="modal1" class="modal">
                     <form class="modal-content" action="/action_page.php">
+                    <button id="closemodal" onClick={(ev) => { handleCloseModal(); }}>X</button>
                         <div class="container">
                             <h1>Crear sobre</h1>
                             <div class="clearfix">
-                                <button type="button" id="buttoncerca"
+                                <button type="button" id="buttoncerca" 
                                     onClick={(ev) => { handleCloseModal(); OpenDocument(ev); }}
-                                    class="deletebtnstock bt">Cerca</button>
-                                <button type="button" id="buttonlejos"
+                                    class="deletebtnstock bt buttonmodal">Cerca</button>
+                                <button type="button" id="buttonlejos" 
                                     onClick={(ev) => { handleCloseModal(); OpenDocument(ev); }}
-                                    class="cancelbtnstock bt">Lejos</button>
+                                    class="cancelbtnstock bt buttonmodal">Lejos</button>
+                                <button type="button" id="buttonlejos" 
+                                    onClick={(ev) => { handleCloseModal(); OpenDocument(ev); }}
+                                    class="cancelbtnstock bt buttonmodal">Reparacion</button>
                             </div>
                         </div>
                     </form>

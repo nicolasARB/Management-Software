@@ -212,3 +212,16 @@ display: inline;
   position: relative;
   margin-left: 20%;
 }
+
+#closemodal{
+width: 1.65rem;
+height: 1.65rem;
+background-color: red;
+color: white;
+position: relative;
+left: 92%;
+text-align: center;
+}
+.buttonmodal{
+  margin-left: 0.5rem;
+}
