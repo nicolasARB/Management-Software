@@ -13,9 +13,9 @@ export async function Readfile(filepath) {
 }
 export async function handleWriteFile(dirPath, content) {
     try {
-        console.log(content);
+        //console.log(content);
         const response = await window.electronAPI.invoke('writeFile', dirPath, content);
-        console.log(response);
+      //  console.log(response);
     } catch (error) {
         console.error('Error al escribir el archivo:', error);
     }
@@ -35,7 +35,7 @@ export default function Database() {
         try {
             const dirPath = 'C:/Users/Public';
             const response = await window.electronAPI.invoke('readDir', dirPath);
-            console.log(response);
+            //console.log(response);
             setFiles(response || []);
             setFilesLoaded(true);
         } catch (error) {

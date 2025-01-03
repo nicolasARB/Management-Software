@@ -9,7 +9,7 @@ export default function Document() {
     const [WorkNumber, SetNumber] = useState('1');
     const [glassProps, SetProps] = useState({
         "numsobre": "", "fecha": "", "type": "", "nombre": "", "address": "", "documentid": "", "phone": "", "mail": "", "esf": "", "cil": "", "dip": "", "alt": "", "oi": "", "oicil": "", "od": "",
-        "odcil": "", "armazon": "", "cristales": "", "dsc": "", "total": "", "sen": "", "saldo": "", "fechaprox": "", "pedidopara": ""
+        "odcil": "", "armazon": "", "cristales": "", "dsc": "", "total": "", "sen": "", "saldo": "", "fechaprox": "", "pedidopara": "", "reparacion": ""
     });
     const [GetsentData, SetsentData] = useState({});
     const [DocumentData, SetDocumentData] = useState();
@@ -176,7 +176,7 @@ export default function Document() {
 
     const [saveDocument, setSaveDocument] = useState();
     const Upload = async (ev) => {
-        console.log(saveDocument);
+        //console.log(saveDocument);
         try {
             handleWriteFile('C:/Users/Public/documents.json', `${saveDocument}`);
         } catch (error) {
@@ -199,10 +199,10 @@ export default function Document() {
                     documents: [...customers[customerToUpdateIndex].documents, sobrenum]
                 };
                 customers[customerToUpdateIndex] = updatedCustomer;
-                console.log(updatedCustomer);
+               // console.log(updatedCustomer);
                 await handleWriteFile("C:/Users/Public/customers.json", JSON.stringify(customers));
 
-                console.log("Cliente actualizado:", updatedCustomer);
+             //   console.log("Cliente actualizado:", updatedCustomer);
             } else {
                 console.log("Cliente no encontrado.");
             }
@@ -216,7 +216,8 @@ export default function Document() {
         // Upload();
         var data = glassProps;
         var save = document.querySelector("#save")
-        console.log(DocumentData);
+      //  console.log(DocumentData);
+      console.log("Guardando...");
         if (save.innerHTML == "guardar") {
             save.innerHTML = "guardando...";
             setTimeout(() => {
@@ -239,8 +240,8 @@ export default function Document() {
                 console.log("DocumentData es nulo o vacío.");
             }
 
-            console.log(data);
-            console.log(DocumentData);
+          //  console.log(data);
+         //   console.log(DocumentData);
             if (isSobre == false) {
                 Uploadtocustomer();
             }
@@ -249,6 +250,7 @@ export default function Document() {
                 newdocumentdata.push(data);
                 console.log("NEW DATA")
                 setSaveDocument(JSON.stringify(newdocumentdata));
+                setIssobre(true);
 
             } else if (isSobre == true) {
                 setSaveDocument(JSON.stringify(DocumentData));
@@ -256,6 +258,7 @@ export default function Document() {
             else {
                 console.log("DocumentData no es un array válido.");
             }
+           // setIssobre(true);
         }
 
     }, [DocumentData]);
@@ -263,7 +266,7 @@ export default function Document() {
     useEffect(() => {
         if (saveDocument !== null && saveDocument !== undefined) {
             setIssobre(true);
-            console.log(saveDocument);
+            //console.log(saveDocument);
             Upload();
         }
     }, [saveDocument]);
@@ -274,6 +277,7 @@ export default function Document() {
         console.log(sobrenum);
         getdocumentsdata();
         var save = document.querySelector("#save")
+
     }
 
     return (<div id="documentcontainer">
@@ -298,7 +302,29 @@ export default function Document() {
                 className="inputs txtinp" id="odcil" value={glassProps.odcil} onChange={(e) => SetProps({ ...glassProps, odcil: e.target.value })}></input></p>
             <p className="ps-3 font-size-base texts nomarginpadding">OI: <input type="text" className="inputs" id="oi" value={glassProps.oi} onChange={(e) => SetProps({ ...glassProps, oi: e.target.value })}></input>
                 <input type="text" className="inputs txtinp" id="oicil" value={glassProps.oicil} onChange={(e) => SetProps({ ...glassProps, oicil: e.target.value })}></input></p>
-            <p className="ps-3 font-size-base texts nomarginpadding">Cristales: <input type="text" className="inputs cristales" id="cristales" value={glassProps.cristales} onChange={(e) => SetProps({ ...glassProps, cristales: e.target.value })}></input></p>
+                {glassProps.type === "Lejos" || glassProps.type === "Cerca" ? (
+        <p className="ps-3 font-size-base texts nomarginpadding">
+            Cristales: 
+            <input 
+                type="text" 
+                className="inputs cristales" 
+                id="cristales" 
+                value={glassProps.cristales} 
+                onChange={(e) => SetProps({ ...glassProps, cristales: e.target.value })}
+            />
+        </p>
+    ) : glassProps.type === "Reparacion" ? (
+        <p className="ps-3 font-size-base texts nomarginpadding">
+            Reparación:  
+            <input 
+                type="text" 
+                className="inputs cristales" 
+                id="reparacion" 
+                value={glassProps.reparacion} 
+                onChange={(e) => SetProps({ ...glassProps, reparacion: e.target.value })}
+            />
+        </p>
+    ) : null}
             <p className="ps-3 font-size-base texts nomarginpadding">Armazón: <input type="text" className="inputs armazon" id="armazon" value={glassProps.armazon} onChange={(e) => SetProps({ ...glassProps, armazon: e.target.value })}></input></p>
             <div className="blackline"></div>
             <div className="desctotaldiv">
