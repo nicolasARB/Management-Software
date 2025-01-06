@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { Readfile, handleWriteFile } from './Databases';
+//import { CustomerContext } from './CustomerProvider';
 export default function Customers() {
     const [CustomersData, setCustomerData] = useState();
     const [DocumentsData, setDocumentsData] = useState([]);
@@ -222,21 +223,33 @@ export default function Customers() {
             console.log(PageNumber);
         }
     }
-    useEffect(() => {
-        const startIndex = (PageNumber - 1) * 17;
-        const endIndex = startIndex + 17;
-        if (Array.isArray(CustomersData) && Array.isArray(CustomerBrowse)) {
-            if (CustomerBrowse.length === 0) {
-                setMappedCustomers(CustomersData.slice(startIndex, endIndex));
-            } else {
-                setMappedCustomers(CustomerBrowse.slice(startIndex, endIndex));
-            }
+
+useEffect(() => {
+    const startIndex = (PageNumber - 1) * 17;
+    const endIndex = startIndex + 17;
+
+    if (Array.isArray(CustomersData) && Array.isArray(CustomerBrowse)) {
+        let sortedCustomers = [];
+
+        if (CustomerBrowse.length === 0) {
+            sortedCustomers = [...CustomersData];
         } else {
+            sortedCustomers = [...CustomerBrowse];
         }
-        if (PageNumber < 1) {
-            setPageNumber(1);
-        }
-    }, [CustomersData, PageNumber, CustomerBrowse]);
+
+        sortedCustomers.sort((a, b) => {
+            const maxA = a.documents.length > 0 ? Math.max(...a.documents) : 0;
+            const maxB = b.documents.length > 0 ? Math.max(...b.documents) : 0;
+            return maxB - maxA; 
+        });
+
+        setMappedCustomers(sortedCustomers.slice(startIndex, endIndex));
+    }
+
+    if (PageNumber < 1) {
+        setPageNumber(1);
+    }
+}, [CustomersData, PageNumber, CustomerBrowse]);
 
     async function CreateNewCustomer() {
         console.log(NewCustomer);
@@ -274,6 +287,17 @@ export default function Customers() {
             setModalVisible(true);
         }
     };
+    useEffect(() => {
+        if (SelectedCustomer) {
+            const updatedCustomerDocuments = DocumentsData.filter(doc => SelectedCustomer.documents.includes(doc.numsobre));
+            SetCustomerDocuments(updatedCustomerDocuments);
+    
+            if (SelectedDocument) {
+                const updatedSelectedDocument = DocumentsData.find(doc => doc.numsobre === SelectedDocument.numsobre);
+                SetSelectedDocument(updatedSelectedDocument || null);
+            }
+        }
+    }, [DocumentsData, SelectedCustomer, SelectedDocument]);
 
 
     function UpdateDocumentData(document, index) {
@@ -310,7 +334,7 @@ export default function Customers() {
             <input className="inline mt-3" type="textarea" id="browsersearch" placeholder="Buscar cliente" onChange={(ev) => updatebrowser(ev)}></input>
             <div className="container-fluid vh-75 mt-3 d-flex align-middle">
                 <section className="h-100 customersections" id="Customers">
-                    {mappedCustomers.length > 0 && mappedCustomers.reverse().map((customer) => (
+                    {mappedCustomers.length > 0 && mappedCustomers/*.reverse()*/.map((customer) => (
                         <div className="customer" onClick={(ev) => ViewCustomerData(customer, ev)}>
                             Cliente - {customer.nombre}, {customer.phone}
                         </div>

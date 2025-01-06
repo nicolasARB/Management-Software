@@ -11,6 +11,7 @@ import Document from './components/Document';
 import Edit from './components/Edit'
 import Statistics from './components/Statistics';
 import Database from './components/Databases';
+import { CustomerProvider } from "./components/CustomerProvider";
 function App() {
   const documentroute = window.location.pathname === '/document';
   console.log(documentroute);
@@ -20,6 +21,7 @@ function App() {
       <BrowserRouter>
         <Database />
         {!documentroute && <Navbar />}
+        <CustomerProvider>
         <Routes>
           <Route exact path="/" element={<Customers />} />
           <Route exact path="/Stock" element={<Stock />} />
@@ -27,6 +29,7 @@ function App() {
           <Route exact path="/edit" element={<Edit />} />
           <Route exact path="/Stats" element={<Statistics />} />
         </Routes>
+        </CustomerProvider>
       </BrowserRouter>)
   } else {
     return (
