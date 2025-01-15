@@ -15,12 +15,12 @@ export default function Customers() {
     const [SelectedCustomer, SetSelectedCustomer] = useState(null);
     const [selectedDocumentIndex, setSelectedDocumentIndex] = useState(null);
     const [NewCustomer, SetNewCustomer] = useState({ "nombre": "", "mail": "", "phone": "", "address": "", "documentid": "", "documents": [] });
-
-    var CustomerName = document.querySelector("#CustomerName");
+   /* var CustomerName = document.querySelector("#CustomerName");
     var CustomerMail = document.querySelector("#CustomerMail");
     var CustomerPhone = document.querySelector("#CustomerPhone");
     var CustomerAddress = document.querySelector("#CustomerAddress");
     var CustomerDocument = document.querySelector("#CustomerDocument");
+        */
     var [SelectedDocument, SetSelectedDocument] = useState(null);
     const handleCloseModal = () => {
         setModalVisible(false);
@@ -94,7 +94,7 @@ export default function Customers() {
             "odcil": "", "armazon": "", "cristales": "", "dsc": "", "total": "", "sen": "", "saldo": "", "fechaprox": "", "pedidopara": ""
         });
         console.log(SelectedCustomer);
-        CustomerName.style.display = "none";
+      /*  CustomerName.style.display = "none";
         CustomerMail.style.display = "none";
         CustomerPhone.style.display = "none";
         CustomerAddress.style.display = "none";
@@ -119,6 +119,7 @@ export default function Customers() {
             CustomerDocument.innerHTML = "DNI: " + data.documentid;
             CustomerDocument.style.display = 'inline';
         }
+            */
         const matchingDocuments = DocumentsData.filter(doc => data.documents.includes(doc.numsobre));
         SetCustomerDocuments(matchingDocuments);
 
@@ -224,7 +225,7 @@ export default function Customers() {
         }
     }
 
-useEffect(() => {
+/*useEffect(() => {
     const startIndex = (PageNumber - 1) * 17;
     const endIndex = startIndex + 17;
 
@@ -250,6 +251,39 @@ useEffect(() => {
         setPageNumber(1);
     }
 }, [CustomersData, PageNumber, CustomerBrowse]);
+*/
+useEffect(() => {
+    const startIndex = (PageNumber - 1) * 17;
+    const endIndex = startIndex + 17;
+
+    if (Array.isArray(CustomersData)) {
+        let sortedCustomers = [...CustomersData]; // Copia de la lista
+
+        // Si hay filtros activos, aplica el filtro
+        if (CustomerBrowse.length > 0) {
+            sortedCustomers = sortedCustomers.filter(customer => 
+                CustomerBrowse.includes(customer)
+            );
+        }
+
+        // Mapeo de clientes desde el más reciente al más antiguo
+        setMappedCustomers(sortedCustomers.reverse().slice(startIndex, endIndex));
+    }
+
+    if (PageNumber < 1) {
+        setPageNumber(1);
+    }
+
+    if (SelectedCustomer) {
+        const foundCustomer = CustomersData.find(
+            customer => customer.id === SelectedCustomer.id
+        );
+        if (foundCustomer) {
+            ViewCustomerData(foundCustomer);
+        }
+    }
+
+}, [CustomersData, PageNumber, CustomerBrowse, SelectedCustomer]);
 
     async function CreateNewCustomer() {
         console.log(NewCustomer);
@@ -306,6 +340,26 @@ useEffect(() => {
         setSelectedDocumentIndex(index);
     }
 
+/*
+                        <input
+                    type="text"
+                    className="cusinline"
+                    value={"Nombre: " + SelectedCustomer.nombre}
+                    placeholder="inserte nombre"
+                    onChange={(e) => SetSelectedCustomer({ ...SelectedCustomer, nombre: e.target.value })}
+                />
+*/
+const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    SetSelectedCustomer((prevCustomer) => ({
+        ...prevCustomer,
+        [name]: value,
+    }));
+};
+
+const handleSelectCustomer = (customer) => {
+    SetSelectedCustomer({ ...customer });
+};
 
     return (
         <div style={{ width: '100' + '%', height: '100' + '%' }}>
@@ -345,11 +399,50 @@ useEffect(() => {
 
                     <section id="customerdata">
                         <h2 className="text-center p-3">Datos personales</h2>
-                        <div id="CustomerName" className="cusinline">Nombre:</div>
-                        <div id="CustomerMail" className="cusinline" >Email:</div>
-                        <div id="CustomerPhone" className="cusinline">Celular:</div>
-                        <div id="CustomerAddress" className="cusinline">Dirección:</div>
-                        <div id="CustomerDocument" className="cusinline">DNI:</div>
+                        {SelectedCustomer && (
+                <div>
+                    <h2>Editar Cliente</h2>
+                    <label>
+                        Nombre:
+                        <input
+                            type="text"
+                            name="nombre"
+                            value={SelectedCustomer.nombre || ""}
+                            onChange={handleInputChange}
+                        />
+                    </label>
+                    <br />
+                    <label>
+                        Email:
+                        <input
+                            type="email"
+                            name="mail"
+                            value={SelectedCustomer.mail || ""}
+                            onChange={handleInputChange}
+                        />
+                    </label>
+                    <br />
+                    <label>
+                        Teléfono:
+                        <input
+                            type="text"
+                            name="phone"
+                            value={SelectedCustomer.phone || ""}
+                            onChange={handleInputChange}
+                        />
+                    </label>
+                    <br />
+                    <label>
+                        Dirección:
+                        <input
+                            type="text"
+                            name="address"
+                            value={SelectedCustomer.address || ""}
+                            onChange={handleInputChange}
+                        />
+                    </label>
+                </div>
+            )}
                     </section>
 
                     <section id="customerdocuments" className="h-50 w-100">
