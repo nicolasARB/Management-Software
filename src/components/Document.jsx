@@ -16,14 +16,20 @@ export default function Document() {
     const [isSobre, setIssobre] = useState(false);
     const [AllDocuments, SetAllDocuments] = useState("");
     var sobrenum;
+    var currentinsobre = false;
 
     async function getalldocuments() {
         try {
             const response = await Readfile("C:/Users/Public/documents.json");
             const documents = JSON.parse(response);
             SetAllDocuments(documents);
-            SetNumber(documents.length + 3);
-            sobrenum = documents.length + 3;
+            console.log(GetsentData.issobre);
+            console.log(GetsentData);
+            if (isSobre == false) {
+                console.log("mov");
+                SetNumber(documents.length + 3);
+                sobrenum = documents.length + 3;
+            }
         } catch (error) {
             console.error('Error loading documents:', error);
         }
@@ -39,12 +45,14 @@ export default function Document() {
                 Data = JSON.parse(response);
                 console.log(Data);
             }
-            if (Data && Data.length !== undefined && isSobre === false) {
+            console.log(isSobre);
+            console.log(currentinsobre);
+            if (Data && Data.length !== undefined && isSobre === false && currentinsobre == false) {
                 console.log("Longitud de DocumentData:", Data.length + 1);
-                if (Data.hasOwnProperty("numsobre")) {
+                /*if (Data.hasOwnProperty("numsobre")) {
                     Data.numsobre = String(Data.length + 3);
                     sobrenum = String(Data.length + 3);
-                }
+                }*/
             } else {
                 if (Data.hasOwnProperty("numsobre")) {
                     Data.numsobre = "3";
@@ -53,7 +61,7 @@ export default function Document() {
                 console.log("Data es nulo o vacío.");
             }
             if (isSobre != true) {
-                SetNumber(sobrenum);
+                //  SetNumber(sobrenum);
             }
         } catch (error) {
             console.error('Error al leer el archivo:', error);
@@ -66,6 +74,7 @@ export default function Document() {
             const parsedData = JSON.parse(response);
             SetsentData(parsedData);
             getsobrenum();
+            // getalldocuments();
             const updatedGlassProps = { ...glassProps };
             for (const key in parsedData) {
                 if (parsedData.hasOwnProperty(key)) {
@@ -112,6 +121,8 @@ export default function Document() {
             if (GetsentData.issobre == true) {
                 setIssobre(true);
                 SetNumber(GetsentData.numsobre);
+                currentinsobre = true;
+                sobrenum = GetsentData.numsobre;
                 console.log(GetsentData.numsobre);
                 SetProps(prevGlassProps => ({
                     ...prevGlassProps,
@@ -199,10 +210,10 @@ export default function Document() {
                     documents: [...customers[customerToUpdateIndex].documents, sobrenum]
                 };
                 customers[customerToUpdateIndex] = updatedCustomer;
-               // console.log(updatedCustomer);
+                // console.log(updatedCustomer);
                 await handleWriteFile("C:/Users/Public/customers.json", JSON.stringify(customers));
 
-             //   console.log("Cliente actualizado:", updatedCustomer);
+                //   console.log("Cliente actualizado:", updatedCustomer);
             } else {
                 console.log("Cliente no encontrado.");
             }
@@ -216,8 +227,8 @@ export default function Document() {
         // Upload();
         var data = glassProps;
         var save = document.querySelector("#save")
-      //  console.log(DocumentData);
-      console.log("Guardando...");
+        //  console.log(DocumentData);
+        console.log("Guardando...");
         if (save.innerHTML == "guardar") {
             save.innerHTML = "guardando...";
             setTimeout(() => {
@@ -240,8 +251,6 @@ export default function Document() {
                 console.log("DocumentData es nulo o vacío.");
             }
 
-          //  console.log(data);
-         //   console.log(DocumentData);
             if (isSobre == false) {
                 Uploadtocustomer();
             }
@@ -258,11 +267,13 @@ export default function Document() {
             else {
                 console.log("DocumentData no es un array válido.");
             }
-           // setIssobre(true);
+            // setIssobre(true);
         }
 
     }, [DocumentData]);
-
+    useEffect(() => {
+        console.log(WorkNumber);
+    }, [WorkNumber]);
     useEffect(() => {
         if (saveDocument !== null && saveDocument !== undefined) {
             setIssobre(true);
@@ -302,29 +313,29 @@ export default function Document() {
                 className="inputs txtinp" id="odcil" value={glassProps.odcil} onChange={(e) => SetProps({ ...glassProps, odcil: e.target.value })}></input></p>
             <p className="ps-3 font-size-base texts nomarginpadding">OI: <input type="text" className="inputs" id="oi" value={glassProps.oi} onChange={(e) => SetProps({ ...glassProps, oi: e.target.value })}></input>
                 <input type="text" className="inputs txtinp" id="oicil" value={glassProps.oicil} onChange={(e) => SetProps({ ...glassProps, oicil: e.target.value })}></input></p>
-                {glassProps.type === "Lejos" || glassProps.type === "Cerca" ? (
-        <p className="ps-3 font-size-base texts nomarginpadding">
-            Cristales: 
-            <input 
-                type="text" 
-                className="inputs cristales" 
-                id="cristales" 
-                value={glassProps.cristales} 
-                onChange={(e) => SetProps({ ...glassProps, cristales: e.target.value })}
-            />
-        </p>
-    ) : glassProps.type === "Reparacion" ? (
-        <p className="ps-3 font-size-base texts nomarginpadding">
-            Reparación:  
-            <input 
-                type="text" 
-                className="inputs cristales" 
-                id="reparacion" 
-                value={glassProps.reparacion} 
-                onChange={(e) => SetProps({ ...glassProps, reparacion: e.target.value })}
-            />
-        </p>
-    ) : null}
+            {glassProps.type === "Lejos" || glassProps.type === "Cerca" ? (
+                <p className="ps-3 font-size-base texts nomarginpadding">
+                    Cristales:
+                    <input
+                        type="text"
+                        className="inputs cristales"
+                        id="cristales"
+                        value={glassProps.cristales}
+                        onChange={(e) => SetProps({ ...glassProps, cristales: e.target.value })}
+                    />
+                </p>
+            ) : glassProps.type === "Reparacion" ? (
+                <p className="ps-3 font-size-base texts nomarginpadding">
+                    Reparación:
+                    <input
+                        type="text"
+                        className="inputs cristales"
+                        id="reparacion"
+                        value={glassProps.reparacion}
+                        onChange={(e) => SetProps({ ...glassProps, reparacion: e.target.value })}
+                    />
+                </p>
+            ) : null}
             <p className="ps-3 font-size-base texts nomarginpadding">Armazón: <input type="text" className="inputs armazon" id="armazon" value={glassProps.armazon} onChange={(e) => SetProps({ ...glassProps, armazon: e.target.value })}></input></p>
             <div className="blackline"></div>
             <div className="desctotaldiv">
@@ -338,17 +349,17 @@ export default function Document() {
 
         </section>
         <p className="corte">
-           ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         </p>
         <section id="info">
             <div id="infodiv">
-<img id="infologo" src={logo}></img>
-<p>Lunes a viernes 10hs a 13hs.</p>
-<div className="margg">
-<p >15hs a 19hs</p>
-</div>
-<p>Sabados de 10hs a 14hs.</p>
-<div id="infodiv2"> <img src={whatsapp}></img> <p>11-6613-0262.</p></div>
+                <img id="infologo" src={logo}></img>
+                <p>Lunes a viernes 10hs a 13hs.</p>
+                <div className="margg">
+                    <p >15hs a 19hs</p>
+                </div>
+                <p>Sabados de 10hs a 14hs.</p>
+                <div id="infodiv2"> <img src={whatsapp}></img> <p>11-6613-0262.</p></div>
             </div>
 
         </section>
@@ -369,9 +380,9 @@ export default function Document() {
             </p>
         </section>
         <p className="corte">
-        ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         </p>
-  
+
 
     </div >
     )

@@ -47,6 +47,10 @@ code {
   margin-left: 0.7vh;
   margin-right: 0.7vh;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
 }
 
 .customer:hover {
@@ -142,24 +146,34 @@ code {
 }
 
 #customerdata {
-  height: 30vh;
+  height: 45%;
   width: 100%;
 }
 
 #customerdata div {
   border: 1px solid black;
   margin: 0.5vw;
-  width: 20vw;
-  height: 15vh;
+  width: 50%;
+  height: 80%;
 }
-.cusinline{
-display: inline;
+
+#customerdata div label {
+  /*text-align: center;*/
+  width: 100%;
+  height: 15%;
 }
+
+.cusinline {
+  display: inline;
+}
+
 #documents {
   width: 100%;
   height: 65%;
   overflow-y: auto;
 }
+
+#documents {}
 
 #createdocument {
   position: relative;
@@ -203,6 +217,19 @@ display: inline;
   margin-left: 10%;
 }
 
+.deletestyle {
+  font-size: 1.1em;
+  font-weight: bold;
+  width: 15%;
+  margin-left: 10%;
+}
+
+#savecustomer {
+  text-align: center;
+  position: relative;
+  left: 35%;
+}
+
 .producstk {
   width: 100%;
   border-color: 2px solid green;
@@ -213,15 +240,16 @@ display: inline;
   margin-left: 20%;
 }
 
-#closemodal{
-width: 1.65rem;
-height: 1.65rem;
-background-color: red;
-color: white;
-position: relative;
-left: 92%;
-text-align: center;
+#closemodal {
+  width: 1.65rem;
+  height: 1.65rem;
+  background-color: red;
+  color: white;
+  position: relative;
+  left: 92%;
+  text-align: center;
 }
-.buttonmodal{
+
+.buttonmodal {
   margin-left: 0.5rem;
 }

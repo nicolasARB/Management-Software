@@ -11,19 +11,25 @@ export default function Customers() {
     const [PageNumber, setPageNumber] = useState(1);
     const [modalVisible, setModalVisible] = useState(false);
 
+    const [CanEdit, SetEditable] = useState(false);
+
+    const [DocumentToDelete, SetDocumentToDelete] = useState();
+    const [DocumentToDeleteModal, SetDocumentToDeleteModal] = useState(false);
+
+    const [CustomerEditModal, SetCustomerEditModal] = useState(false);
 
     const [SelectedCustomer, SetSelectedCustomer] = useState(null);
     const [selectedDocumentIndex, setSelectedDocumentIndex] = useState(null);
-    const [NewCustomer, SetNewCustomer] = useState({ "nombre": "", "mail": "", "phone": "", "address": "", "documentid": "", "documents": [] });
-   /* var CustomerName = document.querySelector("#CustomerName");
-    var CustomerMail = document.querySelector("#CustomerMail");
-    var CustomerPhone = document.querySelector("#CustomerPhone");
-    var CustomerAddress = document.querySelector("#CustomerAddress");
-    var CustomerDocument = document.querySelector("#CustomerDocument");
-        */
+    const [NewCustomer, SetNewCustomer] = useState({ "nombre": "", "mail": "", "phone": "", "address": "", "documentid": "", "Id": "", "documents": [] });
     var [SelectedDocument, SetSelectedDocument] = useState(null);
     const handleCloseModal = () => {
         setModalVisible(false);
+    };
+    const HandleDocumentToDelete = () => {
+        SetDocumentToDeleteModal(false);
+    };
+    const HandleCustomerEdit = () => {
+        SetCustomerEditModal(false);
     };
     const OpenDocument = async (ev) => {
         if (SelectedCustomer != null) {
@@ -34,7 +40,7 @@ export default function Customers() {
             console.log(SelectedDocument);
             if (SelectedDocument != null) {
                 send = SelectedDocument;
-                send.issobre = true;
+                send.issobre = false;
                 console.log("reach");
                 console.log(send);
                 send = JSON.stringify(send);
@@ -78,6 +84,7 @@ export default function Customers() {
         try {
             const response = await Readfile("C:/Users/Public/customers.json");
             filedata = JSON.parse(response);
+            //      console.log(filedata);
         } catch (error) {
             console.error('Error al leer el archivo:', error);
         }
@@ -90,49 +97,12 @@ export default function Customers() {
         SetSelectedDocument(null);
         setSelectedDocumentIndex(null);
         SetSelectedCustomer({
-            "nombre": data.nombre, "mail": data.mail, "phone": data.phone, "address": data.address, "documentid": data.documentid, "documents": data.documents, "esf": "", "cil": "", "dip": "", "alt": "", "oi": "", "oicil": "", "od": "",
+            "nombre": data.nombre, "mail": data.mail, "phone": data.phone, "address": data.address, "documentid": data.documentid, "documents": data.documents, "Id": data.Id, "esf": "", "cil": "", "dip": "", "alt": "", "oi": "", "oicil": "", "od": "",
             "odcil": "", "armazon": "", "cristales": "", "dsc": "", "total": "", "sen": "", "saldo": "", "fechaprox": "", "pedidopara": ""
         });
         console.log(SelectedCustomer);
-      /*  CustomerName.style.display = "none";
-        CustomerMail.style.display = "none";
-        CustomerPhone.style.display = "none";
-        CustomerAddress.style.display = "none";
-        CustomerDocument.style.display = "none";
-        if (data.hasOwnProperty('nombre')) {
-            CustomerName.innerHTML = "Nombre: " + data.nombre;
-            CustomerName.style.display = 'inline';
-        }
-        if (data.hasOwnProperty('mail')) {
-            CustomerMail.innerHTML = "Email: " + data.mail;
-            CustomerMail.style.display = 'inline';
-        }
-        if (data.hasOwnProperty('phone')) {
-            CustomerPhone.innerHTML = "Celular: " + data.phone;
-            CustomerPhone.style.display = 'inline';
-        }
-        if (data.hasOwnProperty('address')) {
-            CustomerAddress.innerHTML = "Dirección: " + data.address;
-            CustomerAddress.style.display = 'inline';
-        }
-        if (data.hasOwnProperty('documentid')) {
-            CustomerDocument.innerHTML = "DNI: " + data.documentid;
-            CustomerDocument.style.display = 'inline';
-        }
-            */
         const matchingDocuments = DocumentsData.filter(doc => data.documents.includes(doc.numsobre));
         SetCustomerDocuments(matchingDocuments);
-
-        /*  matchingDocuments.forEach(doc => {
-              const documentElement = document.createElement("div");
-              documentElement.innerText = `Document ${doc.numsobre}: ${doc.type}`;
-              documentElement.addEventListener("click", () => {
-                  // Handle clicking on a document
-                  console.log(`Clicked on document ${doc.numsobre}`);
-              });
-              documentsDiv.appendChild(documentElement);
-          });
-  */
     }
 
 
@@ -195,12 +165,18 @@ export default function Customers() {
 
     function updatebrowser(ev) {
         const searchTerm = ev.target.value.toLowerCase();
-        console.log(searchTerm);
+
+        if (!searchTerm) {
+            if (CustomerBrowse.length !== 0) {
+                setCustomerbrowse([]);
+            }
+            return;
+        }
 
         const filteredCustomers = CustomersData.filter((customer) => {
             const nombre = customer.nombre.toLowerCase();
             const phone = customer.phone ? customer.phone.toLowerCase() : "";
-            const email = customer.email ? customer.email.toLowerCase() : "";
+            const email = customer.mail ? customer.mail.toLowerCase() : "";
             const address = customer.address ? customer.address.toLowerCase() : "";
 
             return (
@@ -210,10 +186,16 @@ export default function Customers() {
                 address.includes(searchTerm)
             );
         });
-        setCustomerbrowse(filteredCustomers);
-        console.log(CustomerBrowse);
-    }
 
+        // Comparar arrays (por ID, nombre, etc.)
+        const areEqual =
+            filteredCustomers.length === CustomerBrowse.length &&
+            filteredCustomers.every((c, i) => c.Id === CustomerBrowse[i]?.Id);
+
+        if (!areEqual) {
+            setCustomerbrowse(filteredCustomers);
+        }
+    }
     function Arrow(leftoright) {
         console.log(leftoright);
         if (leftoright == "left") {
@@ -225,94 +207,180 @@ export default function Customers() {
         }
     }
 
-/*useEffect(() => {
-    const startIndex = (PageNumber - 1) * 17;
-    const endIndex = startIndex + 17;
+    useEffect(() => {
+        if (!Array.isArray(CustomersData)) return;
 
-    if (Array.isArray(CustomersData) && Array.isArray(CustomerBrowse)) {
-        let sortedCustomers = [];
+        const startIndex = (PageNumber - 1) * 17;
+        const endIndex = startIndex + 17;
 
-        if (CustomerBrowse.length === 0) {
-            sortedCustomers = [...CustomersData];
-        } else {
-            sortedCustomers = [...CustomerBrowse];
+        let baseList = CustomerBrowse.length > 0 ? CustomerBrowse : CustomersData;
+
+        // No uses .reverse() en el array original directamente porque lo muta
+        const sorted = [...baseList].reverse();
+        const newMapped = sorted.slice(startIndex, endIndex);
+
+        // Comparar arrays por ID para evitar re-renders innecesarios
+        const areEqual =
+            newMapped.length === mappedCustomers.length &&
+            newMapped.every((c, i) => c.Id === mappedCustomers[i]?.Id);
+
+        if (!areEqual) {
+            setMappedCustomers(newMapped);
         }
 
-        sortedCustomers.sort((a, b) => {
-            const maxA = a.documents.length > 0 ? Math.max(...a.documents) : 0;
-            const maxB = b.documents.length > 0 ? Math.max(...b.documents) : 0;
-            return maxB - maxA; 
-        });
+        if (PageNumber < 1) {
+            setPageNumber(1);
+        }
+    }, [CustomersData, PageNumber, CustomerBrowse]);
 
-        setMappedCustomers(sortedCustomers.slice(startIndex, endIndex));
-    }
-
-    if (PageNumber < 1) {
-        setPageNumber(1);
-    }
-}, [CustomersData, PageNumber, CustomerBrowse]);
-*/
-useEffect(() => {
-    const startIndex = (PageNumber - 1) * 17;
-    const endIndex = startIndex + 17;
-
-    if (Array.isArray(CustomersData)) {
-        let sortedCustomers = [...CustomersData]; // Copia de la lista
-
-        // Si hay filtros activos, aplica el filtro
-        if (CustomerBrowse.length > 0) {
-            sortedCustomers = sortedCustomers.filter(customer => 
-                CustomerBrowse.includes(customer)
-            );
+    async function AsignarIdsClientesExistentes() {
+        let filedata = [];
+        try {
+            const response = await Readfile("C:/Users/Public/customers.json");
+            filedata = JSON.parse(response);
+        } catch (error) {
+            console.error("Error al leer el archivo:", error);
+            return;
         }
 
-        // Mapeo de clientes desde el más reciente al más antiguo
-        setMappedCustomers(sortedCustomers.reverse().slice(startIndex, endIndex));
-    }
-
-    if (PageNumber < 1) {
-        setPageNumber(1);
-    }
-
-    if (SelectedCustomer) {
-        const foundCustomer = CustomersData.find(
-            customer => customer.id === SelectedCustomer.id
-        );
-        if (foundCustomer) {
-            ViewCustomerData(foundCustomer);
+        const yaTienenIds = filedata.every(cliente => cliente.Id !== undefined && cliente.Id !== null);
+        if (yaTienenIds) {
+            console.log("Todos los clientes ya tienen ID. No se actualiza nada.");
+            return;
         }
+
+        const filedataConIds = filedata.map((cliente, index) => ({
+            ...cliente,
+            Id: index + 1,
+        }));
+
+        try {
+            const updatedFileData = JSON.stringify(filedataConIds, null, 2);
+            await handleWriteFile("C:/Users/Public/customers.json", updatedFileData);
+            console.log("IDs asignados correctamente a todos los clientes.");
+        } catch (error) {
+            console.error("Error al escribir el archivo:", error);
+        }
+
+        loadnewdata();
     }
 
-}, [CustomersData, PageNumber, CustomerBrowse, SelectedCustomer]);
+    useEffect(() => {
+        AsignarIdsClientesExistentes();
+    }, []);
 
     async function CreateNewCustomer() {
         console.log(NewCustomer);
-        var filedata;
+        let filedata = [];
         try {
             const response = await Readfile("C:/Users/Public/customers.json");
-            console.log(response);
+            filedata = JSON.parse(response);
+            console.log("Clientes existentes:", filedata);
+        } catch (error) {
+            console.error("Error al leer el archivo:", error);
+        }
+        console.log(NewCustomer);
+        const result = filedata.find(
+            (item) => item.phone === NewCustomer.phone
+        );
+        console.log(result);
+        if (!result) {
+            console.log("Cliente nuevo. Añadiendo...");
+
+            const maxId = filedata.reduce((max, curr) => Math.max(max, curr.Id || 0), 0);
+            const newId = maxId + 1;
+
+            const clienteConId = { ...NewCustomer, Id: newId };
+            filedata.push(clienteConId);
+
+            try {
+                const updatedFileData = JSON.stringify(filedata, null, 2);
+                await handleWriteFile("C:/Users/Public/customers.json", updatedFileData);
+                console.log("Archivo actualizado con el nuevo cliente.");
+            } catch (error) {
+                console.error("Error al escribir el archivo:", error);
+            }
+        } else {
+            console.log("Cliente ya existe. No se añadió.");
+        }
+
+        loadnewdata();
+    }
+
+    async function EditCustomer() {
+        let filedata = [];
+        try {
+            const response = await Readfile("C:/Users/Public/customers.json");
             filedata = JSON.parse(response);
         } catch (error) {
-            console.error('Error al leer el archivo:', error);
+            console.error("Error al leer el archivo:", error);
+            return;
         }
-        var result = filedata.find((item) => item[0] === NewCustomer.mail || NewCustomer.documentid);
-        console.log(result);
-        if (result === null || result === undefined) {
-            console.log("no se encontro");
-            filedata.push(NewCustomer);
-            console.log(filedata);
-        } else {
-            console.log("se encontro");
+        console.log(SelectedCustomer);
+        const index = filedata.findIndex(cliente => cliente.Id === SelectedCustomer.Id);
+        if (index === -1) {
+            console.error("Cliente no encontrado para editar.");
+            return;
         }
-        console.log(filedata);
+
+        filedata[index] = { ...SelectedCustomer };
+
         try {
-            const updatedFileData = JSON.stringify(filedata);
+            const updatedFileData = JSON.stringify(filedata, null, 2);
             await handleWriteFile("C:/Users/Public/customers.json", updatedFileData);
-            console.log("Archivo actualizado con el nuevo cliente.");
+            console.log("Cliente actualizado correctamente.");
         } catch (error) {
-            console.error('Error al escribir el archivo:', error);
+            console.error("Error al guardar el archivo:", error);
         }
+
         loadnewdata();
+    }
+
+    async function remove(customerR) {
+        try {
+            const indexToRemove = DocumentsData.findIndex(item => item.numsobre === customerR.numsobre);
+
+            if (indexToRemove === -1) {
+                console.warn("Documento no encontrado en la lista.");
+                return;
+            }
+
+            const updatedData = [...DocumentsData.slice(0, indexToRemove), ...DocumentsData.slice(indexToRemove + 1)];
+            setDocumentsData(updatedData);
+            var customerrsobre = Number(customerR.numsobre)
+            console.log(customerrsobre);
+            console.log(customerR.numsobre);
+            const associatedCustomer = CustomersData.find(customer => customer.documents.includes(customerrsobre));
+
+            if (associatedCustomer) {
+                const updatedCustomer = {
+                    ...associatedCustomer,
+                    documents: associatedCustomer.documents.filter(docNum => docNum !== customerrsobre),
+                };
+
+                const customerIndex = CustomersData.findIndex(item => item.phone === associatedCustomer.phone);
+
+                if (customerIndex !== -1) {
+                    const updatedCustomersData = [
+                        ...CustomersData.slice(0, customerIndex),
+                        updatedCustomer,
+                        ...CustomersData.slice(customerIndex + 1),
+                    ];
+
+                    setCustomerData(updatedCustomersData);
+                    console.log(updatedCustomersData);
+                    const updatedCustomersFileData = JSON.stringify(updatedCustomersData);
+                    await handleWriteFile("C:/Users/Public/customers.json", updatedCustomersFileData);
+                }
+            }
+
+            const updatedFileData = JSON.stringify(updatedData);
+            await handleWriteFile("C:/Users/Public/documents.json", updatedFileData);
+            console.log("Documento eliminado y archivo actualizado.");
+        } catch (error) {
+            console.error('Error al eliminar el Documento y escribir el archivo:', error);
+        }
+
     }
 
     const handleModal = () => {
@@ -325,7 +393,7 @@ useEffect(() => {
         if (SelectedCustomer) {
             const updatedCustomerDocuments = DocumentsData.filter(doc => SelectedCustomer.documents.includes(doc.numsobre));
             SetCustomerDocuments(updatedCustomerDocuments);
-    
+
             if (SelectedDocument) {
                 const updatedSelectedDocument = DocumentsData.find(doc => doc.numsobre === SelectedDocument.numsobre);
                 SetSelectedDocument(updatedSelectedDocument || null);
@@ -340,45 +408,74 @@ useEffect(() => {
         setSelectedDocumentIndex(index);
     }
 
-/*
-                        <input
-                    type="text"
-                    className="cusinline"
-                    value={"Nombre: " + SelectedCustomer.nombre}
-                    placeholder="inserte nombre"
-                    onChange={(e) => SetSelectedCustomer({ ...SelectedCustomer, nombre: e.target.value })}
-                />
-*/
-const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    SetSelectedCustomer((prevCustomer) => ({
-        ...prevCustomer,
-        [name]: value,
-    }));
-};
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        SetSelectedCustomer((prevCustomer) => ({
+            ...prevCustomer,
+            [name]: value,
+        }));
+    };
 
-const handleSelectCustomer = (customer) => {
-    SetSelectedCustomer({ ...customer });
-};
+    const handleSelectCustomer = (customer) => {
+        SetSelectedCustomer({ ...customer });
+    };
 
     return (
         <div style={{ width: '100' + '%', height: '100' + '%' }}>
             {modalVisible && (
                 <div id="modal1" class="modal">
                     <form class="modal-content" action="/action_page.php">
-                    <button id="closemodal" onClick={(ev) => { handleCloseModal(); }}>X</button>
+                        <button id="closemodal" onClick={(ev) => { handleCloseModal(); }}>X</button>
                         <div class="container">
                             <h1>Crear sobre</h1>
                             <div class="clearfix">
-                                <button type="button" id="buttoncerca" 
+                                <button type="button" id="buttoncerca"
                                     onClick={(ev) => { handleCloseModal(); OpenDocument(ev); }}
                                     class="deletebtnstock bt buttonmodal">Cerca</button>
-                                <button type="button" id="buttonlejos" 
+                                <button type="button" id="buttonlejos"
                                     onClick={(ev) => { handleCloseModal(); OpenDocument(ev); }}
                                     class="cancelbtnstock bt buttonmodal">Lejos</button>
-                                <button type="button" id="buttonlejos" 
+                                <button type="button" id="buttonlejos"
                                     onClick={(ev) => { handleCloseModal(); OpenDocument(ev); }}
                                     class="cancelbtnstock bt buttonmodal">Reparacion</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            )}
+
+            {DocumentToDeleteModal && (
+                <div id="modal1" class="modal">
+                    <form class="modal-content" action="/action_page.php">
+                        <button id="closemodal" onClick={(ev) => { HandleDocumentToDelete(); }}>X</button>
+                        <div class="container">
+                            <h2>Seguro que queres eliminar este sobre?({DocumentToDelete.numsobre})</h2>
+                            <div class="clearfix">
+                                <button type="button" id="buttoncerca"
+                                    onClick={(ev) => { HandleDocumentToDelete(); remove(DocumentToDelete); }}
+                                    class="deletebtnstock bt buttonmodal">Aceptar</button>
+                                <button type="button" id="buttonlejos"
+                                    onClick={(ev) => { HandleDocumentToDelete(); }}
+                                    class="cancelbtnstock bt buttonmodal">Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            )}
+
+            {CustomerEditModal && (
+                <div id="modal1" class="modal">
+                    <form class="modal-content" action="/action_page.php">
+                        <button id="closemodal" onClick={(ev) => { HandleCustomerEdit(); }}>X</button>
+                        <div class="container">
+                            <h2>Seguro que queres editar este cliente?</h2>
+                            <div class="clearfix">
+                                <button type="button" id="buttoncerca"
+                                    onClick={(ev) => { HandleCustomerEdit(); EditCustomer(); }}
+                                    class="deletebtnstock bt buttonmodal">Aceptar</button>
+                                <button type="button" id="buttonlejos"
+                                    onClick={(ev) => { HandleCustomerEdit(); }}
+                                    class="cancelbtnstock bt buttonmodal">Cancelar</button>
                             </div>
                         </div>
                     </form>
@@ -400,49 +497,57 @@ const handleSelectCustomer = (customer) => {
                     <section id="customerdata">
                         <h2 className="text-center p-3">Datos personales</h2>
                         {SelectedCustomer && (
-                <div>
-                    <h2>Editar Cliente</h2>
-                    <label>
-                        Nombre:
-                        <input
-                            type="text"
-                            name="nombre"
-                            value={SelectedCustomer.nombre || ""}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Email:
-                        <input
-                            type="email"
-                            name="mail"
-                            value={SelectedCustomer.mail || ""}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Teléfono:
-                        <input
-                            type="text"
-                            name="phone"
-                            value={SelectedCustomer.phone || ""}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Dirección:
-                        <input
-                            type="text"
-                            name="address"
-                            value={SelectedCustomer.address || ""}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                </div>
-            )}
+                            <div>
+                                <h2>Editar Cliente</h2>
+                                <label>
+                                    Nombre:
+                                    <input
+                                        type="text"
+                                        name="nombre"
+                                        value={SelectedCustomer.nombre || ""}
+                                        onChange={handleInputChange}
+                                        disabled={!CanEdit}
+                                    />
+                                </label>
+                                <br />
+                                <label>
+                                    Email:
+                                    <input
+                                        type="email"
+                                        name="mail"
+                                        value={SelectedCustomer.mail || ""}
+                                        onChange={handleInputChange}
+                                        disabled={!CanEdit}
+                                    />
+                                </label>
+                                <br />
+                                <label>
+                                    Teléfono:
+                                    <input
+                                        type="text"
+                                        name="phone"
+                                        value={SelectedCustomer.phone || ""}
+                                        onChange={handleInputChange}
+                                        disabled={!CanEdit}
+                                    />
+                                </label>
+                                <br />
+                                <label>
+                                    Dirección:
+                                    <input
+                                        type="text"
+                                        name="address"
+                                        value={SelectedCustomer.address || ""}
+                                        onChange={handleInputChange}
+                                        disabled={!CanEdit}
+                                    />
+                                </label>
+                                {CanEdit && (
+                                    <button id="savecustomer" onClick={() => SetCustomerEditModal(true)}>Guardar</button>
+                                )}
+
+                            </div>
+                        )}
                     </section>
 
                     <section id="customerdocuments" className="h-50 w-100">
@@ -450,10 +555,26 @@ const handleSelectCustomer = (customer) => {
                         <section className="" id="documents">
                             {CustomerDocuments.length > 0 && CustomerDocuments.map((document, index) => (
                                 <div
-                                    className={`document ${selectedDocumentIndex === index ? "selectedocument" : ""}`}
-                                    onClick={(ev) => UpdateDocumentData(document, index)}>
-                                    Anteojo - {document.type} - Sobre nro {document.numsobre}
+                                    className={`document ${selectedDocumentIndex === index ? "selectedocument" : ""} documentincustomer`}
+                                    onClick={(ev) => UpdateDocumentData(document, index)}
+                                >
+                                    <span>Anteojo - {document.type} - Sobre nro {document.numsobre}</span>
+                                    {CanEdit && (
+                                        <button
+                                            className="deletestyle"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                SetDocumentToDelete(document);
+                                                SetDocumentToDeleteModal(true);
+                                                //  remove(document);
+                                            }}
+                                            style={{ color: "red" }}
+                                        >
+                                            X
+                                        </button>
+                                    )}
                                 </div>
+
                             ))}
                         </section>
 
@@ -501,7 +622,7 @@ const handleSelectCustomer = (customer) => {
                     onChange={(e) => SetNewCustomer({ ...NewCustomer, documentid: e.target.value })}
                 />
                 <button id="addcliente" onClick={CreateNewCustomer}>Añadir</button>
-                <button id="edit" onClick={openedit} >Editar</button>
+                <button id="" onClick={() => SetEditable(!CanEdit)}>{CanEdit ? "Deshabilitar Edicion" : "Habilitar Edicion"}</button>
             </footer>
 
 
