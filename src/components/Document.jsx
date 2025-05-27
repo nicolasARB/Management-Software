@@ -8,7 +8,7 @@ export default function Document() {
     const [DocumentDate, SetDate] = useState(null);
     const [WorkNumber, SetNumber] = useState('1');
     const [glassProps, SetProps] = useState({
-        "numsobre": "", "fecha": "", "type": "", "nombre": "", "address": "", "documentid": "", "phone": "", "mail": "", "esf": "", "cil": "", "dip": "", "alt": "", "oi": "", "oicil": "", "od": "",
+        "numsobre": "", "fecha": "", "type": "", "nombre": "", "address": "", "documentid": "", "phone": "", "Id": "" , "mail": "", "esf": "", "cil": "", "dip": "", "alt": "", "oi": "", "oicil": "", "od": "",
         "odcil": "", "armazon": "", "cristales": "", "dsc": "", "total": "", "sen": "", "saldo": "", "fechaprox": "", "pedidopara": "", "reparacion": ""
     });
     const [GetsentData, SetsentData] = useState({});

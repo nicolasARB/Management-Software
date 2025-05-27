@@ -38,6 +38,7 @@ export default function Customers() {
             send.type = ev.target.innerHTML;
             send = JSON.stringify(send);
             console.log(SelectedDocument);
+            console.log(send);
             if (SelectedDocument != null) {
                 send = SelectedDocument;
                 send.issobre = false;
@@ -65,6 +66,7 @@ export default function Customers() {
         if (SelectedDocument != null) {
             var send = SelectedCustomer;
             send = SelectedDocument;
+            send.Id = SelectedCustomer.Id;
             send.issobre = true;
             console.log("reach");
             console.log(send);
@@ -264,7 +266,37 @@ export default function Customers() {
 
         loadnewdata();
     }
+    async function AsignarIdsADocumentos() {
+        let filedata = [];
+        try {
+            const response = await Readfile("C:/Users/Public/documents.json");
+            filedata = JSON.parse(response);
+        } catch (error) {
+            console.error("Error al leer el archivo:", error);
+            return;
+        }
 
+        const yaTienenIds = filedata.every(cliente => cliente.Id !== undefined && cliente.Id !== null);
+        if (yaTienenIds) {
+            console.log("Todos los clientes ya tienen ID. No se actualiza nada.");
+            return;
+        }
+
+        const filedataConIds = filedata.map((cliente, index) => ({
+            ...cliente,
+            Id: index + 1,
+        }));
+
+        try {
+            const updatedFileData = JSON.stringify(filedataConIds, null, 2);
+            await handleWriteFile("C:/Users/Public/customers.json", updatedFileData);
+            console.log("IDs asignados correctamente a todos los clientes.");
+        } catch (error) {
+            console.error("Error al escribir el archivo:", error);
+        }
+
+        loadnewdata();
+    }
     useEffect(() => {
         AsignarIdsClientesExistentes();
     }, []);
@@ -498,7 +530,6 @@ export default function Customers() {
                         <h2 className="text-center p-3">Datos personales</h2>
                         {SelectedCustomer && (
                             <div>
-                                <h2>Editar Cliente</h2>
                                 <label>
                                     Nombre:
                                     <input
