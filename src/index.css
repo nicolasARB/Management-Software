@@ -35,6 +35,7 @@ code {
 
 .customer {
   font-size: 2vh;
+  width: 100%;
   padding: 0.58vh;
   margin-left: 0.7vh;
   margin-right: 0.7vh;
@@ -152,19 +153,27 @@ code {
 #customerdata {
   height: 45%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #customerdata div {
   border: 1px solid black;
   padding: 0.5vw;
   width: 90%;
-  height: 70%;
+  height: 85%;
+    display: flex;
+  flex-direction: column;
 }
 
 #customerdata div label {
   /*text-align: center;*/
   width: 100%;
-  height: 15%;
+  height: 5%;
+  font-size: small;
+}
+#customerdata div label input {
+  /*text-align: center;*/
   display: inline;
 }
 
@@ -232,7 +241,9 @@ code {
 #savecustomer {
   text-align: center;
   position: relative;
-  left: 35%;
+  width: 20%;
+  left: 20%;
+  margin-top: 1.4rem;
 }
 
 .producstk {
@@ -259,7 +270,10 @@ code {
   margin-left: 0.5rem;
 }
 
-
+#crearabrir{
+  display: inline;
+  width: 100%;
+}
 
 
 

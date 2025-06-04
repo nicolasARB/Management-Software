@@ -266,39 +266,62 @@ export default function Customers() {
 
         loadnewdata();
     }
-    async function AsignarIdsADocumentos() {
-        let filedata = [];
-        try {
-            const response = await Readfile("C:/Users/Public/documents.json");
-            filedata = JSON.parse(response);
-        } catch (error) {
-            console.error("Error al leer el archivo:", error);
-            return;
-        }
+async function AsignarIdsADocumentos() {
+    let documentos = [];
+    let clientes = [];
 
-        const yaTienenIds = filedata.every(cliente => cliente.Id !== undefined && cliente.Id !== null);
-        if (yaTienenIds) {
-            console.log("Todos los clientes ya tienen ID. No se actualiza nada.");
-            return;
-        }
-
-        const filedataConIds = filedata.map((cliente, index) => ({
-            ...cliente,
-            Id: index + 1,
-        }));
-
-        try {
-            const updatedFileData = JSON.stringify(filedataConIds, null, 2);
-            await handleWriteFile("C:/Users/Public/customers.json", updatedFileData);
-            console.log("IDs asignados correctamente a todos los clientes.");
-        } catch (error) {
-            console.error("Error al escribir el archivo:", error);
-        }
-
-        loadnewdata();
+    try {
+        const docData = await Readfile("C:/Users/Public/documents.json");
+        documentos = JSON.parse(docData);
+    } catch (error) {
+        console.error("Error al leer el archivo de documentos:", error);
+        return;
     }
+
+    try {
+        const clientData = await Readfile("C:/Users/Public/customers.json"); // Asegurate de que este sea el path correcto
+      console.log(clientData);
+        clientes = JSON.parse(clientData);
+    } catch (error) {
+        console.error("Error al leer el archivo de clientes:", error);
+        return;
+    }
+
+    let cambios = false;
+
+    const documentosActualizados = documentos.map(doc => {
+        if (doc.Id !== undefined && doc.Id !== null) return doc;
+
+        const cliente = clientes.find(c => c.phone === doc.phone);
+        if (cliente) {
+            cambios = true;
+            return {
+                ...doc,
+                Id: cliente.Id,
+            };
+        }
+
+        return doc;
+    });
+
+    if (!cambios) {
+        console.log("No se encontraron documentos sin ID o sin coincidencias de teléfono.");
+        return;
+    }
+
+    try {
+        const updatedData = JSON.stringify(documentosActualizados, null, 2);
+        await handleWriteFile("C:/Users/Public/documents.json", updatedData);
+        console.log("IDs asignados correctamente a los documentos que no los tenían.");
+    } catch (error) {
+        console.error("Error al escribir el archivo actualizado:", error);
+    }
+
+    loadnewdata();
+}
     useEffect(() => {
         AsignarIdsClientesExistentes();
+ AsignarIdsADocumentos();
     }, []);
 
     async function CreateNewCustomer() {
@@ -527,11 +550,11 @@ export default function Customers() {
                 <section className="h-100 customersections" id="CustomerData">
 
                     <section id="customerdata">
-                        <h2 className="text-center p-3">Datos personales</h2>
+                        <h2 className="text-center p-1">Datos personales</h2>
                         {SelectedCustomer && (
                             <div>
                                 <label>
-                                    Nombre:
+                                    Nombre: 
                                     <input
                                         type="text"
                                         name="nombre"
@@ -610,8 +633,10 @@ export default function Customers() {
                         </section>
 
                     </section>
+                    <div id="crearabrir">
                     <button id="createdocument" onClick={handleModal}>crear sobre</button>
                     <button id="opendocument" onClick={Opencustomerdoc}>abrir</button>
+                </div>
                 </section>
             </div>
             <div id="page">
