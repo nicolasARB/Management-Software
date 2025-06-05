@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Datos de ejemplo para el gráfico
@@ -44,39 +44,59 @@ const Button = ({ children, ...props }) => (
 
 // Componente principal
 export default function Statistics() {
-  const inputRefs = [useRef(null), useRef(null), useRef(null)];
-  const [filters, setFilters] = useState({ dia: '', mes: '', anio: '' });
+  const today = new Date();
+  const [filters, setFilters] = useState({
+    dia: today.getDate().toString(),
+    mes: (today.getMonth() + 1).toString(),
+    anio: today.getFullYear().toString()
+  });
 
-  const handleInputChange = (index, value) => {
-    inputRefs[index].current.style.width = `${Math.max(value.length * 10, 40)}px`;
+  const diaRef = useRef();
+  const mesRef = useRef();
+  const anioRef = useRef();
+
+  const handleChange = (field, value) => {
+    setFilters(prev => ({ ...prev, [field]: value }));
+    const ref = field === 'dia' ? diaRef : field === 'mes' ? mesRef : anioRef;
+    if (ref.current) {
+      ref.current.style.width = `${Math.max(value.length * 15, 50)}px`;
+    }
   };
-
+  useEffect(() => {
+    handleChange('dia', filters.dia);
+    handleChange('mes', filters.mes);
+    handleChange('anio', filters.anio);
+  }, []);
   return (
-    <div style={{ padding: '2rem', backgroundColor: '#f9f9f9', minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
+       <div style={{ padding: '2rem', backgroundColor: '#f9f9f9', minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
       {/* Filtros */}
       <div style={{ marginBottom: '1.5rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
         <input
-          ref={inputRefs[0]}
+          ref={diaRef}
           placeholder="Día"
-          onChange={(e) => handleInputChange(0, e.target.value)}
+          value={filters.dia}
+          onChange={e => handleChange('dia', e.target.value)}
           style={{ width: '40px', padding: '0.3rem', borderRadius: '6px', border: '1px solid #ccc' }}
         />
         <div>/</div>
         <input
-          ref={inputRefs[1]}
+          ref={mesRef}
           placeholder="Mes"
-          onChange={(e) => handleInputChange(1, e.target.value)}
+          value={filters.mes}
+          onChange={e => handleChange('mes', e.target.value)}
           style={{ width: '40px', padding: '0.3rem', borderRadius: '6px', border: '1px solid #ccc' }}
         />
         <div>/</div>
         <input
-          ref={inputRefs[2]}
+          ref={anioRef}
           placeholder="Año"
-          onChange={(e) => handleInputChange(2, e.target.value)}
-          style={{ width: '60px', padding: '0.3rem', borderRadius: '6px', border: '1px solid #ccc' }}
+          value={filters.anio}
+          onChange={e => handleChange('anio', e.target.value)}
+          style={{ width: '80px', padding: '0.3rem', borderRadius: '6px', border: '1px solid #ccc' }}
         />
         <Button>Filtrar</Button>
       </div>
+
 
       {/* Contenido principal dividido en 2 columnas */}
       <div style={{ display: 'flex', gap: '2rem' }}>
@@ -95,7 +115,6 @@ export default function Statistics() {
                 <span>$2500</span>
                 <Button style={{ padding: '0.3rem 0.5rem' }}>Ver sobre</Button>
               </div>
-              {/* ...más ventas... */}
             </div>
           </Card>
         </div>
@@ -122,6 +141,8 @@ export default function Statistics() {
                     outerRadius={60}
                     fill="#8884d8"
                     dataKey="value"
+                    animationDuration={700}
+                    animationBegin={0}
                   >
                     {dataExample.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
