@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { Readfile, handleWriteFile } from './Databases';
 import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Datos de ejemplo para el gráfico
@@ -45,6 +46,7 @@ const Button = ({ children, ...props }) => (
 // Componente principal
 export default function Statistics() {
   const today = new Date();
+      const [DocumentsData, setDocumentsData] = useState([]);
   const [filters, setFilters] = useState({
     dia: today.getDate().toString(),
     mes: (today.getMonth() + 1).toString(),
@@ -67,6 +69,65 @@ export default function Statistics() {
     handleChange('mes', filters.mes);
     handleChange('anio', filters.anio);
   }, []);
+
+const itemsPerPage = 5;
+const [currentPage, setCurrentPage] = useState(1);
+
+// IMPORTANTE: si DocumentsData viene de una API o filtro, usar useMemo para evitar recalcular todo
+const paginatedDocuments = useMemo(() => {
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return DocumentsData.slice(start, end);
+}, [DocumentsData, currentPage]);
+
+useEffect(() => {
+  const maxPages = Math.ceil(DocumentsData.length / itemsPerPage);
+  if (currentPage > maxPages) {
+    setCurrentPage(maxPages); 
+  }
+}, [DocumentsData]);
+
+const totalPages = Math.ceil(DocumentsData.length / itemsPerPage);
+
+const handlePageChange = (page) => {
+  if (page >= 1 && page <= totalPages) {
+    setCurrentPage(page);
+  }
+};
+
+    useEffect(() => {
+        async function loadDocuments() {
+            try {
+                const response = await Readfile("C:/Users/Public/documents.json");
+                const documents = JSON.parse(response);
+                setDocumentsData(documents);
+            } catch (error) {
+                console.error('Error loading documents:', error);
+            }
+        }
+        loadDocuments();
+    }, []);
+
+    function updateDocumentdata() {
+        async function loadDocuments() {
+            try {
+                const response = await Readfile("C:/Users/Public/documents.json");
+                const documents = JSON.parse(response);
+                setDocumentsData(documents);
+                console.log(documents);
+                
+            } catch (error) {
+                console.error('Error loading documents:', error);
+            }
+        }
+        loadDocuments();
+    }
+
+
+    useEffect(() => {
+    updateDocumentdata();
+    }, [])
+
   return (
        <div style={{ padding: '2rem', backgroundColor: '#f9f9f9', minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
       {/* Filtros */}
@@ -102,21 +163,34 @@ export default function Statistics() {
       <div style={{ display: 'flex', gap: '2rem' }}>
         {/* Columna izquierda: Ventas */}
         <div style={{ flex: 1 }}>
-          <Card>
-            <h3 style={{ marginBottom: '1rem' }}>Ventas</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span>Lente Solar XYZ</span>
-                <span>$5000</span>
-                <Button style={{ padding: '0.3rem 0.5rem' }}>Ver sobre</Button>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span>Armazón ABC</span>
-                <span>$2500</span>
-                <Button style={{ padding: '0.3rem 0.5rem' }}>Ver sobre</Button>
-              </div>
-            </div>
-          </Card>
+        <Card>
+  <h3 style={{ marginBottom: '1rem' }}>Ventas</h3>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+    {paginatedDocuments.map((doc) => (
+      <div
+        key={doc.Id}
+        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+      >
+        <span>{doc.nombre || `Sobre #${doc.numsobre}`}</span>
+        <span>{doc.total || doc.saldo || '—'}</span>
+        <Button style={{ padding: '0.3rem 0.5rem' }}>Ver sobre</Button>
+      </div>
+    ))}
+  </div>
+  {/* Paginación */}
+  <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+    <Button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+      ← Anterior
+    </Button>
+    <span style={{ alignSelf: 'center' }}>
+      Página {currentPage} de {totalPages}
+    </span>
+    <Button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+      Siguiente →
+    </Button>
+  </div>
+</Card>
+
         </div>
 
         {/* Columna derecha: Gastos y Gráfico */}
