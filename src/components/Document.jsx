@@ -354,10 +354,16 @@ export default function Document() {
         <section id="info">
             <div id="infodiv">
                 <img id="infologo" src={logo}></img>
-                <p>Lunes a viernes 10hs a 13hs.</p>
-                <div className="margg">
-                    <p >15hs a 19hs</p>
+                <p>Av Federico Lacroze 3211.</p>
+                    <div className="margg">
+                <p>Lunes a Viernes</p>
                 </div>
+                <div className="margg">
+                    <p >10hs a 13hs y 15hs a 19hs.</p>
+                </div>
+               {/*  <div className="margg">
+                    <p >15hs a 19hs</p>
+                </div>*/}
                 <p>Sabados de 10hs a 14hs.</p>
                 <div id="infodiv2"> <img src={whatsapp}></img> <p>11-6613-0262.</p></div>
             </div>
@@ -379,7 +385,7 @@ export default function Document() {
             <p className="retiroyfechaprox pedidopara">Fecha aproximada de retiro: <input id="retiroaprox" type="text" className="inputs" value={glassProps.fechaprox} onChange={(e) => SetProps({ ...glassProps, fechaprox: e.target.value })}></input>
             </p>
         </section>
-        <p className="corte">
+        <p className="corte" id="#corte2">
             ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         </p>
 

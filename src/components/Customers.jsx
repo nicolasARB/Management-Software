@@ -37,8 +37,6 @@ export default function Customers() {
             console.log(ev.target);
             send.type = ev.target.innerHTML;
             send = JSON.stringify(send);
-            console.log(SelectedDocument);
-            console.log(send);
             if (SelectedDocument != null) {
                 send = SelectedDocument;
                 send.issobre = false;
@@ -95,7 +93,6 @@ export default function Customers() {
     loadnewdata();
 
     function ViewCustomerData(data, ev) {
-        console.log(data);
         SetSelectedDocument(null);
         setSelectedDocumentIndex(null);
         SetSelectedCustomer({
@@ -458,7 +455,6 @@ async function AsignarIdsADocumentos() {
 
 
     function UpdateDocumentData(document, index) {
-        console.log(document);
         SetSelectedDocument(document);
         setSelectedDocumentIndex(index);
     }
