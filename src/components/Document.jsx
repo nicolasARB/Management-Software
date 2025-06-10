@@ -364,7 +364,7 @@ export default function Document() {
                {/*  <div className="margg">
                     <p >15hs a 19hs</p>
                 </div>*/}
-                <p>Sabados de 10hs a 14hs.</p>
+                <p>Sábados de 10hs a 14hs.</p>
                 <div id="infodiv2"> <img src={whatsapp}></img> <p>11-6613-0262.</p></div>
             </div>
 
