@@ -43,10 +43,10 @@ const Button = ({ children, ...props }) => (
   </button>
 );
 
-// Componente principal
+
 export default function Statistics() {
   const today = new Date();
-      const [DocumentsData, setDocumentsData] = useState([]);
+  const [DocumentsData, setDocumentsData] = useState([]);
   const [filters, setFilters] = useState({
     dia: today.getDate().toString(),
     mes: (today.getMonth() + 1).toString(),
@@ -58,10 +58,12 @@ export default function Statistics() {
   const anioRef = useRef();
 
   const handleChange = (field, value) => {
-    setFilters(prev => ({ ...prev, [field]: value }));
+    const numericValue = value.replace(/\D/g, '');
+    setFilters(prev => ({ ...prev, [field]: numericValue }));
+
     const ref = field === 'dia' ? diaRef : field === 'mes' ? mesRef : anioRef;
     if (ref.current) {
-      ref.current.style.width = `${Math.max(value.length * 15, 50)}px`;
+      ref.current.style.width = `${Math.max(numericValue.length * 15, 50)}px`;
     }
   };
   useEffect(() => {
@@ -70,66 +72,152 @@ export default function Statistics() {
     handleChange('anio', filters.anio);
   }, []);
 
-const itemsPerPage = 5;
-const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [DocumentsBrowse, SetDocumentsBrowse] = useState([]);
+  const [paginatedDocuments, SetpaginatedDocuments] = useState([]);
 
-// IMPORTANTE: si DocumentsData viene de una API o filtro, usar useMemo para evitar recalcular todo
-const paginatedDocuments = useMemo(() => {
-  const start = (currentPage - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  return DocumentsData.slice(start, end);
-}, [DocumentsData, currentPage]);
 
-useEffect(() => {
-  const maxPages = Math.ceil(DocumentsData.length / itemsPerPage);
-  if (currentPage > maxPages) {
-    setCurrentPage(maxPages); 
+
+  const getFilteredDocuments = useMemo(() => {
+    return DocumentsData.filter(doc => {
+      if (!doc.fecha) return false;
+
+      const [docDia, docMes, docAnio] = doc.fecha.split('/');
+
+      return (
+        (!filters.dia || docDia === filters.dia.padStart(2, '0')) &&
+        (!filters.mes || docMes === filters.mes.padStart(2, '0')) &&
+        (!filters.anio || docAnio === filters.anio)
+      );
+    });
+  }, [DocumentsData, filters]);
+
+  const totalPages = useMemo(() => Math.ceil(getFilteredDocuments.length / itemsPerPage), [getFilteredDocuments]);
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const sliced = getFilteredDocuments.slice(startIndex, endIndex);
+    SetpaginatedDocuments(sliced);
+  }, [getFilteredDocuments, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters]);
+
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  useEffect(() => {
+    async function loadDocuments() {
+      try {
+        const response = await Readfile("C:/Users/Public/documents.json");
+        const documents = JSON.parse(response);
+        setDocumentsData(documents);
+        setCurrentPage(1);
+      } catch (error) {
+        console.error('Error loading documents:', error);
+      }
+    }
+    loadDocuments();
+  }, []);
+
+  function updateDocumentdata() {
+    async function loadDocuments() {
+      try {
+        const response = await Readfile("C:/Users/Public/documents.json");
+        const documents = JSON.parse(response);
+        setDocumentsData(documents);
+        console.log(documents);
+        setCurrentPage(1);
+
+      } catch (error) {
+        console.error('Error loading documents:', error);
+      }
+    }
+    loadDocuments();
   }
-}, [DocumentsData]);
 
-const totalPages = Math.ceil(DocumentsData.length / itemsPerPage);
 
-const handlePageChange = (page) => {
-  if (page >= 1 && page <= totalPages) {
-    setCurrentPage(page);
+  useEffect(() => {
+    updateDocumentdata();
+  }, [])
+
+  const cleanNumberString = (str) => {
+    if (!str) return "0";
+
+    return str
+      .replace(/\$/g, '')
+      .replace(/\./g, '')
+      .replace(/,/g, '.')
+      .trim();
+  };
+
+  function formatMoney(value) {
+    if (typeof value !== 'number') {
+      value = Number(value);
+      if (isNaN(value)) return '$0';
+    }
+    return '$' + value.toLocaleString('es-ES', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    });
   }
-};
+  function formatCurrency(value) {
+    return '$' + Number(value).toLocaleString('es-ES', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    });
+  }
 
-    useEffect(() => {
-        async function loadDocuments() {
-            try {
-                const response = await Readfile("C:/Users/Public/documents.json");
-                const documents = JSON.parse(response);
-                setDocumentsData(documents);
-            } catch (error) {
-                console.error('Error loading documents:', error);
-            }
-        }
-        loadDocuments();
-    }, []);
+  const gananciasYGastos = useMemo(() => {
+    const ganancias = getFilteredDocuments.reduce((acc, doc) => {
+      const valorStr = doc.total || doc.saldo || "0";
+      const valorLimpio = cleanNumberString(valorStr);
+      const valor = parseFloat(valorLimpio);
+      return acc + (isNaN(valor) ? 0 : valor);
+    }, 0);
 
-    function updateDocumentdata() {
-        async function loadDocuments() {
-            try {
-                const response = await Readfile("C:/Users/Public/documents.json");
-                const documents = JSON.parse(response);
-                setDocumentsData(documents);
-                console.log(documents);
-                
-            } catch (error) {
-                console.error('Error loading documents:', error);
-            }
-        }
-        loadDocuments();
+    const gastos = 10000;
+
+    return [
+      { name: 'Ganancias', value: ganancias },
+      { name: 'Gastos', value: gastos }
+    ];
+  }, [getFilteredDocuments]);
+
+  const getTitleFromFilters = () => {
+    const dia = filters.dia?.trim();
+    const mes = filters.mes?.trim();
+    const anio = filters.anio?.trim();
+
+    const meses = [
+      '', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+      'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+    ];
+
+    const nombreMes = meses[parseInt(mes)];
+
+    if (dia && mes && anio) {
+      return `${parseInt(dia)} de ${nombreMes} de ${anio}`;
+    }
+    if (mes && anio) {
+      return `${nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1)} de ${anio}`;
+    }
+    if (anio) {
+      return `Año ${anio}`;
     }
 
-
-    useEffect(() => {
-    updateDocumentdata();
-    }, [])
+    return 'Todas las ventas';
+  };
 
   return (
-       <div style={{ padding: '2rem', backgroundColor: '#f9f9f9', minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
+    <div style={{ padding: '2rem', backgroundColor: '#f9f9f9', minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
       {/* Filtros */}
       <div style={{ marginBottom: '1.5rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
         <input
@@ -161,39 +249,41 @@ const handlePageChange = (page) => {
 
       {/* Contenido principal dividido en 2 columnas */}
       <div style={{ display: 'flex', gap: '2rem' }}>
-        {/* Columna izquierda: Ventas */}
-        <div style={{ flex: 1 }}>
-        <Card>
-  <h3 style={{ marginBottom: '1rem' }}>Ventas</h3>
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-    {paginatedDocuments.map((doc) => (
-      <div
-        key={doc.Id}
-        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-      >
-        <span>{doc.nombre || `Sobre #${doc.numsobre}`}</span>
-        <span>{doc.total || doc.saldo || '—'}</span>
-        <Button style={{ padding: '0.3rem 0.5rem' }}>Ver sobre</Button>
-      </div>
-    ))}
-  </div>
-  {/* Paginación */}
-  <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
-    <Button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-      ← Anterior
-    </Button>
-    <span style={{ alignSelf: 'center' }}>
-      Página {currentPage} de {totalPages}
-    </span>
-    <Button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
-      Siguiente →
-    </Button>
-  </div>
-</Card>
+        <div style={{ display: "flex", flexDirection: "column", width: "50%" }}>
+          <h1 style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>{getTitleFromFilters()}</h1>
+          {/* Columna izquierda: Ventas */}
+          <div style={{ flex: 1 }}>
+            <Card>
+              <h3 style={{ marginBottom: '1rem' }}>Ventas</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {paginatedDocuments.map((doc) => (
+                  <div
+                    key={doc.numsobre}
+                    style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                  >
+                    <span>{`Sobre #${doc.numsobre}`}</span>
+                    <span>{doc.total || doc.saldo || '—'}</span>
+                    <Button style={{ padding: '0.3rem 0.5rem' }}>Ver sobre</Button>
+                  </div>
+                ))}
+              </div>
+              {/* Paginación */}
+              <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+                <Button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                  ← Anterior
+                </Button>
+                <span style={{ alignSelf: 'center' }}>
+                  Página {currentPage} de {totalPages}
+                </span>
+                <Button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                  Siguiente →
+                </Button>
+              </div>
+            </Card>
+
+          </div>
 
         </div>
-
-        {/* Columna derecha: Gastos y Gráfico */}
         <div style={{ flex: 1 }}>
           <Card style={{ marginBottom: '1.5rem' }}>
             <h3 style={{ marginBottom: '1rem' }}>Gastos</h3>
@@ -204,25 +294,26 @@ const handlePageChange = (page) => {
 
           <Card>
             <h3 style={{ marginBottom: '1rem' }}>Ganancias vs Gastos</h3>
-            <div style={{ width: '100%', height: 200 }}>
+            <div style={{ width: '100%', height: 300 }}>
               <ResponsiveContainer>
                 <PieChart>
                   <Pie
-                    data={dataExample}
+                    data={gananciasYGastos}
                     cx="50%"
                     cy="50%"
                     labelLine={false}
                     outerRadius={60}
                     fill="#8884d8"
                     dataKey="value"
+                    label={({ name, value }) => `${name}: ${formatCurrency(value)}`}
                     animationDuration={700}
                     animationBegin={0}
                   >
-                    {dataExample.map((entry, index) => (
+                    {gananciasYGastos.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <Tooltip formatter={(value) => formatCurrency(value)} />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
