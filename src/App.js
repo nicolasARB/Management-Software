@@ -11,16 +11,19 @@ import Document from './components/Document';
 import Edit from './components/Edit'
 import Statistics from './components/Statistics';
 import Database from './components/Databases';
+import Receipt from './components/receipt';
 import { CustomerProvider } from "./components/CustomerProvider";
 function App() {
   const documentroute = window.location.pathname === '/document';
+  const Receiptroute = window.location.pathname === '/receipt';
   console.log(documentroute);
   console.log(window.location.pathname);
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     return (
       <BrowserRouter>
         <Database />
-        {!documentroute && <Navbar />}
+                { <Navbar />}
+     {/*   {(!documentroute)  && <Navbar />}*/}
         <CustomerProvider>
         <Routes>
           <Route exact path="/" element={<Customers />} />
@@ -28,6 +31,7 @@ function App() {
           <Route exact path="/document" element={<Document />} />
           <Route exact path="/edit" element={<Edit />} />
           <Route exact path="/Stats" element={<Statistics />} />
+          <Route exact path="/Receipt" element={<Receipt />} />
         </Routes>
         </CustomerProvider>
       </BrowserRouter>)
@@ -35,13 +39,15 @@ function App() {
     return (
       <HashRouter>
         <Database />
-        {!documentroute && <Navbar />}
-        <Routes>
+        { <Navbar />}
+     {/*}   {(!documentroute) && <Navbar />} */}
+         <Routes>
           <Route exact path="/" element={<Customers />} />
           <Route exact path="/Stock" element={<Stock />} />
           <Route exact path="/document" element={<Document />} />
           <Route exact path="/edit" element={<Edit />} />
           <Route exact path="/Stats" element={<Statistics />} />
+          <Route exact path="/Receipt" element={<Receipt />} />
         </Routes>
       </HashRouter>)
   }

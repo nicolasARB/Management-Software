@@ -407,6 +407,16 @@ export default function Customers() {
         loadnewdata();
     }
 
+const HandleReceipt = async (ev) => {
+    console.log("done");
+    try{
+ await window.electronAPI.invoke('openReceiptWindow');
+ console.log("S")
+    }catch (error){
+        console.error("Error", error)
+    }
+}
+
     async function remove(customerR) {
         try {
             const indexToRemove = DocumentsData.findIndex(item => item.numsobre === customerR.numsobre);
@@ -460,6 +470,9 @@ export default function Customers() {
             setModalVisible(true);
         }
     };
+
+
+
     useEffect(() => {
         if (SelectedCustomer) {
             const updatedCustomerDocuments = DocumentsData.filter(doc => SelectedCustomer.documents.includes(doc.numsobre));
@@ -670,6 +683,7 @@ export default function Customers() {
                     <div id="crearabrir">
                         <button id="createdocument" onClick={handleModal}>crear sobre</button>
                         <button id="opendocument" onClick={Opencustomerdoc}>abrir</button>
+                        <button id="opendocument" onClick={HandleReceipt}>Crear comprobante</button>
                     </div>
                 </section>
             </div>
