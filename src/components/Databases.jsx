@@ -15,7 +15,7 @@ export async function handleWriteFile(dirPath, content) {
     try {
         //console.log(content);
         const response = await window.electronAPI.invoke('writeFile', dirPath, content);
-      //  console.log(response);
+        //  console.log(response);
     } catch (error) {
         console.error('Error al escribir el archivo:', error);
     }
@@ -80,6 +80,11 @@ export default function Database() {
                 console.log("Found senddata.json");
             } else {
                 handleWriteFile('C:/Users/Public/senddata.json', `{}`);
+            }
+            if (statisticsfile) {
+                console.log("Found statistics.json");
+            } else {
+                handleWriteFile('C:/Users/Public/statistics.json', `[]`);
             }
         }
     }, [files]);

@@ -16,6 +16,8 @@ export default function Customers() {
     const [DocumentToDelete, SetDocumentToDelete] = useState();
     const [DocumentToDeleteModal, SetDocumentToDeleteModal] = useState(false);
 
+    const [CustomerToAddModal, SetCustomerToAddModal] = useState(false);
+
     const [CustomerEditModal, SetCustomerEditModal] = useState(false);
 
     const [SelectedCustomer, SetSelectedCustomer] = useState(null);
@@ -27,6 +29,9 @@ export default function Customers() {
     };
     const HandleDocumentToDelete = () => {
         SetDocumentToDeleteModal(false);
+    };
+    const HandleCustomerToAdd = () => {
+        SetCustomerToAddModal(false);
     };
     const HandleCustomerEdit = () => {
         SetCustomerEditModal(false);
@@ -99,8 +104,13 @@ export default function Customers() {
             "nombre": data.nombre, "mail": data.mail, "phone": data.phone, "address": data.address, "documentid": data.documentid, "documents": data.documents, "Id": data.Id, "esf": "", "cil": "", "dip": "", "alt": "", "oi": "", "oicil": "", "od": "",
             "odcil": "", "armazon": "", "cristales": "", "dsc": "", "total": "", "sen": "", "saldo": "", "fechaprox": "", "pedidopara": ""
         });
-        console.log(SelectedCustomer);
-        const matchingDocuments = DocumentsData.filter(doc => data.documents.includes(doc.numsobre));
+        const docNums = data.documents.map(d => parseInt(d)).filter(n => !isNaN(n));
+
+        const matchingDocuments = DocumentsData.filter(doc => {
+            const ns = parseInt(doc.numsobre);
+            return !isNaN(ns) && docNums.includes(ns);
+        });
+
         SetCustomerDocuments(matchingDocuments);
     }
 
@@ -263,65 +273,65 @@ export default function Customers() {
 
         loadnewdata();
     }
-async function AsignarIdsADocumentos() {
-    let documentos = [];
-    let clientes = [];
+    async function AsignarIdsADocumentos() {
+        let documentos = [];
+        let clientes = [];
 
-    try {
-        const docData = await Readfile("C:/Users/Public/documents.json");
-        documentos = JSON.parse(docData);
-    } catch (error) {
-        console.error("Error al leer el archivo de documentos:", error);
-        return;
-    }
-
-    try {
-        const clientData = await Readfile("C:/Users/Public/customers.json"); // Asegurate de que este sea el path correcto
-      console.log(clientData);
-        clientes = JSON.parse(clientData);
-    } catch (error) {
-        console.error("Error al leer el archivo de clientes:", error);
-        return;
-    }
-
-    let cambios = false;
-
-    const documentosActualizados = documentos.map(doc => {
-        if (doc.Id !== undefined && doc.Id !== null) return doc;
-
-        const cliente = clientes.find(c => c.phone === doc.phone);
-        if (cliente) {
-            cambios = true;
-            return {
-                ...doc,
-                Id: cliente.Id,
-            };
+        try {
+            const docData = await Readfile("C:/Users/Public/documents.json");
+            documentos = JSON.parse(docData);
+        } catch (error) {
+            console.error("Error al leer el archivo de documentos:", error);
+            return;
         }
 
-        return doc;
-    });
+        try {
+            const clientData = await Readfile("C:/Users/Public/customers.json"); // Asegurate de que este sea el path correcto
+            console.log(clientData);
+            clientes = JSON.parse(clientData);
+        } catch (error) {
+            console.error("Error al leer el archivo de clientes:", error);
+            return;
+        }
 
-    if (!cambios) {
-        console.log("No se encontraron documentos sin ID o sin coincidencias de teléfono.");
-        return;
+        let cambios = false;
+
+        const documentosActualizados = documentos.map(doc => {
+            if (doc.Id !== undefined && doc.Id !== null) return doc;
+
+            const cliente = clientes.find(c => c.phone === doc.phone);
+            if (cliente) {
+                cambios = true;
+                return {
+                    ...doc,
+                    Id: cliente.Id,
+                };
+            }
+
+            return doc;
+        });
+
+        if (!cambios) {
+            console.log("No se encontraron documentos sin ID o sin coincidencias de teléfono.");
+            return;
+        }
+
+        try {
+            const updatedData = JSON.stringify(documentosActualizados, null, 2);
+            await handleWriteFile("C:/Users/Public/documents.json", updatedData);
+            console.log("IDs asignados correctamente a los documentos que no los tenían.");
+        } catch (error) {
+            console.error("Error al escribir el archivo actualizado:", error);
+        }
+
+        loadnewdata();
     }
-
-    try {
-        const updatedData = JSON.stringify(documentosActualizados, null, 2);
-        await handleWriteFile("C:/Users/Public/documents.json", updatedData);
-        console.log("IDs asignados correctamente a los documentos que no los tenían.");
-    } catch (error) {
-        console.error("Error al escribir el archivo actualizado:", error);
-    }
-
-    loadnewdata();
-}
     useEffect(() => {
         AsignarIdsClientesExistentes();
- AsignarIdsADocumentos();
+        AsignarIdsADocumentos();
     }, []);
 
-    async function CreateNewCustomer() {
+    async function CreateNewCustomer(modal) {
         console.log(NewCustomer);
         let filedata = [];
         try {
@@ -331,30 +341,39 @@ async function AsignarIdsADocumentos() {
         } catch (error) {
             console.error("Error al leer el archivo:", error);
         }
-        console.log(NewCustomer);
-        const result = filedata.find(
-            (item) => item.phone === NewCustomer.phone
+        const alreadyExists = filedata.find(
+            (item) =>
+                item.phone.trim() === NewCustomer.phone.trim() ||
+                item.nombre.trim().toLowerCase() === NewCustomer.nombre.trim().toLowerCase()
         );
-        console.log(result);
-        if (!result) {
-            console.log("Cliente nuevo. Añadiendo...");
 
-            const maxId = filedata.reduce((max, curr) => Math.max(max, curr.Id || 0), 0);
-            const newId = maxId + 1;
-
-            const clienteConId = { ...NewCustomer, Id: newId };
-            filedata.push(clienteConId);
-
-            try {
-                const updatedFileData = JSON.stringify(filedata, null, 2);
-                await handleWriteFile("C:/Users/Public/customers.json", updatedFileData);
-                console.log("Archivo actualizado con el nuevo cliente.");
-            } catch (error) {
-                console.error("Error al escribir el archivo:", error);
-            }
-        } else {
-            console.log("Cliente ya existe. No se añadió.");
+        if (alreadyExists && modal != true) {
+            SetCustomerToAddModal(true);
+            return;
         }
+        console.log(NewCustomer);
+        /*const result = filedata.find(
+            (item) => item.phone === NewCustomer.phone
+        );*/
+        //   console.log(result);
+
+        console.log("Cliente nuevo. Añadiendo...");
+
+        const maxId = filedata.reduce((max, curr) => Math.max(max, curr.Id || 0), 0);
+        const newId = maxId + 1;
+
+        const clienteConId = { ...NewCustomer, Id: newId };
+        filedata.push(clienteConId);
+
+        try {
+            const updatedFileData = JSON.stringify(filedata, null, 2);
+            await handleWriteFile("C:/Users/Public/customers.json", updatedFileData);
+            console.log("Archivo actualizado con el nuevo cliente.");
+        } catch (error) {
+            console.error("Error al escribir el archivo:", error);
+        }
+
+
 
         loadnewdata();
     }
@@ -514,6 +533,25 @@ async function AsignarIdsADocumentos() {
                 </div>
             )}
 
+            {CustomerToAddModal && (
+                <div id="modal1" class="modal">
+                    <form class="modal-content" action="/action_page.php">
+                        <button id="closemodal" onClick={(ev) => { HandleCustomerToAdd(); }}>X</button>
+                        <div class="container">
+                            <h2>Ya hay un cliente con este nombre o numero de telefono, estas seguro que deseas agregarlo?</h2>
+                            <div class="clearfix">
+                                <button type="button" id="buttoncerca"
+                                    onClick={(ev) => { HandleCustomerToAdd(); CreateNewCustomer(true) }}
+                                    class="deletebtnstock bt buttonmodal">Aceptar</button>
+                                <button type="button" id="buttonlejos"
+                                    onClick={(ev) => { HandleCustomerToAdd(); }}
+                                    class="cancelbtnstock bt buttonmodal">Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            )}
+
             {CustomerEditModal && (
                 <div id="modal1" class="modal">
                     <form class="modal-content" action="/action_page.php">
@@ -550,7 +588,7 @@ async function AsignarIdsADocumentos() {
                         {SelectedCustomer && (
                             <div>
                                 <label>
-                                    Nombre: 
+                                    Nombre:
                                     <input
                                         type="text"
                                         name="nombre"
@@ -630,9 +668,9 @@ async function AsignarIdsADocumentos() {
 
                     </section>
                     <div id="crearabrir">
-                    <button id="createdocument" onClick={handleModal}>crear sobre</button>
-                    <button id="opendocument" onClick={Opencustomerdoc}>abrir</button>
-                </div>
+                        <button id="createdocument" onClick={handleModal}>crear sobre</button>
+                        <button id="opendocument" onClick={Opencustomerdoc}>abrir</button>
+                    </div>
                 </section>
             </div>
             <div id="page">

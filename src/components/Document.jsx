@@ -8,7 +8,7 @@ export default function Document() {
     const [DocumentDate, SetDate] = useState(null);
     const [WorkNumber, SetNumber] = useState('1');
     const [glassProps, SetProps] = useState({
-        "numsobre": "", "fecha": "", "type": "", "nombre": "", "address": "", "documentid": "", "phone": "", "Id": "" , "mail": "", "esf": "", "cil": "", "dip": "", "alt": "", "oi": "", "oicil": "", "od": "",
+        "numsobre": "", "fecha": "", "type": "", "nombre": "", "address": "", "documentid": "", "phone": "", "Id": "", "mail": "", "esf": "", "cil": "", "dip": "", "alt": "", "oi": "", "oicil": "", "od": "",
         "odcil": "", "armazon": "", "cristales": "", "dsc": "", "total": "", "sen": "", "saldo": "", "fechaprox": "", "pedidopara": "", "reparacion": ""
     });
     const [GetsentData, SetsentData] = useState({});
@@ -23,13 +23,24 @@ export default function Document() {
             const response = await Readfile("C:/Users/Public/documents.json");
             const documents = JSON.parse(response);
             SetAllDocuments(documents);
-            console.log(GetsentData.issobre);
-            console.log(GetsentData);
-            if (isSobre == false) {
-                console.log("mov");
-                SetNumber(documents.length + 3);
-                sobrenum = documents.length + 3;
-            }
+
+            let maxSobre = 0;
+
+            documents.forEach(doc => {
+                const ns = parseInt(doc.numsobre);
+                if (!isNaN(ns) && ns > maxSobre) {
+                    maxSobre = ns;
+                }
+            });
+
+
+            const nextSobre = maxSobre + 1;
+
+            SetNumber(nextSobre.toString());
+            sobrenum = nextSobre;
+
+            console.log("Próximo número de sobre:", nextSobre);
+
         } catch (error) {
             console.error('Error loading documents:', error);
         }
@@ -202,18 +213,19 @@ export default function Document() {
             const customers = JSON.parse(response);
 
             const customerToUpdateIndex = customers.findIndex(customer =>
-                customer.nombre === GetsentData.nombre
+                customer.Id === GetsentData.Id
             );
+            console.log(customerToUpdateIndex)
             if (customerToUpdateIndex !== -1) {
                 const updatedCustomer = {
                     ...customers[customerToUpdateIndex],
                     documents: [...customers[customerToUpdateIndex].documents, sobrenum]
                 };
                 customers[customerToUpdateIndex] = updatedCustomer;
-                // console.log(updatedCustomer);
+                console.log(updatedCustomer);
                 await handleWriteFile("C:/Users/Public/customers.json", JSON.stringify(customers));
 
-                //   console.log("Cliente actualizado:", updatedCustomer);
+                console.log("Cliente actualizado:", updatedCustomer);
             } else {
                 console.log("Cliente no encontrado.");
             }
@@ -355,13 +367,13 @@ export default function Document() {
             <div id="infodiv">
                 <img id="infologo" src={logo}></img>
                 <p>Av Federico Lacroze 3211.</p>
-                    <div className="margg">
-                <p>Lunes a Viernes</p>
+                <div className="margg">
+                    <p>Lunes a Viernes</p>
                 </div>
                 <div className="margg">
                     <p >10hs a 13hs y 15hs a 19hs.</p>
                 </div>
-               {/*  <div className="margg">
+                {/*  <div className="margg">
                     <p >15hs a 19hs</p>
                 </div>*/}
                 <p>Sábados de 10hs a 14hs.</p>

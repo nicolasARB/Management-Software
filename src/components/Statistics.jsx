@@ -47,6 +47,8 @@ const Button = ({ children, ...props }) => (
 export default function Statistics() {
   const today = new Date();
   const [DocumentsData, setDocumentsData] = useState([]);
+  const [expenses, setExpenses] = useState([]);
+  const [newExpense, setNewExpense] = useState({ nombre: '', cantidad: '' });
   const [filters, setFilters] = useState({
     dia: today.getDate().toString(),
     mes: (today.getMonth() + 1).toString(),
@@ -158,16 +160,7 @@ export default function Statistics() {
       .trim();
   };
 
-  function formatMoney(value) {
-    if (typeof value !== 'number') {
-      value = Number(value);
-      if (isNaN(value)) return '$0';
-    }
-    return '$' + value.toLocaleString('es-ES', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    });
-  }
+
   function formatCurrency(value) {
     return '$' + Number(value).toLocaleString('es-ES', {
       minimumFractionDigits: 0,
@@ -216,6 +209,42 @@ export default function Statistics() {
     return 'Todas las ventas';
   };
 
+
+  const loadExpenses = async () => {
+    try {
+      const response = await Readfile("C:/Users/Public/statistics.json");
+      const saved = JSON.parse(response);
+      setExpenses(saved);
+    } catch (err) {
+      console.warn('No se pudo leer statistics.json. Se iniciará vacío.');
+      setExpenses([]);
+    }
+  };
+
+  const saveExpense = async (gasto) => {
+    const fecha = new Date();
+    const formattedDate = `${fecha.getDate().toString().padStart(2, '0')}/${(fecha.getMonth() + 1).toString().padStart(2, '0')}/${fecha.getFullYear()}`;
+
+    const nuevoGasto = {
+      ...gasto,
+      fecha: formattedDate
+    };
+
+    const actualizados = [...expenses, nuevoGasto];
+    setExpenses(actualizados);
+    await handleWriteFile("C:/Users/Public/statistics.json", JSON.stringify(actualizados, null, 2));
+  };
+
+  useEffect(() => {
+    loadExpenses();
+  }, []);
+
+  const handleAddExpense = () => {
+    if (!newExpense.nombre || !newExpense.cantidad) return;
+    saveExpense({ nombre: newExpense.nombre, cantidad: parseFloat(newExpense.cantidad) });
+    setNewExpense({ nombre: '', cantidad: '' });
+  };
+
   return (
     <div style={{ padding: '2rem', backgroundColor: '#f9f9f9', minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
       {/* Filtros */}
@@ -248,6 +277,7 @@ export default function Statistics() {
 
 
       {/* Contenido principal dividido en 2 columnas */}
+
       <div style={{ display: 'flex', gap: '2rem' }}>
         <div style={{ display: "flex", flexDirection: "column", width: "50%" }}>
           <h1 style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>{getTitleFromFilters()}</h1>
@@ -284,13 +314,50 @@ export default function Statistics() {
           </div>
 
         </div>
-        <div style={{ flex: 1 }}>
-          <Card style={{ marginBottom: '1.5rem' }}>
-            <h3 style={{ marginBottom: '1rem' }}>Gastos</h3>
-            <ul style={{ paddingLeft: '1rem' }}>
-              <li>Alquiler: $10.000</li>
-            </ul>
-          </Card>
+        <div style={{ display: "flex", flex: 1, justifyContent: "center", flexDirection: "column" }}>
+
+
+          <div style={{ display: 'flex', gap: '2rem', justifyContent: "center" }}>
+            {/* Columna derecha: Gastos */}
+            <div style={{ width: '80%' }}>
+              <Card>
+                <h3 style={{ marginBottom: '1rem' }}>Añadir Gasto</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <input
+                    placeholder="Nombre"
+                    value={newExpense.nombre}
+                    onChange={e => setNewExpense(prev => ({ ...prev, nombre: e.target.value }))}
+                    style={{ padding: '0.5rem', borderRadius: '6px', border: '1px solid #ccc' }}
+                  />
+                  <input
+                    placeholder="Costo"
+                    type="number"
+                    value={newExpense.cantidad}
+                    onChange={e => setNewExpense(prev => ({ ...prev, cantidad: e.target.value }))}
+                    style={{ padding: '0.5rem', borderRadius: '6px', border: '1px solid #ccc' }}
+                  />
+                  <Button onClick={handleAddExpense}>Añadir</Button>
+                </div>
+              </Card>
+
+              {/* Lista de gastos */}
+              <Card style={{ marginTop: '1rem' }}>
+                <h3 style={{ marginBottom: '1rem' }}>Gastos</h3>
+                {expenses.length === 0 ? (
+                  <p>No hay gastos añadidos aún.</p>
+                ) : (
+                  <ul style={{ listStyle: 'none', padding: 0 }}>
+                    {expenses.map((g, index) => (
+                      <li key={index} style={{ display: 'flex', justifyContent: 'center', padding: '0.5rem 0' }}>
+                        <span>{g.nombre} </span>
+                        <span>${(g.cantidad)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </Card>
+            </div>
+          </div>
 
           <Card>
             <h3 style={{ marginBottom: '1rem' }}>Ganancias vs Gastos</h3>

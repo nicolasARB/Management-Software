@@ -67,7 +67,7 @@ code {
   margin-right: 3%;
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
 }
 
@@ -162,7 +162,7 @@ code {
   padding: 0.5vw;
   width: 90%;
   height: 85%;
-    display: flex;
+  display: flex;
   flex-direction: column;
 }
 
@@ -172,6 +172,7 @@ code {
   height: 5%;
   font-size: small;
 }
+
 #customerdata div label input {
   /*text-align: center;*/
   display: inline;
@@ -270,10 +271,7 @@ code {
   margin-left: 0.5rem;
 }
 
-#crearabrir{
+#crearabrir {
   display: inline;
   width: 100%;
 }
-
-
-
