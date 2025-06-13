@@ -1,26 +1,41 @@
-import React from 'react';
-import './Comprobante.css'; // Asegurate de tener este archivo
+import { useEffect } from "react";
+import logo from "../images/logo2.jpeg";
+import "./Comprobante.css";
 
 export default function Comprobante() {
+  useEffect(() => {
+    const navbar = document.querySelector("#navbar");
+    if (navbar) navbar.style.display = "none";
+    return () => {
+      if (navbar) navbar.style.display = "flex";
+    };
+  }, []);
+
   return (
     <div className="comprobante">
       <div className="header">
         <div className="logo-info">
-          {/* Reemplazá esta imagen por tu logo real */}
-          <img src="/logo.png" alt="Logo" className="logo" />
+          <img src={logo} alt="Logo" className="logo" />
           <div className="empresa-info">
-            <strong>ÓPTICA RISLEY</strong>
-            <p>Dirección comercial: Lacroze Av. 3211.</p>
-            <p>risleyoptica@gmail.com</p>
+            <strong className="titulo-comprobante">COMPROBANTE</strong>
+
+            <div className="contactos-linea">
+              <p>Dirección comercial: Lacroze Av. 3211.</p>
+              <p>@risley.optica</p>
+            </div>
+
+            <div className="contactos-linea">
+              <p>risleyoptica@gmail.com</p>
+              <p>11-6613-0262</p>
+            </div>
           </div>
         </div>
-        <div className="fecha-box">
-          <span>FECHA</span>
-          <div className="fecha-grid">
-            <div>06</div>
-            <div>09</div>
-            <div>24</div>
-          </div>
+
+        <div className="fecha-absolute">
+          <span className="fecha-label">FECHA</span>
+          <div className="fecha-box">06</div>
+          <div className="fecha-box">09</div>
+          <div className="fecha-box">24</div>
         </div>
       </div>
 
