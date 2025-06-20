@@ -85,13 +85,13 @@ export default function Statistics() {
     return DocumentsData.filter(doc => {
       if (!doc.fecha) return false;
 
-      const [docDia, docMes, docAnio] = doc.fecha.split('/');
+  const [docDia, docMes, docAnio] = doc.fecha.split('/');
 
-      return (
-        (!filters.dia || docDia === filters.dia.padStart(2, '0')) &&
-        (!filters.mes || docMes === filters.mes.padStart(2, '0')) &&
-        (!filters.anio || docAnio === filters.anio)
-      );
+return (
+  (!filters.dia || parseInt(docDia) === parseInt(filters.dia)) &&
+  (!filters.mes || parseInt(docMes) === parseInt(filters.mes)) &&
+  (!filters.anio || docAnio === filters.anio)
+);
     });
   }, [DocumentsData, filters]);
 
