@@ -1,123 +1,119 @@
-.comprobante {
-  width: 600px;
+.print-comprobante {
+  width: 720px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 20px;
   border: 2px solid black;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  color: black;
-  position: relative; /* para posicionar la fecha absoluta */
+  font-family: 'Arial', sans-serif;
+  font-size: 13px;
+  color: #000;
+  background: #fff;
 }
 
-.header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-bottom: 16px;
-  position: relative;
-}
-
-.logo-info {
-  display: flex;
-  gap: 10px;
-  flex-grow: 1;
-}
-
-.logo {
-  width: 100px;
-  height: auto;
-}
-
-.empresa-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-grow: 1;
-  gap: 6px;
-}
-
-.contactos-linea {
+.comprobante-header {
   display: flex;
   justify-content: space-between;
-  width: 87%;
-  font-size: 11px;
+  align-items: flex-start;
+  border-bottom: 1px solid black;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
 }
 
-.contactos-linea p {
+.comprobante-logo {
+  width: 150px;
+  height: 100px;
+
+}
+
+.empresa-datos {
+  flex-grow: 1;
+}
+
+.empresa-datos h1 {
   margin: 0;
-  white-space: nowrap;
+  font-size: 18px;
 }
 
-.fecha-absolute {
-  position: absolute;
-  top: 0;
-  right: 10%;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-}
-
-.fecha-label {
-  font-weight: bold;
-  border: 1px solid black;
-  padding: 2px 6px;
-  font-size: 10px;
+.empresa-datos p {
+  margin: 2px 0;
+  font-size: 12px;
 }
 
 .fecha-box {
-  border: 1px solid black;
-  padding: 2px 6px;
-  text-align: center;
-  font-size: 11px;
+  text-align: right;
+  font-size: 18px;
 }
 
-.contacto {
-  margin-bottom: 12px;
-  font-size: 12px;
-}
-
-.contacto div {
-  margin: 4px 0;
-}
-
-.tabla {
-  width: 100%;
-  border-collapse: collapse;
+.cliente-info {
   margin-bottom: 16px;
-  font-size: 11px;
-}
-
-.tabla th,
-.tabla td {
-  border: 1px solid black;
-  padding: 6px 4px;
-  text-align: left;
-}
-
-.tabla th {
-  background-color: #f5f5f5;
-}
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.gracias {
-  font-weight: bold;
   font-size: 13px;
 }
 
-.total-box {
-  display: flex;
-  align-items: center;
-  border: 1px solid black;
-  padding: 4px 8px;
-  gap: 6px;
+.cliente-info p {
+  margin: 4px 0;
 }
 
-.total-box span {
+.comprobante-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.comprobante-tabla th,
+.comprobante-tabla td {
+  border: 1px solid black;
+  padding: 6px 8px;
+  text-align: left;
+}
+
+.comprobante-tabla th {
+  background-color: #f0f0f0;
+}
+
+.comprobante-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid black;
+  padding-top: 10px;
+}
+
+.agradecimiento {
   font-weight: bold;
+  font-size: 14px;
+}
+
+.comprobante-total {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid black;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.print-button-wrapper {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.print-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.print-button:hover {
+  background-color: #333;
+}
+
+@media print {
+  .print-button-wrapper {
+    display: none;
+  }
 }

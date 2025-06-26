@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logo from '../images/logo2.jpeg';
+import logo from '../images/Logo1.png';
 import whatsapp from '../images/whatsapp.png';
 import { Readfile, handleWriteFile } from './Databases';
 
