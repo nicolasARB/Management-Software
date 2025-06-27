@@ -117,3 +117,17 @@
     display: none;
   }
 }
+.comprobante-tabla input {
+  width: 100%;
+  border: none;
+  font-size: 12px;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+@media print {
+  .print-button-wrapper,
+  .comprobante-tabla input {
+    display: none;
+  }
+}

@@ -4,6 +4,14 @@ import "./Comprobante.css";
 
 export default function Comprobante() {
   const [fechaActual, setFechaActual] = useState("");
+  const [items, setItems] = useState(() =>
+    Array.from({ length: 10 }, () => ({
+      cantidad: "",
+      descripcion: "",
+      precio: "",
+      bonif: "",
+    }))
+  );
 
   useEffect(() => {
     const navbar = document.getElementById("navbar");
@@ -25,6 +33,26 @@ export default function Comprobante() {
     window.print();
   };
 
+  const handleItemChange = (index, field, value) => {
+    const newItems = [...items];
+    newItems[index][field] = value;
+    setItems(newItems);
+  };
+
+  const calcularTotalFila = (item) => {
+    const cantidad = parseFloat(item.cantidad);
+    const precio = parseFloat(item.precio);
+    const bonif = parseFloat(item.bonif);
+
+    if (isNaN(cantidad) || isNaN(precio)) return 0;
+
+    const subtotal = cantidad * precio;
+    const descuento = !isNaN(bonif) ? subtotal * (bonif / 100) : 0;
+    return subtotal - descuento;
+  };
+
+  const totalGeneral = items.reduce((acc, item) => acc + calcularTotalFila(item), 0);
+
   return (
     <>
       <div className="print-comprobante">
@@ -41,11 +69,11 @@ export default function Comprobante() {
           </div>
         </header>
 
-        <section className="cliente-info">
-          <p><strong>Cliente:</strong> Fernanda Contreras</p>
-          <p><strong>Teléfono:</strong> _________________________________</p>
-          <p><strong>Dirección:</strong> _________________________________</p>
-        </section>
+<section className="cliente-info">
+  <p><strong>Cliente:</strong> <span>Fernanda Contreras</span></p>
+  <p><strong>Teléfono:</strong> <span></span></p>
+  <p><strong>Dirección:</strong> <span></span></p>
+</section>
 
         <table className="comprobante-tabla">
           <thead>
@@ -58,20 +86,42 @@ export default function Comprobante() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Armazón Diseño + Cristales Control Blue</td>
-              <td>$71.000</td>
-              <td>0%</td>
-              <td>$71.000</td>
-            </tr>
-            {[...Array(10)].map((_, i) => (
-              <tr key={i}>
-                <td>&nbsp;</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            {items.map((item, index) => (
+              <tr key={index}>
+                <td>
+                  <input
+                    type="number"
+                    value={item.cantidad}
+                    onChange={(e) => handleItemChange(index, "cantidad", e.target.value)}
+                    min="0"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    value={item.descripcion}
+                    onChange={(e) => handleItemChange(index, "descripcion", e.target.value)}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    value={item.precio}
+                    onChange={(e) => handleItemChange(index, "precio", e.target.value)}
+                    min="0"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    value={item.bonif}
+                    onChange={(e) => handleItemChange(index, "bonif", e.target.value)}
+                    min="0"
+                  />
+                </td>
+                <td>
+                  {calcularTotalFila(item) > 0 ? `$${calcularTotalFila(item).toLocaleString("es-AR")}` : ""}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -81,7 +131,7 @@ export default function Comprobante() {
           <p className="agradecimiento">¡Gracias por confiar en nosotros!</p>
           <div className="comprobante-total">
             <span>Total:</span>
-            <strong>$71.000</strong>
+            <strong>${totalGeneral.toLocaleString("es-AR")}</strong>
           </div>
         </footer>
       </div>
