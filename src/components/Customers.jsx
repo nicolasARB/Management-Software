@@ -11,6 +11,10 @@ export default function Customers() {
     const [PageNumber, setPageNumber] = useState(1);
     const [modalVisible, setModalVisible] = useState(false);
 
+    const [CurrentOption, SetOption] = useState("Sobres");
+    const handleClickOption = (option) => {
+        SetOption(option);
+    };
     const [CanEdit, SetEditable] = useState(false);
 
     const [DocumentToDelete, SetDocumentToDelete] = useState();
@@ -407,15 +411,15 @@ export default function Customers() {
         loadnewdata();
     }
 
-const HandleReceipt = async (ev) => {
-    console.log("done");
-    try{
- await window.electronAPI.invoke('openReceiptWindow');
- console.log("S")
-    }catch (error){
-        console.error("Error", error)
+    const HandleReceipt = async (ev) => {
+        console.log("done");
+        try {
+            await window.electronAPI.invoke('openReceiptWindow');
+            console.log("S")
+        } catch (error) {
+            console.error("Error", error)
+        }
     }
-}
 
     async function remove(customerR) {
         try {
@@ -652,7 +656,20 @@ const HandleReceipt = async (ev) => {
                     </section>
 
                     <section id="customerdocuments" className="h-50 w-100">
-                        <h2 className="text-center p-3">Sobres</h2>
+                        <div id="customerselect">
+                            <button
+                                className={`text-center p-3 ${CurrentOption === "Sobres" ? "selectedoption" : ""}`}
+                                onClick={() => handleClickOption("Sobres")}
+                            >
+                                Sobres
+                            </button>
+                            <button
+                                className={`text-center p-3 ${CurrentOption === "Comprobantes" ? "selectedoption" : ""}`}
+                                onClick={() => handleClickOption("Comprobantes")}
+                            >
+                                Comprobantes
+                            </button>
+                        </div>
                         <section className="" id="documents">
                             {CustomerDocuments.length > 0 && CustomerDocuments.map((document, index) => (
                                 <div
