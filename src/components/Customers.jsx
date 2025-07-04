@@ -412,14 +412,24 @@ export default function Customers() {
     }
 
     const HandleReceipt = async (ev) => {
-        console.log("done");
+       if (SelectedCustomer != null) {
+            var send = SelectedCustomer;
+            console.log(SelectedCustomer);
+            send.Id = SelectedCustomer.Id;
+            send.issobre = true;
+            console.log("reach");
+            console.log(send);
+            send = JSON.stringify(send);
         try {
+            handleWriteFile('C:/Users/Public/senddata.json', `${send}`)
             await window.electronAPI.invoke('openReceiptWindow');
             console.log("S")
         } catch (error) {
             console.error("Error", error)
         }
     }
+
+}
 
     async function remove(customerR) {
         try {

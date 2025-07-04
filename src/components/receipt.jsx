@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import logo from "../images/logo5.png";
+import {Readfile, handleWriteFile} from './Databases';
 import "./Comprobante.css";
 
 export default function Comprobante() {
   const [fechaActual, setFechaActual] = useState("");
+      const [GetsentData, SetsentData] = useState({});
+      const [Data, SetData] = useState({"nombre": "", "phone": "", "address": "", "mail": "", "id": "", "elements": {} })
+      const [glassProps, SetProps] = useState({
+              "numsobre": "", "fecha": "", "type": "", "nombre": "", "address": "", "documentid": "", "phone": "", "Id": "", "mail": "", "esf": "", "cil": "", "dip": "", "alt": "", "oi": "", "oicil": "", "od": "",
+              "odcil": "", "armazon": "", "cristales": "", "dsc": "", "total": "", "sen": "", "saldo": "", "fechaprox": "", "pedidopara": "", "reparacion": ""
+          });
   const [items, setItems] = useState(() =>
     Array.from({ length: 10 }, () => ({
       cantidad: "",
@@ -39,6 +46,36 @@ export default function Comprobante() {
     setItems(newItems);
   };
 
+      async function loadnewdata() {
+          try {
+              const response = await Readfile("C:/Users/Public/senddata.json");
+              const parsedData = JSON.parse(response);
+              SetsentData(parsedData);
+              const UpdatedData = { ...Data };
+              for (const key in parsedData) {
+                  if (parsedData.hasOwnProperty(key)) {
+                      if (UpdatedData.hasOwnProperty(key)) {
+                          UpdatedData[key] = parsedData[key];
+                      }
+                  }
+              }
+              console.log(parsedData);
+              SetData(UpdatedData);
+              console.log(UpdatedData);
+              console.log(Data);
+  
+          } catch (error) {
+              console.error('Error al leer el archivo:', error);
+          }
+      }
+      useEffect(() => {
+          loadnewdata();
+      }, []);
+
+  const Save = () => {
+
+  }
+
   const calcularTotalFila = (item) => {
     const cantidad = parseFloat(item.cantidad);
     const precio = parseFloat(item.precio);
@@ -70,9 +107,9 @@ export default function Comprobante() {
         </header>
 
 <section className="cliente-info">
-  <p><strong>Cliente:</strong> <span>Fernanda Contreras</span></p>
-  <p><strong>Teléfono:</strong> <span></span></p>
-  <p><strong>Dirección:</strong> <span></span></p>
+  <p><strong>Cliente:</strong> <span>{Data.nombre}</span></p>
+  <p><strong>Teléfono:</strong> <span>{Data.phone}</span></p>
+  <p><strong>Dirección:</strong> <span>{Data.address}</span></p>
 </section>
 
         <table className="comprobante-tabla">
@@ -137,6 +174,8 @@ export default function Comprobante() {
       </div>
 
       <div className="print-button-wrapper">
+
+        <button onClick={Save} className="print-button">Guardar</button>
         <button onClick={handlePrint} className="print-button">
           Imprimir Comprobante
         </button>
