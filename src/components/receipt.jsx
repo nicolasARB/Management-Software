@@ -6,11 +6,7 @@ import "./Comprobante.css";
 export default function Comprobante() {
   const [fechaActual, setFechaActual] = useState("");
       const [GetsentData, SetsentData] = useState({});
-      const [Data, SetData] = useState({"nombre": "", "phone": "", "address": "", "mail": "", "id": "", "elements": {} })
-      const [glassProps, SetProps] = useState({
-              "numsobre": "", "fecha": "", "type": "", "nombre": "", "address": "", "documentid": "", "phone": "", "Id": "", "mail": "", "esf": "", "cil": "", "dip": "", "alt": "", "oi": "", "oicil": "", "od": "",
-              "odcil": "", "armazon": "", "cristales": "", "dsc": "", "total": "", "sen": "", "saldo": "", "fechaprox": "", "pedidopara": "", "reparacion": ""
-          });
+      const [Data, SetData] = useState({"nombre": "", "phone": "", "address": "", "mail": "", "id": "", "fecha": "" , "elements": {} })
   const [items, setItems] = useState(() =>
     Array.from({ length: 10 }, () => ({
       cantidad: "",
@@ -72,9 +68,40 @@ export default function Comprobante() {
           loadnewdata();
       }, []);
 
-  const Save = () => {
+const Save = async () => {
+  try {
+    const newReceipt = {
+      ...Data,
+      fecha: fechaActual,
+      elements: items
+    };
 
+    let existingData = [];
+
+    try {
+      const fileContent = await Readfile('C:/Users/Public/receipts.json');
+      existingData = JSON.parse(fileContent);
+
+      if (!Array.isArray(existingData)) {
+        existingData = [];
+      }
+    } catch (readError) {
+      console.warn('No se pudo leer receipts.json o está vacío. Se creará uno nuevo.');
+    }
+
+    existingData.push(newReceipt); 
+
+    await handleWriteFile(
+      'C:/Users/Public/receipts.json',
+      JSON.stringify(existingData, null, 2)
+    );
+
+    console.log('Recibo guardado correctamente.');
+  } catch (error) {
+    console.error('Error al guardar el recibo:', error);
   }
+};
+
 
   const calcularTotalFila = (item) => {
     const cantidad = parseFloat(item.cantidad);

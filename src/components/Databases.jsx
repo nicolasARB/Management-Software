@@ -59,6 +59,7 @@ export default function Database() {
             const documentsfile = files.find((file) => file === 'documents.json');
             const senddata = files.find((file) => file === 'senddata.json');
             const statisticsfile = files.find((file) => file === 'statistics.json');
+            const Receipts = files.find((file) => file === 'receipts.json');
             if (clientesJsonFile) {
                 console.log('Found customers.json file"');
             } else {
@@ -85,6 +86,11 @@ export default function Database() {
                 console.log("Found statistics.json");
             } else {
                 handleWriteFile('C:/Users/Public/statistics.json', `[]`);
+            }
+                        if (Receipts) {
+                console.log("Found receipts.json");
+            } else {
+                handleWriteFile('C:/Users/Public/receipts.json', `[]`);
             }
         }
     }, [files]);
